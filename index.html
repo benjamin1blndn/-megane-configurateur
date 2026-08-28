@@ -390,9 +390,6 @@ header{
 </button>
 </div>
 <script>
-/* =========================================================
-   MOTORISATIONS
-========================================================= */
 const engines={
     evolution:[
         ["1.3 TCe 140 ch BVM6","Essence",28800],
@@ -469,9 +466,6 @@ function isDiesel(){
 function isRS(){
     return config.trim==="rs" || config.trim==="rstrophy";
 }
-/* =========================================================
-   CARROSSERIE
-========================================================= */
 function renderBodies(){
     const c=document.getElementById("bodyChoices");
     c.innerHTML="";
@@ -494,9 +488,6 @@ function renderBodies(){
         c.appendChild(b);
     });
 }
-/* =========================================================
-   FINITIONS
-========================================================= */
 function renderTrims(){
     const c=document.getElementById("trimChoices");
     c.innerHTML="";
@@ -518,9 +509,6 @@ function renderTrims(){
         c.appendChild(b);
     });
 }
-/* =========================================================
-   MOTORISATIONS
-========================================================= */
 function renderEngines(){
     const c=document.getElementById("engineChoices");
     c.innerHTML="";
@@ -544,9 +532,6 @@ function renderEngines(){
         c.appendChild(d);
     });
 }
-/* =========================================================
-   COULEURS
-========================================================= */
 function renderColors(){
     const c=document.getElementById("colorChoices");
     c.innerHTML="";
@@ -570,9 +555,6 @@ function renderColors(){
         c.appendChild(b);
     });
 }
-/* =========================================================
-   SELLERIE
-========================================================= */
 function getUpholsteries(){
     if(config.trim==="rstrophy"){
         return[
@@ -626,9 +608,6 @@ function renderUpholstery(){
         c.appendChild(b);
     });
 }
-/* =========================================================
-   JANTES
-========================================================= */
 function getWheels(){
     if(config.trim==="evolution"){
         if(config.options.includes("allweather")){
@@ -655,7 +634,7 @@ function getWheels(){
     if(config.trim==="rs"){
         return[
             ["Jantes de série RS","jantes_rs.jpg",0],
-            ["Jantes 19 pouces Interlagos noires","interlagos.jpg",1000]
+            ["Jantes Alu 19\" RS Interlagos Diam Noir","interlagos.jpg",1000]
         ];
     }
     return[
@@ -689,9 +668,6 @@ function renderWheels(){
         c.appendChild(b);
     });
 }
-/* =========================================================
-   OPTIONS
-========================================================= */
 function getOptions(){
     const options=[];
     function add(id,name,price,image,description="",available=true){
@@ -702,184 +678,40 @@ function getOptions(){
         }
     }
     if(config.trim==="evolution"){
-        add(
-            "spare",
-            "Roue de secours",
-            200,
-            "roue_secours.jpg",
-            "Essence uniquement",
-            !isHybrid() && !isDiesel()
-        );
-        add(
-            "galette",
-            "Roue de secours galette",
-            150,
-            "galette.jpg",
-            "Diesel uniquement",
-            isDiesel()
-        );
-        add(
-            "allweather",
-            "Pneus tout temps",
-            300,
-            "pneus_tout_temps.jpg",
-            "Ajoute les enjoliveurs Elliptik et supprime les jantes Impulse"
-        );
-        add(
-            "camera",
-            "Caméra de recul",
-            250,
-            "camera_recul.jpg"
-        );
-        add(
-            "safety",
-            "Safety Pack",
-            650,
-            "safety_pack.jpg"
-        );
-        add(
-            "dash42",
-            "Tableau de bord numérique 4,2 pouces + compteurs analogiques",
-            -100,
-            "tableau_42.jpg",
-            "Non disponible sur hybride",
-            !isHybrid()
-        );
-        add(
-            "mirrors",
-            "Rétroviseurs extérieurs électriques et dégivrants",
-            0,
-            "retroviseurs.jpg",
-            "Non disponible sur hybride",
-            !isHybrid()
-        );
-        add(
-            "wallbox",
-            "Câble de recharge Wallbox",
-            300,
-            "wallbox.jpg",
-            "Hybride uniquement",
-            isHybrid()
-        );
+        add("spare","Roue de secours",200,"roue_secours.jpg","Essence uniquement",!isHybrid() && !isDiesel());
+        add("galette","Roue de secours galette",150,"galette.jpg","Diesel uniquement",isDiesel());
+        add("allweather","Pneus tout temps",300,"pneus_tout_temps.jpg","Ajoute les enjoliveurs Elliptik et supprime les jantes Impulse");
+        add("camera","Caméra de recul",250,"camera_recul.jpg");
+        add("safety","Safety Pack",650,"safety_pack.jpg");
+        add("dash42","Tableau de bord numérique 4,2 pouces + compteurs analogiques",-100,"tableau_42.jpg","Non disponible sur hybride",!isHybrid());
+        add("mirrors","Rétroviseurs extérieurs électriques et dégivrants",0,"retroviseurs.jpg","Non disponible sur hybride",!isHybrid());
+        add("wallbox","Câble de recharge Wallbox",300,"wallbox.jpg","Hybride uniquement",isHybrid());
     }
     if(config.trim==="techno"){
-        add(
-            "hud",
-            "Affichage tête haute",
-            400,
-            "affichage_tete_haute.jpg"
-        );
-        add(
-            "sunroof",
-            "Toit ouvrant",
-            900,
-            "toit_ouvrant.jpg"
-        );
-        add(
-            "dash10",
-            "Tableau de bord numérique 10 pouces",
-            100,
-            "tableau_10.jpg"
-        );
-        add(
-            "winter",
-            "Winter Pack",
-            400,
-            "winter_pack.jpg"
-        );
-        add(
-            "easypark",
-            "Pack Easy Park",
-            550,
-            "easy_park.jpg"
-        );
-        add(
-            "wallbox",
-            "Câble de recharge Wallbox",
-            300,
-            "wallbox.jpg",
-            "Hybride uniquement",
-            isHybrid()
-        );
+        add("hud","Affichage tête haute",400,"affichage_tete_haute.jpg");
+        add("sunroof","Toit ouvrant",900,"toit_ouvrant.jpg");
+        add("dash10","Tableau de bord numérique 10 pouces",100,"tableau_10.jpg");
+        add("winter","Winter Pack",400,"winter_pack.jpg");
+        add("easypark","Pack Easy Park",550,"easy_park.jpg");
+        add("wallbox","Câble de recharge Wallbox",300,"wallbox.jpg","Hybride uniquement",isHybrid());
     }
     if(config.trim==="rsline"){
-        add(
-            "bose",
-            "Bose",
-            700,
-            "bose.jpg"
-        );
-        add(
-            "hud",
-            "Affichage tête haute",
-            400,
-            "affichage_tete_haute.jpg"
-        );
-        add(
-            "easydrive",
-            "Pack Easy Drive E-Tech",
-            600,
-            "easy_drive.jpg"
-        );
-        add(
-            "sunroof",
-            "Toit ouvrant",
-            900,
-            "toit_ouvrant.jpg"
-        );
-        add(
-            "spareRS",
-            "Roue de secours",
-            150,
-            "roue_secours.jpg"
-        );
+        add("bose","Bose",700,"bose.jpg");
+        add("hud","Affichage tête haute",400,"affichage_tete_haute.jpg");
+        add("easydrive","Pack Easy Drive E-Tech",600,"easy_drive.jpg");
+        add("sunroof","Toit ouvrant",900,"toit_ouvrant.jpg");
+        add("spareRS","Roue de secours",150,"roue_secours.jpg");
     }
     if(config.trim==="rs"){
-        add(
-            "sunroof",
-            "Toit ouvrant",
-            900,
-            "toit_ouvrant.jpg"
-        );
-        add(
-            "rsmonitor",
-            "RS Monitor",
-            250,
-            "rs_monitor.jpg"
-        );
-        add(
-            "alcantara",
-            "Pack Alcantara",
-            1500,
-            "alcantara.jpg"
-        );
+        add("sunroof","Toit ouvrant",900,"toit_ouvrant.jpg");
+        add("rsmonitor","RS Monitor",250,"rs_monitor.jpg");
+        add("alcantara","Pack Alcantara",1500,"alcantara.jpg");
     }
     if(config.trim==="rstrophy"){
-        add(
-            "adaptive",
-            "Régulateur de vitesse adaptatif",
-            300,
-            "regulateur_adaptatif.jpg"
-        );
-        add(
-            "sunroof",
-            "Toit ouvrant",
-            900,
-            "toit_ouvrant.jpg"
-        );
-        add(
-            "rsmonitor",
-            "RS Monitor",
-            250,
-            "rs_monitor.jpg"
-        );
-        add(
-            "recaro",
-            "Sièges baquet Recaro",
-            1900,
-            "recaro.jpg",
-            "Non chauffants"
-        );
+        add("adaptive","Régulateur de vitesse adaptatif",300,"regulateur_adaptatif.jpg");
+        add("sunroof","Toit ouvrant",900,"toit_ouvrant.jpg");
+        add("rsmonitor","RS Monitor",250,"rs_monitor.jpg");
+        add("recaro","Sièges baquet Recaro",1900,"recaro.jpg","Non chauffants");
     }
     return options;
 }
@@ -888,8 +720,7 @@ function renderOptions(){
     c.innerHTML="";
     getOptions().forEach(option=>{
         const b=document.createElement("button");
-        b.className="option "+
-            (config.options.includes(option.id)?"active":"");
+        b.className="option "+(config.options.includes(option.id)?"active":"");
         b.innerHTML=`
             <img src="${option.image}"
                  alt="${option.name}"
@@ -912,37 +743,27 @@ function renderOptions(){
         `;
         b.onclick=()=>{
             if(config.options.includes(option.id)){
-                config.options=
-                    config.options.filter(id=>id!==option.id);
+                config.options=config.options.filter(id=>id!==option.id);
             }else{
                 config.options.push(option.id);
             }
             if(option.id==="spare"){
-                config.options=
-                    config.options.filter(id=>id!=="galette");
+                config.options=config.options.filter(id=>id!=="galette");
             }
             if(option.id==="galette"){
-                config.options=
-                    config.options.filter(id=>id!=="spare");
+                config.options=config.options.filter(id=>id!=="spare");
             }
             render();
         };
         c.appendChild(b);
     });
 }
-/* =========================================================
-   IMAGE ERROR
-========================================================= */
 function imageError(img,file){
     const box=document.createElement("div");
     box.className="image-missing";
-    box.innerHTML=
-        "Image introuvable<br><br>"+file;
+    box.innerHTML="Image introuvable<br><br>"+file;
     img.replaceWith(box);
 }
-/* =========================================================
-   PRIX
-========================================================= */
 function calculatePrice(){
     let total=currentEngine()[2];
     if(config.body==="estate"){
@@ -961,9 +782,6 @@ function calculatePrice(){
     });
     return total;
 }
-/* =========================================================
-   RÉCAPITULATIF
-========================================================= */
 function renderSummary(){
     const c=document.getElementById("summary");
     const colors=isRS()?rsColors:normalColors;
@@ -972,9 +790,7 @@ function renderSummary(){
     c.innerHTML=`
         <div class="summary-row">
             <span>Carrosserie</span>
-            <strong>
-                ${config.body==="berline"?"Berline":"Estate"}
-            </strong>
+            <strong>${config.body==="berline"?"Berline":"Estate"}</strong>
         </div>
         <div class="summary-row">
             <span>Finition</span>
@@ -998,9 +814,6 @@ function renderSummary(){
         </div>
     `;
 }
-/* =========================================================
-   GRANDE IMAGE
-========================================================= */
 function changeView(file){
     const container=document.getElementById("carVisual");
     const img=document.createElement("img");
@@ -1020,9 +833,6 @@ function changeView(file){
         container.appendChild(img);
     };
 }
-/* =========================================================
-   SAUVEGARDE
-========================================================= */
 function saveConfiguration(){
     localStorage.setItem(
         "meganeConfiguration",
@@ -1030,9 +840,6 @@ function saveConfiguration(){
     );
     alert("Configuration enregistrée sur cet appareil.");
 }
-/* =========================================================
-   AFFICHAGE
-========================================================= */
 function render(){
     renderBodies();
     renderTrims();
