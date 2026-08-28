@@ -4,1024 +4,1179 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Configurateur Renault Mégane IV Phase 2 — 2023</title>
+<title>Renault Mégane IV Phase 2 — Configurateur</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-    background: #f3f3f3;
-    color: #171717;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #111;
+    background: #fff;
 }
+
+/* HEADER */
 
 header {
-    background: #111;
-    color: white;
-    padding: 30px 18px;
+    height: 64px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: -2px;
+}
+
+.sub {
+    font-size: 12px;
+    color: #666;
+}
+
+/* LAYOUT */
+
+main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 430px;
+    min-height: calc(100vh - 64px);
+}
+
+.viewer {
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero {
+    flex: 1;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 25px;
+}
+
+.car {
+    width: min(92%, 900px);
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(145deg, #eee, #ddd);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 60px #0002;
+    overflow: hidden;
+}
+
+.car img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.placeholder {
     text-align: center;
+    color: #777;
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 20px;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 29px;
+/* SUMMARY */
+
+.summary {
+    position: absolute;
+    left: 30px;
+    bottom: 25px;
+    background: #fff;
+    padding: 13px 17px;
+    box-shadow: 0 4px 18px #0002;
+    font-size: 12px;
 }
 
-header p {
-    margin: 8px 0 0;
-    color: #c8c8c8;
+.summary b {
+    font-size: 16px;
 }
 
-.container {
-    max-width: 920px;
-    margin: auto;
-    padding: 18px;
+/* VIEWS */
+
+.views {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    padding: 11px 18px;
+}
+
+.views button {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 9px 12px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.views button:hover {
+    border-color: #111;
+}
+
+.views button.active {
+    border-color: #111;
+    font-weight: 700;
+}
+
+/* PANEL */
+
+.panel {
+    background: #fff;
+    border-left: 1px solid #ddd;
+    overflow-y: auto;
+    padding-bottom: 100px;
+}
+
+.step {
+    padding: 25px 25px 4px;
+}
+
+.step small,
+.category {
+    color: #777;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: 11px;
+}
+
+.step h1 {
+    font-size: 28px;
+    margin: 7px 0 20px;
 }
 
 .section {
-    background: white;
-    border-radius: 16px;
-    padding: 22px;
-    margin-bottom: 18px;
-    box-shadow: 0 3px 12px rgba(0,0,0,.07);
-}
-
-.section h2 {
-    margin: 0 0 17px;
-    font-size: 21px;
-    padding-bottom: 10px;
+    padding: 21px 25px;
     border-bottom: 1px solid #ddd;
 }
 
-label.title {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
+.section h2 {
+    font-size: 18px;
+    margin: 0 0 13px;
 }
+
+/* FINITIONS / CARDS */
+
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    background: #fff;
+    text-align: left;
+    padding: 14px;
+    cursor: pointer;
+    transition: .15s;
+}
+
+.card:hover {
+    border-color: #111;
+}
+
+.card.selected {
+    border: 2px solid #111;
+    padding: 13px;
+    background: #fafafa;
+}
+
+.card strong {
+    display: block;
+    font-size: 15px;
+}
+
+.card span {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* SELECT */
 
 select {
     width: 100%;
     padding: 13px;
-    border: 1px solid #bbb;
-    border-radius: 9px;
-    background: white;
-    font-size: 16px;
+    border: 1px solid #aaa;
+    background: #fff;
+    font-size: 14px;
+}
+
+/* OPTIONS */
+
+.category {
+    margin: 20px 0 9px;
 }
 
 .option {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 11px;
-    background: #f7f7f7;
-    border-radius: 10px;
-    padding: 14px;
-    margin: 9px 0;
+    border: 1px solid #ddd;
+    padding: 9px;
+    margin: 7px 0;
+    cursor: pointer;
+    transition: .15s;
 }
 
 .option:hover {
-    background: #eeeeee;
+    border-color: #111;
 }
 
 .option input {
-    margin-top: 4px;
-    transform: scale(1.15);
+    width: 18px;
+    height: 18px;
+    accent-color: #111;
 }
 
-.option strong {
+.thumb {
+    width: 64px;
+    height: 46px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: #777;
+    flex: none;
+    overflow: hidden;
+}
+
+.thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.txt {
+    flex: 1;
+}
+
+.txt b {
     display: block;
+    font-size: 13px;
 }
 
-.option small {
+.txt small {
     display: block;
-    margin-top: 4px;
-    color: #666;
-    line-height: 1.45;
+    color: #777;
+    margin-top: 3px;
 }
 
-.price-tag {
-    font-weight: 600;
-    margin-top: 4px;
+.hidden {
+    display: none !important;
 }
 
-.info {
-    margin-top: 12px;
-    padding: 12px;
-    border-radius: 9px;
-    background: #f0f0f0;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.warning {
-    display: none;
-    margin-top: 12px;
-    padding: 12px;
-    border-radius: 9px;
-    background: #fff2c7;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.summary {
-    line-height: 1.9;
-}
-
-.summary-line {
-    padding: 5px 0;
-    border-bottom: 1px solid #eee;
-}
+/* PRICE */
 
 .total {
-    margin-top: 22px;
-    text-align: center;
-    font-size: 32px;
-    font-weight: 700;
-}
-
-.total-note {
-    text-align: center;
-    color: #777;
-    font-size: 13px;
-    margin-top: 7px;
-}
-
-button {
-    width: 100%;
-    border: 0;
-    border-radius: 10px;
-    padding: 15px;
-    margin-top: 15px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 430px;
     background: #111;
-    color: white;
-    font-size: 17px;
+    color: #fff;
+    padding: 15px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 20;
+}
+
+.total small {
+    font-size: 10px;
+}
+
+.total strong {
+    font-size: 21px;
+}
+
+.total button {
+    border: 0;
+    background: #ffd500;
+    padding: 12px 16px;
+    font-weight: 800;
     cursor: pointer;
 }
 
-button:hover {
-    background: #333;
+.total button:hover {
+    background: #e8c000;
 }
 
-.badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 20px;
-    background: #e8e8e8;
-    font-size: 12px;
-    margin-left: 5px;
-}
+/* MOBILE */
 
-.empty {
-    color: #777;
-    font-style: italic;
-}
+@media (max-width: 900px) {
 
-footer {
-    text-align: center;
-    color: #777;
-    font-size: 12px;
-    padding: 20px;
-}
+    header {
+        height: auto;
+        min-height: 64px;
+        padding: 12px 18px;
+        gap: 10px;
+    }
 
+    .sub {
+        text-align: right;
+        font-size: 10px;
+    }
+
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        border-left: 0;
+    }
+
+    .hero {
+        min-height: 350px;
+    }
+
+    .summary {
+        left: 15px;
+        bottom: 15px;
+    }
+
+    .total {
+        width: 100%;
+    }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-
-<h1>Renault Mégane IV Phase 2</h1>
-
-<p>
-Configurateur France — gamme 2022 / 2023
-</p>
-
+    <div class="logo">RENAULT</div>
+    <div class="sub">
+        MÉGANE IV PHASE 2 · FIN 2022 · CONFIGURATEUR
+    </div>
 </header>
 
+<main>
 
-<div class="container">
+<section class="viewer">
 
+    <div class="hero">
 
-<!-- =====================================================
-     CARROSSERIE
-===================================================== -->
+        <div class="car" id="car">
+            <div class="placeholder">
+                Images à placer dans le dossier
+                <b>images/</b><br><br>
+                front.jpg · side.jpg · rear.jpg<br>
+                wheels.jpg · seats.jpg · dashboard.jpg
+            </div>
+        </div>
 
-<div class="section">
+        <div class="summary">
+            <b id="name">Mégane Berline Evolution</b>
+            <br>
+            <span id="spec">
+                1.3 TCe 140 ch BVM6 · Blanc Glacier ·
+                Jantes alliage 16" Impulse
+            </span>
+        </div>
 
-<h2>🚗 Carrosserie</h2>
+    </div>
 
-<label class="title">
-Type de carrosserie
-</label>
+    <div class="views" id="views"></div>
 
-<select id="carrosserie" onchange="updateAll()">
+</section>
 
-<option value="berline">
-Mégane Berline
-</option>
 
-<option value="estate">
-Mégane Estate (+1 000 €)
-</option>
+<section class="panel">
 
-</select>
+    <div class="step">
+        <small>Étape 1</small>
+        <h1>Configurez votre Mégane</h1>
+    </div>
 
-<div class="info">
 
-L'Estate possède notamment les barres de toit aluminium de série.
-Certaines fonctions de modularité sont spécifiques à cette carrosserie.
+    <!-- CARROSSERIE -->
 
-</div>
+    <div class="section">
 
-</div>
+        <h2>Carrosserie</h2>
 
+        <div class="cards">
 
+            <button
+                class="card selected"
+                data-body="berline">
 
-<!-- =====================================================
-     FINITION
-===================================================== -->
+                <strong>Mégane Berline</strong>
+                <span>Hatchback 5 portes</span>
 
-<div class="section">
+            </button>
 
-<h2>🏷️ Niveau de finition</h2>
 
-<select id="finition" onchange="updateAll()">
+            <button
+                class="card"
+                data-body="estate">
 
-<option value="evolution">
-Évolution
-</option>
+                <strong>Mégane Estate</strong>
+                <span>Break</span>
 
-<option value="techno">
-Techno
-</option>
+            </button>
 
-</select>
+        </div>
 
-</div>
+    </div>
 
 
+    <!-- FINITION -->
 
-<!-- =====================================================
-     MOTORISATION
-===================================================== -->
+    <div class="section">
 
-<div class="section">
+        <h2>Finition</h2>
 
-<h2>⚙️ Motorisation</h2>
+        <div class="cards">
 
-<select id="moteur" onchange="updateAll()"></select>
+            <button
+                type="button"
+                class="card selected"
+                data-trim="evolution">
 
-<div class="info">
+                <strong>Evolution</strong>
+                <span>
+                    Équipement de série selon version
+                </span>
 
-Les motorisations sont adaptées automatiquement au niveau
-de finition sélectionné.
+            </button>
 
-</div>
 
-</div>
+            <button
+                type="button"
+                class="card"
+                data-trim="techno">
 
+                <strong>Techno</strong>
+                <span>
+                    Evolution + équipements
+                </span>
 
+            </button>
 
-<!-- =====================================================
-     COULEUR
-===================================================== -->
+        </div>
 
-<div class="section">
+    </div>
 
-<h2>🎨 Teinte extérieure</h2>
 
-<select id="couleur" onchange="updateAll()">
+    <!-- MOTORISATION -->
 
-<option value="0">
-Blanc Glacier — 0 €
-</option>
+    <div class="section">
 
-<option value="850">
-Blanc Nacré — 850 €
-</option>
+        <h2>Motorisation</h2>
 
-<option value="750">
-Bleu Iron — 750 €
-</option>
+        <select id="engine"></select>
 
-<option value="850">
-Rouge Flamme — 850 €
-</option>
+    </div>
 
-<option value="650">
-Gris Highland — 650 €
-</option>
 
-<option value="650">
-Gris Titanium — 650 €
-</option>
+    <!-- PERSONNALISATION -->
 
-<option value="650">
-Noir Étoilé — 650 €
-</option>
+    <div class="section">
 
-</select>
+        <h2>Personnalisation</h2>
 
-</div>
 
+        <!-- COULEURS -->
 
+        <div class="category">
+            Couleurs
+        </div>
 
-<!-- =====================================================
-     JANTES
-===================================================== -->
+        <div id="colors"></div>
 
-<div class="section">
 
-<h2>🛞 Jantes</h2>
+        <!-- JANTES -->
 
-<select id="jantes" onchange="updateAll()"></select>
+        <div class="category">
+            Jantes
+        </div>
 
-</div>
+        <div id="wheels"></div>
 
 
+        <!-- CONFORT -->
 
-<!-- =====================================================
-     SELLERIE
-===================================================== -->
+        <div class="category">
+            Confort
+        </div>
 
-<div class="section">
 
-<h2>💺 Sellerie</h2>
+        <label class="option estate-only">
 
-<select id="sellerie" onchange="updateAll()"></select>
+            <input
+                type="checkbox"
+                data-name="Pack Modularity">
 
-</div>
+            <div class="thumb">
+                IMAGE
+            </div>
 
+            <div class="txt">
 
+                <b>Pack Modularity</b>
 
-<!-- =====================================================
-     OPTIONS
-===================================================== -->
+                <small>
+                    Équipement spécifique Estate
+                    selon configuration
+                </small>
 
-<div class="section">
+            </div>
 
-<h2>➕ Options et packs</h2>
+        </label>
 
-<div id="options"></div>
 
-</div>
+        <label class="option">
 
+            <input
+                type="checkbox"
+                data-name="Caméra de recul">
 
+            <div class="thumb">
+                IMAGE
+            </div>
 
-<!-- =====================================================
-     ÉQUIPEMENTS DE SÉRIE
-===================================================== -->
+            <div class="txt">
 
-<div class="section">
+                <b>Caméra de recul</b>
 
-<h2>✓ Équipements de série</h2>
+                <small>
+                    Disponible selon version
+                </small>
 
-<div id="serie"></div>
+            </div>
 
-</div>
+        </label>
 
 
+        <label class="option">
 
-<!-- =====================================================
-     ACCESSOIRES
-===================================================== -->
+            <input
+                type="checkbox"
+                data-name="Toit ouvrant électrique panoramique">
 
-<div class="section">
+            <div class="thumb">
+                IMAGE
+            </div>
 
-<h2>🧰 Accessoires</h2>
+            <div class="txt">
 
-<div id="accessoires"></div>
+                <b>
+                    Toit ouvrant électrique panoramique
+                </b>
 
-<div class="info">
+                <small>
+                    Disponible selon version
+                </small>
 
-Les accessoires sont séparés des options usine.
-Le prix affiché dépend de la référence d'accessoire.
+            </div>
 
-</div>
+        </label>
 
-</div>
 
+        <!-- SECURITE -->
 
+        <div class="category">
+            Sécurité et aides à la conduite
+        </div>
 
-<!-- =====================================================
-     AVERTISSEMENTS
-===================================================== -->
 
-<div class="section">
+        <label class="option">
 
-<h2>ℹ️ Compatibilité</h2>
+            <input
+                type="checkbox"
+                data-name="Pack Safety">
 
-<div id="warning" class="warning"></div>
+            <div class="thumb">
+                IMAGE
+            </div>
 
-</div>
+            <div class="txt">
 
+                <b>Pack Safety</b>
 
+                <small>
+                    Équipements selon niveau de finition
+                </small>
 
-<!-- =====================================================
-     RÉCAPITULATIF
-===================================================== -->
+            </div>
 
-<div class="section">
+        </label>
 
-<h2>📋 Votre configuration</h2>
 
-<div id="resume" class="summary"></div>
+        <!-- INTERIEUR -->
+
+        <div class="category">
+            Intérieur
+        </div>
+
+
+        <label class="option">
+
+            <input
+                type="checkbox"
+                data-name="Sièges avant chauffants">
+
+            <div class="thumb">
+                IMAGE
+            </div>
+
+            <div class="txt">
+
+                <b>Sièges avant chauffants</b>
+
+                <small>
+                    Selon sellerie et version
+                </small>
+
+            </div>
+
+        </label>
+
+
+        <label class="option">
+
+            <input
+                type="checkbox"
+                data-name="Sellerie mixte">
+
+            <div class="thumb">
+                IMAGE
+            </div>
+
+            <div class="txt">
+
+                <b>
+                    Sellerie mixte textile enduit
+                    grainé / tissu carbone
+                </b>
+
+                <small>
+                    Équipement associé à certaines versions
+                </small>
+
+            </div>
+
+        </label>
+
+
+        <!-- MULTIMEDIA -->
+
+        <div class="category">
+            Multimédia
+        </div>
+
+
+        <label class="option">
+
+            <input
+                type="checkbox"
+                data-name="Easy Link 9,3 pouces">
+
+            <div class="thumb">
+                IMAGE
+            </div>
+
+            <div class="txt">
+
+                <b>
+                    Easy Link 9,3 pouces
+                </b>
+
+                <small>
+                    Navigation et services connectés
+                    selon version
+                </small>
+
+            </div>
+
+        </label>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- TOTAL -->
 
 <div class="total">
 
-<span id="total">
-0 €
-</span>
+    <div>
+
+        <small>
+            PRIX TOTAL
+        </small>
+
+        <br>
+
+        <strong id="total">
+            Prix à compléter
+        </strong>
+
+    </div>
+
+
+    <button id="saveButton">
+        ENREGISTRER
+    </button>
 
 </div>
-
-<div class="total-note" id="totalNote"></div>
-
-<button onclick="resetConfiguration()">
-Réinitialiser la configuration
-</button>
-
-</div>
-
-
-</div>
-
-
-<footer>
-
-Renault Mégane IV Phase 2 — configurateur non officiel.
-Données basées sur la documentation commerciale Renault.
-
-</footer>
-
 
 
 <script>
 
 /* =========================================================
+   ETAT DU CONFIGURATEUR
+========================================================= */
+
+const state = {
+
+    body: "berline",
+
+    trim: "evolution",
+
+    engine: "tce140bvm",
+
+    color: "Blanc Glacier",
+
+    wheel: "16",
+
+    wheelName: 'Jantes alliage 16" Impulse',
+
+    options: []
+
+};
+
+
+/* =========================================================
    MOTORISATIONS
 ========================================================= */
 
-const moteurs = {
+const engines = {
 
     evolution: [
 
-        {
-            id: "tce140bvm",
-            nom: "1.3 TCe 140 BVM6",
-            prix: 28800
-        },
+        [
+            "tce140bvm",
+            "1.3 TCe 140 ch BVM6"
+        ],
 
-        {
-            id: "dci115bvm",
-            nom: "1.5 Blue dCi 115 BVM6",
-            prix: 30800
-        },
-
-        {
-            id: "dci115edc",
-            nom: "1.5 Blue dCi 115 EDC7",
-            prix: 32800
-        },
-
-        {
-            id: "etech160",
-            nom: "1.6 E-Tech Plug-in Hybrid 160 BVA",
-            prix: 38750
-        }
+        [
+            "blue115",
+            "1.5 Blue dCi 115 ch BVM6"
+        ]
 
     ],
 
 
     techno: [
 
-        {
-            id: "tce140bvm",
-            nom: "1.3 TCe 140 BVM6",
-            prix: 30750
-        },
+        [
+            "tce140bvm",
+            "1.3 TCe 140 ch BVM6"
+        ],
 
-        {
-            id: "tce140edc",
-            nom: "1.3 TCe 140 EDC7",
-            prix: 32750
-        },
+        [
+            "tce140edc",
+            "1.3 TCe 140 ch EDC7"
+        ],
 
-        {
-            id: "dci115bvm",
-            nom: "1.5 Blue dCi 115 BVM6",
-            prix: 32750
-        },
+        [
+            "tce160edc",
+            "1.3 TCe 160 ch EDC7"
+        ],
 
-        {
-            id: "dci115edc",
-            nom: "1.5 Blue dCi 115 EDC7",
-            prix: 34750
-        },
+        [
+            "blue115",
+            "1.5 Blue dCi 115 ch BVM6"
+        ],
 
-        {
-            id: "etech160",
-            nom: "1.6 E-Tech Plug-in Hybrid 160 BVA",
-            prix: 40700
-        }
+        [
+            "blue115edc",
+            "1.5 Blue dCi 115 ch EDC7"
+        ]
 
     ]
 
 };
 
+
+/* =========================================================
+   COULEURS
+========================================================= */
+
+const colorsList = [
+
+    "Blanc Glacier",
+
+    "Gris Highland",
+
+    "Gris Titanium",
+
+    "Noir Étoilé",
+
+    "Bleu Iron",
+
+    "Rouge Flamme",
+
+    "Blanc Nacré"
+
+];
+
+
+/* =========================================================
+   IMAGES
+========================================================= */
+
+function imageHTML(file, label) {
+
+    return `
+        <img
+            src="images/${file}"
+            alt="${label}"
+            onerror="
+                this.replaceWith(
+                    Object.assign(
+                        document.createElement('span'),
+                        {
+                            className:'placeholder',
+                            textContent:'${label}'
+                        }
+                    )
+                )
+            "
+        >
+    `;
+
+}
+
+
+/* =========================================================
+   VUES
+========================================================= */
+
+function createViews() {
+
+    const views = [
+
+        ["front.jpg", "Avant"],
+
+        ["side.jpg", "Côté"],
+
+        ["rear.jpg", "Arrière"],
+
+        ["wheels.jpg", "Jantes"],
+
+        ["seats.jpg", "Sièges"],
+
+        ["dashboard.jpg", "Tableau de bord"]
+
+    ];
+
+
+    const container =
+        document.getElementById("views");
+
+    container.innerHTML = "";
+
+
+    views.forEach((view, index) => {
+
+        const button =
+            document.createElement("button");
+
+        button.textContent = view[1];
+
+
+        if (index === 0) {
+
+            button.classList.add("active");
+
+        }
+
+
+        button.addEventListener("click", () => {
+
+            document
+                .querySelectorAll("#views button")
+                .forEach(btn =>
+                    btn.classList.remove("active")
+                );
+
+
+            button.classList.add("active");
+
+
+            document
+                .getElementById("car")
+                .innerHTML =
+                    imageHTML(
+                        view[0],
+                        view[1]
+                    );
+
+        });
+
+
+        container.appendChild(button);
+
+    });
+
+
+    document.getElementById("car").innerHTML =
+        imageHTML(
+            "front.jpg",
+            "Vue avant"
+        );
+
+}
+
+
+/* =========================================================
+   COULEURS
+========================================================= */
+
+function createColors() {
+
+    const container =
+        document.getElementById("colors");
+
+    container.innerHTML = "";
+
+
+    colorsList.forEach((color, index) => {
+
+        const label =
+            document.createElement("label");
+
+        label.className = "option";
+
+
+        label.innerHTML = `
+
+            <input
+                type="radio"
+                name="color"
+                value="${color}"
+                ${index === 0 ? "checked" : ""}
+            >
+
+            <div class="thumb">
+                PHOTO
+            </div>
+
+            <div class="txt">
+
+                <b>${color}</b>
+
+                <small>
+                    Couleur de carrosserie
+                </small>
+
+            </div>
+
+        `;
+
+
+        label
+            .querySelector("input")
+            .addEventListener("change", () => {
+
+                state.color = color;
+
+                update();
+
+            });
+
+
+        container.appendChild(label);
+
+    });
+
+}
+
+
+/* =========================================================
+   MOTORISATIONS
+========================================================= */
+
+function fillEngines() {
+
+    const select =
+        document.getElementById("engine");
+
+    select.innerHTML = "";
+
+
+    engines[state.trim].forEach(engine => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = engine[0];
+
+        option.textContent = engine[1];
+
+        select.appendChild(option);
+
+    });
+
+
+    const available =
+        engines[state.trim]
+            .map(engine => engine[0]);
+
+
+    if (!available.includes(state.engine)) {
+
+        state.engine =
+            engines[state.trim][0][0];
+
+    }
+
+
+    select.value = state.engine;
+
+}
 
 
 /* =========================================================
    JANTES
 ========================================================= */
 
-const jantes = {
+function createWheels() {
 
-    evolution: [
+    const container =
+        document.getElementById("wheels");
 
-        {
-            id: "impulse",
-            nom: '16" Impulse diamantées gris Erbé',
-            prix: 0
-        }
-
-    ],
-
-    techno: [
-
-        {
-            id: "allium",
-            nom: '17" Allium diamantées gris Erbé',
-            prix: 0
-        },
-
-        {
-            id: "hightek",
-            nom: '18" Hightek diamantées gris Erbé',
-            prix: 700
-        }
-
-    ]
-
-};
+    container.innerHTML = "";
 
 
-
-/* =========================================================
-   SELLERIES
-========================================================= */
-
-const selleries = {
-
-    evolution: [
-
-        {
-            nom: "Sellerie tissu carbone",
-            prix: 0
-        }
-
-    ],
-
-    techno: [
-
-        {
-            nom: "Sellerie mixte textile enduit grainé / tissu carbone texturé",
-            prix: 0
-        }
-
-    ]
-
-};
+    let wheels;
 
 
+    if (state.trim === "evolution") {
 
-/* =========================================================
-   OPTIONS
-========================================================= */
+        wheels = [
 
-const options = [
+            [
+                "16",
+                'Jantes alliage 16" Impulse'
+            ],
 
-    {
-        id: "camera",
-        nom: "Caméra de recul",
-        prix: null,
-        finitions: ["evolution"],
-        description:
-            "Option sur Évolution. De série sur Techno."
-    },
+            [
+                "17",
+                'Jantes alliage 17" Allium'
+            ]
 
+        ];
 
-    {
-        id: "commutation",
-        nom: "Commutation automatique des feux de croisement / route",
-        prix: null,
-        finitions: ["evolution"],
-        description:
-            "Disponible en option sur Évolution."
-    },
+    } else {
 
+        wheels = [
 
-    {
-        id: "pneus",
-        nom: "Pneus tout temps",
-        prix: null,
-        finitions: ["evolution"],
-        description:
-            "Option proposée sur Évolution."
-    },
+            [
+                "17",
+                'Jantes alliage 17" Allium'
+            ],
 
+            [
+                "18",
+                'Jantes alliage 18" Hightek'
+            ]
 
-    {
-        id: "roue",
-        nom: "Roue de secours",
-        prix: null,
-        finitions: ["evolution", "techno"],
-        description:
-            "Roue de secours ; temporaire sur moteur diesel."
-    },
+        ];
 
-
-    {
-        id: "toit",
-        nom: "Toit ouvrant électrique panoramique",
-        prix: 900,
-        finitions: ["techno"],
-        description:
-            "Toit panoramique avec vélum occultant motorisé."
-    },
-
-
-    {
-        id: "easypark",
-        nom: "Pack Easy Park",
-        prix: 550,
-        finitions: ["techno"],
-        description:
-            "Comprend notamment Easy Park Assist, détecteur d'angle mort et détection active de véhicule arrière."
-    },
-
-
-    {
-        id: "modularity",
-        nom: "Pack Modularity",
-        prix: null,
-        finitions: ["techno"],
-        carrosseries: ["estate"],
-        description:
-            "Uniquement sur Mégane Estate. Inclut la fonctionnalité de mise en tablette du siège passager et le système Easy Break."
     }
 
-];
 
+    wheels.forEach((wheel, index) => {
 
+        const label =
+            document.createElement("label");
 
-/* =========================================================
-   ÉQUIPEMENTS DE SÉRIE
-========================================================= */
+        label.className = "option";
 
-const serieEvolution = [
 
-    "ESC, ABS avec aide au freinage d'urgence",
+        label.innerHTML = `
 
-    "Airbags frontaux conducteur et passager adaptatifs",
+            <input
+                type="radio"
+                name="wheel"
+                value="${wheel[0]}"
+                ${index === 0 ? "checked" : ""}
+            >
 
-    "Airbags latéraux bassin/thorax avant",
+            <div class="thumb">
+                JANTE
+            </div>
 
-    "Airbags rideaux avant et arrière",
+            <div class="txt">
 
-    "Capteur de pluie et de luminosité",
+                <b>${wheel[1]}</b>
 
-    "Aide au parking avant et arrière",
+                <small>
+                    ${
+                        index === 0
+                        ? "Équipement de série selon version"
+                        : "Choix optionnel selon configuration"
+                    }
+                </small>
 
-    "Alerte de détection de fatigue",
+            </div>
 
-    "Régulateur-limiteur de vitesse",
+        `;
 
-    "Aide au démarrage en côte",
 
-    "Climatisation automatique bi-zone",
+        label
+            .querySelector("input")
+            .addEventListener("change", () => {
 
-    "Carte Renault mains-libres",
+                state.wheel = wheel[0];
 
-    "Jantes alliage 16\" Impulse",
+                state.wheelName = wheel[1];
 
-    "Projecteurs avant Full LED Pure Vision",
+                update();
 
-    "Feux arrière à LED",
+            });
 
-    "Vitres avant et arrière électriques",
 
-    "Sellerie tissu carbone",
-
-    "Easy Link 7\" avec navigation",
-
-    "Apple CarPlay sans fil",
-
-    "Android Auto",
-
-    "Radio DAB",
-
-    "Son Arkamys Auditorium 6 haut-parleurs",
-
-    "Tableau de bord numérique 7\""
-
-];
-
-
-const serieTechno = [
-
-    "Tous les équipements de la finition Évolution",
-
-    "Jantes alliage 17\" Allium",
-
-    "Vitres arrière et lunette arrière surteintées",
-
-    "Barres de toit aluminium sur Estate",
-
-    "Sellerie mixte textile enduit grainé / tissu carbone texturé",
-
-    "Rétroviseur intérieur électrochrome sans bord",
-
-    "Siège avant passager réglable en hauteur",
-
-    "Tablette tactile Easy Link 9,3\"",
-
-    "Navigation Europe et services connectés",
-
-    "Tableau de bord numérique 10,2\"",
-
-    "Caméra de recul",
-
-    "Assistant au maintien dans la voie",
-
-    "Freinage actif d'urgence",
-
-    "Alerte de distance de sécurité",
-
-    "Reconnaissance des panneaux",
-
-    "Commutation automatique des feux",
-
-    "Appel d'urgence Renault",
-
-    "Multi-Sense",
-
-    "Frein de parking assisté",
-
-    "Auto-Hold"
-
-];
-
-
-
-/* =========================================================
-   ACCESSOIRES
-========================================================= */
-
-const accessoires = [
-
-    {
-        nom: "Tapis de sol",
-        prix: null
-    },
-
-    {
-        nom: "Barres de toit",
-        prix: null
-    },
-
-    {
-        nom: "Coffre de toit",
-        prix: null
-    },
-
-    {
-        nom: "Porte-vélos",
-        prix: null
-    },
-
-    {
-        nom: "Attelage",
-        prix: null
-    },
-
-    {
-        nom: "Aménagement de coffre",
-        prix: null
-    },
-
-    {
-        nom: "Chaînes / chaussettes neige",
-        prix: null
-    },
-
-    {
-        nom: "Aide au stationnement",
-        prix: null
-    },
-
-    {
-        nom: "Jantes et roues complètes",
-        prix: null
-    },
-
-    {
-        nom: "Antivols de jantes",
-        prix: null
-    },
-
-    {
-        nom: "Câble de recharge pour hybride rechargeable",
-        prix: null,
-        moteurs: ["etech160"]
-    }
-
-];
-
-
-
-/* =========================================================
-   FONCTIONS UTILITAIRES
-========================================================= */
-
-function getFinition() {
-
-    return document.getElementById("finition").value;
-
-}
-
-
-function getCarrosserie() {
-
-    return document.getElementById("carrosserie").value;
-
-}
-
-
-function getMoteur() {
-
-    return document.getElementById("moteur").value;
-
-}
-
-
-function formatPrice(price) {
-
-    if (price === null || price === undefined) {
-        return "Prix à confirmer";
-    }
-
-    return price.toLocaleString("fr-FR") + " €";
-
-}
-
-
-
-/* =========================================================
-   MOTEURS
-========================================================= */
-
-function updateMotors() {
-
-    const finition = getFinition();
-
-    const select =
-        document.getElementById("moteur");
-
-    const ancienneValeur =
-        select.value;
-
-    select.innerHTML = "";
-
-    moteurs[finition].forEach(moteur => {
-
-        const option =
-            document.createElement("option");
-
-        option.value = moteur.id;
-
-        option.dataset.prix =
-            moteur.prix;
-
-        option.textContent =
-            moteur.nom +
-            " — " +
-            formatPrice(moteur.prix);
-
-        select.appendChild(option);
+        container.appendChild(label);
 
     });
 
 
-    const existe =
-        [...select.options]
-        .some(option =>
-            option.value === ancienneValeur
-        );
+    state.wheel = wheels[0][0];
 
-    if (existe) {
-        select.value = ancienneValeur;
-    }
+    state.wheelName = wheels[0][1];
 
 }
-
-
-
-/* =========================================================
-   JANTES
-========================================================= */
-
-function updateWheels() {
-
-    const finition = getFinition();
-
-    const select =
-        document.getElementById("jantes");
-
-    const ancienneValeur =
-        select.value;
-
-    select.innerHTML = "";
-
-
-    jantes[finition].forEach(jante => {
-
-        const option =
-            document.createElement("option");
-
-        option.value = jante.id;
-
-        option.dataset.prix =
-            jante.prix;
-
-        option.textContent =
-            jante.nom +
-            " — " +
-            formatPrice(jante.prix);
-
-        select.appendChild(option);
-
-    });
-
-
-    const existe =
-        [...select.options]
-        .some(option =>
-            option.value === ancienneValeur
-        );
-
-    if (existe) {
-        select.value = ancienneValeur;
-    }
-
-}
-
-
-
-/* =========================================================
-   SELLERIE
-========================================================= */
-
-function updateSelleries() {
-
-    const finition = getFinition();
-
-    const select =
-        document.getElementById("sellerie");
-
-    select.innerHTML = "";
-
-
-    selleries[finition].forEach(sellerie => {
-
-        const option =
-            document.createElement("option");
-
-        option.value =
-            sellerie.nom;
-
-        option.dataset.prix =
-            sellerie.prix;
-
-        option.textContent =
-            sellerie.nom +
-            " — " +
-            formatPrice(sellerie.prix);
-
-        select.appendChild(option);
-
-    });
-
-}
-
 
 
 /* =========================================================
@@ -1030,683 +1185,270 @@ function updateSelleries() {
 
 function updateOptions() {
 
-    const finition = getFinition();
-
-    const carrosserie = getCarrosserie();
-
-    const moteur = getMoteur();
-
-    const container =
-        document.getElementById("options");
-
-    container.innerHTML = "";
-
-
-    options.forEach(option => {
-
-
-        if (!option.finitions.includes(finition)) {
-            return;
-        }
-
-
-        if (
-            option.carrosseries &&
-            !option.carrosseries.includes(carrosserie)
-        ) {
-            return;
-        }
-
-
-        const div =
-            document.createElement("div");
-
-        div.className = "option";
-
-
-        const input =
-            document.createElement("input");
-
-        input.type = "checkbox";
-
-        input.id =
-            "option_" + option.id;
-
-        input.value =
-            option.prix === null
-            ? "0"
-            : option.prix;
-
-
-        input.onchange =
-            updateAll;
-
-
-        const content =
-            document.createElement("div");
-
-
-        const title =
-            document.createElement("strong");
-
-        title.textContent =
-            option.nom;
-
-
-        const description =
-            document.createElement("small");
-
-        let prixTexte =
-            option.prix === null
-            ? "Prix à confirmer"
-            : "+" + formatPrice(option.prix);
-
-
-        description.innerHTML =
-            prixTexte +
-            "<br>" +
-            option.description;
-
-
-        content.appendChild(title);
-
-        content.appendChild(description);
-
-        div.appendChild(input);
-
-        div.appendChild(content);
-
-        container.appendChild(div);
-
-    });
-
-
-    if (!container.children.length) {
-
-        container.innerHTML =
-            '<div class="empty">Aucune option disponible.</div>';
-
-    }
-
-}
-
-
-
-/* =========================================================
-   ÉQUIPEMENTS DE SÉRIE
-========================================================= */
-
-function updateSerie() {
-
-    const finition = getFinition();
-
-    const liste =
-        finition === "evolution"
-        ? serieEvolution
-        : serieTechno;
-
-    const container =
-        document.getElementById("serie");
-
-    container.innerHTML = "";
-
-
-    liste.forEach(element => {
-
-        const div =
-            document.createElement("div");
-
-        div.className = "option";
-
-        div.innerHTML = `
-            <div>
-                ✓
-            </div>
-
-            <div>
-                <strong>${element}</strong>
-            </div>
-        `;
-
-        container.appendChild(div);
-
-    });
-
-}
-
-
-
-/* =========================================================
-   ACCESSOIRES
-========================================================= */
-
-function updateAccessories() {
-
-    const moteur = getMoteur();
-
-    const container =
-        document.getElementById("accessoires");
-
-    container.innerHTML = "";
-
-
-    accessoires.forEach(accessoire => {
-
-        if (
-            accessoire.moteurs &&
-            !accessoire.moteurs.includes(moteur)
-        ) {
-            return;
-        }
-
-
-        const div =
-            document.createElement("div");
-
-        div.className = "option";
-
-
-        const input =
-            document.createElement("input");
-
-        input.type = "checkbox";
-
-        input.value =
-            accessoire.prix === null
-            ? "0"
-            : accessoire.prix;
-
-        input.onchange =
-            updateAll;
-
-
-        const content =
-            document.createElement("div");
-
-
-        const title =
-            document.createElement("strong");
-
-        title.textContent =
-            accessoire.nom;
-
-
-        const price =
-            document.createElement("small");
-
-        price.textContent =
-            accessoire.prix === null
-            ? "Prix à confirmer"
-            : "+" +
-              formatPrice(accessoire.prix);
-
-
-        content.appendChild(title);
-
-        content.appendChild(price);
-
-
-        div.appendChild(input);
-
-        div.appendChild(content);
-
-
-        container.appendChild(div);
-
-    });
-
-}
-
-
-
-/* =========================================================
-   CALCUL DU PRIX
-========================================================= */
-
-function calculateTotal() {
-
-    const moteur =
-        document.getElementById("moteur");
-
-    const prixMoteur =
-        Number(
-            moteur
-            .options[moteur.selectedIndex]
-            .dataset.prix
-        );
-
-
-    const carrosserie =
-        getCarrosserie();
-
-    const prixCarrosserie =
-        carrosserie === "estate"
-        ? 1000
-        : 0;
-
-
-    const couleur =
-        Number(
-            document
-            .getElementById("couleur")
-            .value
-        );
-
-
-    const jantesSelect =
-        document.getElementById("jantes");
-
-    const prixJantes =
-        Number(
-            jantesSelect
-            .options[jantesSelect.selectedIndex]
-            .dataset.prix
-        );
-
-
-    let prixOptions = 0;
-
-    let prixInconnus = false;
+    state.options = [];
 
 
     document
-    .querySelectorAll(
-        '#options input[type="checkbox"]'
-    )
-    .forEach(input => {
+        .querySelectorAll(
+            '.option input[type="checkbox"]'
+        )
+        .forEach(input => {
 
-        if (input.checked) {
+            if (input.checked) {
 
-            const prix =
-                Number(input.value);
-
-            prixOptions += prix;
-
-            const option =
-                options.find(item =>
-                    "option_" + item.id === input.id
+                state.options.push(
+                    input.dataset.name
                 );
 
-            if (
-                option &&
-                option.prix === null
-            ) {
-
-                prixInconnus = true;
-
             }
 
-        }
-
-    });
-
-
-    let prixAccessoires = 0;
-
-
-    document
-    .querySelectorAll(
-        '#accessoires input[type="checkbox"]'
-    )
-    .forEach(input => {
-
-        if (input.checked) {
-
-            prixAccessoires +=
-                Number(input.value);
-
-            if (
-                input.value === "0"
-            ) {
-
-                prixInconnus = true;
-
-            }
-
-        }
-
-    });
-
-
-    return {
-
-        total:
-            prixMoteur +
-            prixCarrosserie +
-            couleur +
-            prixJantes +
-            prixOptions +
-            prixAccessoires,
-
-        prixInconnus
-
-    };
+        });
 
 }
 
 
-
 /* =========================================================
-   RÉCAPITULATIF
+   MISE À JOUR GENERALE
 ========================================================= */
 
-function updateResume() {
-
-    const carrosserie =
-        document.getElementById("carrosserie");
-
-    const finition =
-        document.getElementById("finition");
-
-    const moteur =
-        document.getElementById("moteur");
-
-    const couleur =
-        document.getElementById("couleur");
-
-    const jantes =
-        document.getElementById("jantes");
-
-    const sellerie =
-        document.getElementById("sellerie");
-
-
-    let optionsSelectionnees = [];
-
-
-    document
-    .querySelectorAll(
-        '#options input[type="checkbox"]'
-    )
-    .forEach(input => {
-
-        if (input.checked) {
-
-            const option =
-                options.find(item =>
-                    "option_" + item.id === input.id
-                );
-
-            if (option) {
-
-                optionsSelectionnees
-                    .push(option.nom);
-
-            }
-
-        }
-
-    });
-
-
-    let accessoiresSelectionnes = [];
-
-
-    document
-    .querySelectorAll(
-        '#accessoires input[type="checkbox"]'
-    )
-    .forEach(input => {
-
-        if (input.checked) {
-
-            const strong =
-                input.parentElement
-                .querySelector("strong");
-
-            if (strong) {
-
-                accessoiresSelectionnes
-                    .push(strong.textContent);
-
-            }
-
-        }
-
-    });
-
-
-    document.getElementById("resume")
-    .innerHTML = `
-
-        <div class="summary-line">
-            <strong>Carrosserie :</strong>
-            ${carrosserie.options[
-                carrosserie.selectedIndex
-            ].text}
-        </div>
-
-        <div class="summary-line">
-            <strong>Finition :</strong>
-            ${finition.options[
-                finition.selectedIndex
-            ].text}
-        </div>
-
-        <div class="summary-line">
-            <strong>Motorisation :</strong>
-            ${moteur.options[
-                moteur.selectedIndex
-            ].text}
-        </div>
-
-        <div class="summary-line">
-            <strong>Couleur :</strong>
-            ${couleur.options[
-                couleur.selectedIndex
-            ].text}
-        </div>
-
-        <div class="summary-line">
-            <strong>Jantes :</strong>
-            ${jantes.options[
-                jantes.selectedIndex
-            ].text}
-        </div>
-
-        <div class="summary-line">
-            <strong>Sellerie :</strong>
-            ${sellerie.options[
-                sellerie.selectedIndex
-            ].text}
-        </div>
-
-        <div class="summary-line">
-            <strong>Options :</strong>
-            ${
-                optionsSelectionnees.length
-                ? optionsSelectionnees.join(", ")
-                : "Aucune"
-            }
-        </div>
-
-        <div class="summary-line">
-            <strong>Accessoires :</strong>
-            ${
-                accessoiresSelectionnes.length
-                ? accessoiresSelectionnes.join(", ")
-                : "Aucun"
-            }
-        </div>
-
-    `;
-
-}
-
-
-
-/* =========================================================
-   COMPATIBILITÉS
-========================================================= */
-
-function updateCompatibility() {
-
-    const finition =
-        getFinition();
-
-    const carrosserie =
-        getCarrosserie();
-
-    const moteur =
-        getMoteur();
-
-    const warning =
-        document.getElementById("warning");
-
-    let messages = [];
-
-
-    if (
-        carrosserie === "estate"
-    ) {
-
-        messages.push(
-            "Vous avez sélectionné la Mégane Estate."
-        );
-
-    }
-
-
-    if (
-        finition === "techno"
-    ) {
-
-        messages.push(
-            "La caméra de recul et plusieurs aides à la conduite sont de série sur Techno."
-        );
-
-    }
-
-
-    if (
-        moteur === "etech160"
-    ) {
-
-        messages.push(
-            "Motorisation hybride rechargeable E-Tech Plug-in Hybrid 160 avec boîte automatique."
-        );
-
-    }
-
-
-    if (
-        moteur.includes("dci")
-    ) {
-
-        messages.push(
-            "La roue de secours est temporaire sur les motorisations diesel."
-        );
-
-    }
-
-
-    if (
-        carrosserie === "estate" &&
-        finition === "techno"
-    ) {
-
-        messages.push(
-            "Le Pack Modularity est disponible sur cette configuration."
-        );
-
-    }
-
-
-    warning.innerHTML =
-        messages
-        .map(message => "• " + message)
-        .join("<br>");
-
-    warning.style.display =
-        messages.length
-        ? "block"
-        : "none";
-
-}
-
-
-
-/* =========================================================
-   TOTAL
-========================================================= */
-
-function updateTotal() {
-
-    const result =
-        calculateTotal();
-
-    document.getElementById("total")
-        .textContent =
-        result.total
-        .toLocaleString("fr-FR") +
-        " €";
-
-
-    document.getElementById("totalNote")
-        .textContent =
-        result.prixInconnus
-        ? "⚠️ Le total n'inclut pas certains prix encore à confirmer."
-        : "Prix calculé selon les éléments tarifés.";
-
-}
-
-
-
-/* =========================================================
-   MISE À JOUR GÉNÉRALE
-========================================================= */
-
-function updateAll() {
-
-    updateMotors();
-
-    updateWheels();
-
-    updateSelleries();
+function update() {
 
     updateOptions();
 
-    updateSerie();
 
-    updateAccessories();
+    /* Estate */
 
-    updateResume();
+    document
+        .querySelectorAll(".estate-only")
+        .forEach(element => {
 
-    updateCompatibility();
+            element.classList.toggle(
+                "hidden",
+                state.body !== "estate"
+            );
 
-    updateTotal();
+        });
+
+
+    /* Nom */
+
+    const bodyName =
+        state.body === "estate"
+            ? "Estate"
+            : "Berline";
+
+
+    const trimName =
+        state.trim === "techno"
+            ? "Techno"
+            : "Evolution";
+
+
+    document
+        .getElementById("name")
+        .textContent =
+            `Mégane ${bodyName} ${trimName}`;
+
+
+    /* Motorisation */
+
+    const engineSelect =
+        document.getElementById("engine");
+
+
+    const engineName =
+        engineSelect.selectedOptions[0]
+            ?.textContent || "";
+
+
+    document
+        .getElementById("spec")
+        .textContent =
+            `${engineName} · ${state.color} · ${state.wheelName}`;
+
+
+    /* Prix */
+
+    document
+        .getElementById("total")
+        .textContent =
+            "Prix à compléter";
+
+
+    /* Sécurité : on remet l'affichage correct */
+
+    document
+        .querySelectorAll("[data-trim]")
+        .forEach(button => {
+
+            button.classList.toggle(
+                "selected",
+                button.dataset.trim === state.trim
+            );
+
+        });
+
+
+    document
+        .querySelectorAll("[data-body]")
+        .forEach(button => {
+
+            button.classList.toggle(
+                "selected",
+                button.dataset.body === state.body
+            );
+
+        });
 
 }
-
 
 
 /* =========================================================
-   RESET
+   BOUTONS CARROSSERIE
 ========================================================= */
 
-function resetConfiguration() {
+document
+    .querySelectorAll("[data-body]")
+    .forEach(button => {
 
-    document.getElementById("carrosserie").value =
-        "berline";
+        button.addEventListener("click", () => {
 
-    document.getElementById("finition").value =
-        "evolution";
+            state.body =
+                button.dataset.body;
 
-    document.getElementById("couleur").value =
-        "0";
+            update();
+
+        });
+
+    });
 
 
-    updateAll();
+/* =========================================================
+   BOUTONS FINITION
+========================================================= */
 
-}
+document
+    .querySelectorAll("[data-trim]")
+    .forEach(button => {
 
+        button.addEventListener("click", () => {
+
+            state.trim =
+                button.dataset.trim;
+
+
+            /*
+             * IMPORTANT :
+             * On reconstruit les motorisations
+             * et les jantes immédiatement.
+             */
+
+            state.engine =
+                engines[state.trim][0][0];
+
+
+            fillEngines();
+
+            createWheels();
+
+            update();
+
+        });
+
+    });
+
+
+/* =========================================================
+   MOTORISATION
+========================================================= */
+
+document
+    .getElementById("engine")
+    .addEventListener("change", event => {
+
+        state.engine =
+            event.target.value;
+
+        update();
+
+    });
+
+
+/* =========================================================
+   CHECKBOX OPTIONS
+========================================================= */
+
+document
+    .querySelectorAll(
+        '.option input[type="checkbox"]'
+    )
+    .forEach(input => {
+
+        input.addEventListener(
+            "change",
+            update
+        );
+
+    });
+
+
+/* =========================================================
+   ENREGISTRER
+========================================================= */
+
+document
+    .getElementById("saveButton")
+    .addEventListener("click", () => {
+
+        const configuration = {
+
+            carrosserie:
+                state.body,
+
+            finition:
+                state.trim,
+
+            motorisation:
+                state.engine,
+
+            couleur:
+                state.color,
+
+            jantes:
+                state.wheelName,
+
+            options:
+                state.options
+
+        };
+
+
+        localStorage.setItem(
+            "meganeConfiguration",
+            JSON.stringify(configuration)
+        );
+
+
+        alert(
+            "Configuration enregistrée dans le navigateur."
+        );
+
+    });
 
 
 /* =========================================================
    INITIALISATION
 ========================================================= */
 
-updateAll();
+createColors();
+
+fillEngines();
+
+createWheels();
+
+createViews();
+
+update();
 
 </script>
 
