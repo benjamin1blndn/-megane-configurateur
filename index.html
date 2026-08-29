@@ -4,1099 +4,602 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Renault Mégane IV — Configurateur</title>
+
 <style>
-*{
-    box-sizing:border-box;
-}
-html{
-    scroll-behavior:smooth;
-}
+*{box-sizing:border-box}
+
 body{
     margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    background:#f5f5f5;
+    background:#f4f4f4;
     color:#111;
 }
+
 button{
     font-family:inherit;
     cursor:pointer;
 }
-:root{
-    --yellow:#ffd500;
-    --dark:#111;
-    --light:#f5f5f5;
-    --border:#dedede;
-    --muted:#777;
-}
-/* =========================================================
-   HEADER
-========================================================= */
+
 header{
-    height:72px;
+    height:70px;
     background:#111;
     color:white;
     display:flex;
     align-items:center;
-    justify-content:center;
+    justify-content:space-between;
+    padding:0 30px;
+}
+
+.logo{
+    font-size:27px;
+    font-weight:900;
+}
+
+.header-title{
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.container{
+    display:grid;
+    grid-template-columns:58% 42%;
+    min-height:calc(100vh - 70px);
+}
+
+.visual{
+    background:#e9e9e9;
     position:sticky;
     top:0;
-    z-index:100;
-}
-.header-model{
-    font-size:24px;
-    font-weight:800;
-    letter-spacing:.5px;
-}
-/* =========================================================
-   TOP CONFIGURATOR
-========================================================= */
-.configurator{
-    background:white;
-    padding:35px 4vw 55px;
-}
-.configurator-inner{
-    max-width:1500px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:56% 44%;
-    gap:40px;
-    align-items:start;
-}
-/* =========================================================
-   LEFT GALLERY
-========================================================= */
-.gallery{
-    position:sticky;
-    top:105px;
-}
-.main-image{
-    width:100%;
-    height:470px;
-    background:#eeeeee;
+    height:calc(100vh - 70px);
     display:flex;
     align-items:center;
     justify-content:center;
     overflow:hidden;
-    border-radius:2px;
 }
-.main-image img{
-    width:100%;
-    height:100%;
+
+.visual img{
+    max-width:92%;
+    max-height:75%;
     object-fit:contain;
 }
-.image-placeholder{
-    color:#888;
+
+.no-image{
     text-align:center;
-    font-size:13px;
-    line-height:1.7;
+    color:#777;
 }
-.image-placeholder strong{
-    color:#222;
-}
-.gallery-thumbs{
-    display:grid;
-    grid-template-columns:repeat(6,1fr);
-    gap:8px;
-    margin-top:10px;
-}
-.gallery-thumb{
-    height:76px;
-    border:1px solid #ccc;
-    background:#f2f2f2;
-    padding:0;
-    overflow:hidden;
-}
-.gallery-thumb.active{
-    border:2px solid #111;
-}
-.gallery-thumb img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-.thumb-placeholder{
-    width:100%;
-    height:100%;
+
+.view-buttons{
+    position:absolute;
+    bottom:20px;
     display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    color:#999;
-    font-size:9px;
-    padding:4px;
+    gap:6px;
 }
-/* =========================================================
-   RIGHT PANEL
-========================================================= */
-.right-panel{
-    padding-bottom:20px;
+
+.view-buttons button{
+    background:white;
+    border:1px solid #aaa;
+    padding:9px 13px;
+    font-size:10px;
 }
-.model-title{
-    margin-bottom:30px;
+
+.panel{
+    background:white;
+    padding-bottom:110px;
 }
-.model-title small{
+
+.title{
+    padding:30px;
+    border-bottom:1px solid #ddd;
+}
+
+.title small{
+    color:#777;
     text-transform:uppercase;
     letter-spacing:2px;
-    color:#777;
-    font-size:10px;
 }
-.model-title h1{
-    margin:7px 0 0;
-    font-size:38px;
+
+.title h1{
+    margin:8px 0;
+    font-size:32px;
 }
-/* =========================================================
-   STEPS
-========================================================= */
-.step{
-    border-top:1px solid var(--border);
-    padding:25px 0;
+
+.title p{
+    color:#666;
+    font-size:13px;
 }
-.step:last-child{
-    border-bottom:1px solid var(--border);
+
+.section{
+    padding:24px 28px;
+    border-bottom:1px solid #ddd;
 }
-.step-number{
-    font-size:10px;
-    color:#888;
-    text-transform:uppercase;
-    letter-spacing:1.5px;
-    margin-bottom:8px;
+
+.section h2{
+    margin-top:0;
+    font-size:19px;
 }
-.step h2{
-    font-size:21px;
-    margin:0 0 18px;
-}
-.choice-grid{
+
+.grid{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:10px;
 }
+
 .choice{
-    border:1px solid #ccc;
     background:white;
-    padding:17px;
+    border:1px solid #ccc;
+    padding:16px;
     text-align:left;
-    transition:.15s;
 }
-.choice:hover{
-    border-color:#777;
-}
+
 .choice.active{
     border:2px solid #111;
-    padding:16px;
+    padding:15px;
 }
+
 .choice strong{
     display:block;
     font-size:14px;
 }
-.choice small{
+
+.choice span{
     display:block;
     margin-top:6px;
     color:#777;
-    font-size:10px;
-}
-/* =========================================================
-   INFORMATION CARDS
-========================================================= */
-.info-card{
-    border:1px solid var(--border);
-    padding:18px;
-    margin-top:12px;
-    background:#fafafa;
-}
-.info-card-title{
-    font-weight:bold;
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    margin-bottom:12px;
-}
-.info-list{
-    display:grid;
-    gap:9px;
-}
-.info-line{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
     font-size:11px;
-    border-bottom:1px solid #e4e4e4;
-    padding-bottom:7px;
 }
-.info-line span{
-    color:#777;
-}
-.info-line strong{
-    text-align:right;
-}
-/* =========================================================
-   MOTORISATIONS
-========================================================= */
-.engine-list{
-    display:grid;
-    gap:10px;
-}
+
 .engine{
     border:1px solid #ccc;
-    background:white;
-    padding:18px;
+    padding:15px;
+    margin:8px 0;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
+
 .engine.active{
     border:2px solid #111;
-    padding:17px;
+    padding:14px;
 }
-.engine-name{
-    font-size:14px;
+
+.engine strong{
+    font-size:13px;
+}
+
+.engine small{
+    display:block;
+    color:#777;
+    margin-top:5px;
+}
+
+.engine-price{
     font-weight:bold;
 }
-.engine-type{
-    margin-top:6px;
+
+.colors{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.color{
+    background:white;
+    border:1px solid #ccc;
+    padding:10px;
+    text-align:left;
+}
+
+.color.active{
+    border:2px solid #111;
+    padding:9px;
+}
+
+.color-dot{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    display:inline-block;
+    vertical-align:middle;
+    margin-right:8px;
+    border:1px solid #999;
+}
+
+.color-name{
+    font-size:11px;
+    font-weight:bold;
+}
+
+.color-price{
+    display:block;
+    margin-left:40px;
+    margin-top:3px;
+    font-size:9px;
     color:#777;
+}
+
+.upholstery-grid,
+.wheel-grid,
+.option-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.upholstery,
+.wheel,
+.option{
+    background:white;
+    border:1px solid #ccc;
+    padding:0;
+    text-align:left;
+    overflow:hidden;
+}
+
+.upholstery.active,
+.wheel.active,
+.option.active{
+    border:2px solid #111;
+}
+
+.upholstery img,
+.wheel img{
+    width:100%;
+    height:140px;
+    object-fit:contain;
+    display:block;
+    background:#eee;
+}
+
+/* MODIFICATION 2 : SELLERIE RONDE */
+.upholstery img{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    margin:15px auto 0;
+}
+
+/* OPTIONS : IMAGE 16:9 */
+.option img{
+    width:100%;
+    aspect-ratio:16 / 9;
+    height:auto;
+    object-fit:cover;
+    display:block;
+    background:#eee;
+}
+
+.image-missing{
+    width:100%;
+    height:140px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:#eee;
+    color:#999;
     font-size:10px;
 }
-.engine-price{
-    font-size:13px;
+
+.option .image-missing{
+    aspect-ratio:16 / 9;
+    height:auto;
+}
+
+.upholstery-info,
+.wheel-info{
+    padding:12px;
+}
+
+.upholstery-info strong,
+.wheel-info strong{
+    font-size:11px;
+}
+
+.upholstery-info small,
+.wheel-info span{
+    display:block;
+    margin-top:5px;
+    font-size:10px;
+    color:#777;
+}
+
+/* NOUVELLE PRÉSENTATION DES OPTIONS */
+.option-content{
+    padding:12px;
+}
+
+.option-content strong{
+    display:block;
+    font-size:11px;
+    margin-bottom:10px;
+}
+
+.option-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.option-check{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:10px;
+    color:#555;
+}
+
+.option-check input{
+    width:16px;
+    height:16px;
+    margin:0;
+    accent-color:#111;
+}
+
+.option-price{
+    font-size:10px;
+    color:#777;
     font-weight:bold;
     white-space:nowrap;
 }
-/* =========================================================
-   COLORS
-========================================================= */
-.selected-color{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
-    padding:15px;
-    background:#f6f6f6;
-}
-.selected-color-name{
-    font-weight:bold;
-    font-size:13px;
-}
-.selected-color-price{
-    font-size:11px;
-    color:#666;
-}
-.color-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-}
-.color-choice{
-    background:white;
-    border:1px solid transparent;
-    text-align:center;
-    padding:5px;
-}
-.color-choice.active{
-    border:2px solid #111;
-}
-.color-circle{
-    width:68px;
-    height:68px;
-    border-radius:50%;
-    margin:0 auto 10px;
-    border:1px solid #aaa;
-    box-shadow:0 2px 5px rgba(0,0,0,.15);
-}
-.color-choice-name{
-    font-size:10px;
-    font-weight:bold;
-    min-height:25px;
-}
-.color-choice-price{
-    color:#777;
-    font-size:9px;
-    margin-top:4px;
-}
-/* =========================================================
-   WHEELS
-========================================================= */
-.wheel-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-.wheel-card{
-    border:1px solid #ccc;
-    background:white;
-    padding:14px;
-    text-align:center;
-}
-.wheel-card.active{
-    border:2px solid #111;
-    padding:13px;
-}
-.wheel-image{
-    width:145px;
-    height:145px;
-    border-radius:50%;
-    background:#eee;
-    margin:0 auto 13px;
-    overflow:hidden;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-.wheel-image img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-}
-.wheel-card strong{
-    display:block;
-    font-size:11px;
-}
-.wheel-card span{
+
+.option-description{
     display:block;
     margin-top:7px;
-    font-size:10px;
-    color:#777;
-}
-/* =========================================================
-   UPHOLSTERY
-========================================================= */
-.upholstery-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-.upholstery-card{
-    border:1px solid #ccc;
-    background:white;
-    padding:14px;
-    text-align:left;
-}
-.upholstery-card.active{
-    border:2px solid #111;
-    padding:13px;
-}
-.upholstery-card strong{
-    font-size:11px;
-}
-.upholstery-card span{
-    display:block;
-    color:#777;
     font-size:9px;
-    margin-top:5px;
-}
-.upholstery-image{
-    width:100%;
-    height:150px;
-    border-radius:50%;
-    margin-top:12px;
-    overflow:hidden;
-    background:#eee;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-.upholstery-image img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-}
-/* =========================================================
-   EQUIPMENT SECTION
-========================================================= */
-.equipment-section{
-    background:#f4f4f4;
-    padding:70px 4vw 120px;
-}
-.equipment-inner{
-    max-width:1200px;
-    margin:auto;
-}
-.equipment-header{
-    margin-bottom:45px;
-}
-.equipment-header small{
-    color:#777;
-    text-transform:uppercase;
-    letter-spacing:2px;
-    font-size:10px;
-}
-.equipment-header h2{
-    font-size:36px;
-    margin:8px 0;
-}
-.equipment-count{
-    color:#777;
-    font-size:13px;
-}
-.category{
-    margin-bottom:45px;
-}
-.category-title{
-    border-bottom:1px solid #ccc;
-    padding-bottom:12px;
-    margin-bottom:15px;
-    font-size:19px;
-}
-.option-list{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-.option-card{
-    background:white;
-    border:1px solid #ccc;
-    display:grid;
-    grid-template-columns:150px 1fr;
-    min-height:150px;
-}
-.option-card.active{
-    border:2px solid #111;
-}
-.option-image{
-    background:#eee;
-    min-height:150px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-}
-.option-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-.option-image-placeholder{
-    text-align:center;
     color:#999;
-    font-size:9px;
-    padding:10px;
 }
-.option-info{
-    padding:16px;
+
+/* COMPTEUR DES CATÉGORIES */
+.option-category{
+    margin-bottom:25px;
 }
-.option-info strong{
-    display:block;
-    font-size:12px;
-    line-height:1.4;
-}
-.option-info p{
-    font-size:10px;
-    color:#777;
-    line-height:1.5;
-}
-.option-bottom{
+
+.option-category-title{
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    margin-top:15px;
+    gap:8px;
+    margin:0 0 12px;
+    font-size:15px;
 }
-.option-price{
-    font-weight:bold;
-    font-size:11px;
-}
-.checkbox{
-    width:22px;
-    height:22px;
-    border:1px solid #999;
-    display:flex;
+
+.option-category-count{
+    min-width:20px;
+    height:20px;
+    padding:0 6px;
+    border-radius:10px;
+    background:#111;
+    color:white;
+    display:inline-flex;
     align-items:center;
     justify-content:center;
-}
-.option-card.active .checkbox{
-    background:#111;
-    border-color:#111;
-    color:white;
-}
-.checkbox::after{
-    content:"✓";
-    display:none;
-}
-.option-card.active .checkbox::after{
-    display:block;
-}
-/* =========================================================
-   SUMMARY
-========================================================= */
-.summary-section{
-    background:white;
-    padding:75px 4vw 130px;
-}
-.summary-inner{
-    max-width:1000px;
-    margin:auto;
-}
-.summary-header{
-    margin-bottom:35px;
-}
-.summary-header small{
-    text-transform:uppercase;
-    letter-spacing:2px;
-    color:#777;
     font-size:10px;
+    font-weight:bold;
 }
-.summary-header h2{
-    font-size:38px;
-    margin:8px 0;
+
+.summary{
+    background:#f5f5f5;
+    padding:22px;
 }
-.summary-car{
-    background:#f4f4f4;
-    padding:25px;
-    margin-bottom:20px;
-}
-.summary-car h3{
-    font-size:24px;
-    margin:0 0 5px;
-}
-.summary-version{
-    font-size:13px;
-    color:#666;
-}
-.summary-specs{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-    margin-top:20px;
-}
-.spec-box{
-    background:white;
-    padding:15px;
-    border:1px solid #ddd;
-}
-.spec-box span{
-    display:block;
-    color:#777;
-    font-size:9px;
+
+.summary-title{
+    font-weight:bold;
     text-transform:uppercase;
+    font-size:11px;
     letter-spacing:1px;
-    margin-bottom:6px;
 }
-.spec-box strong{
-    font-size:12px;
-}
-.summary-details{
-    border-top:1px solid #ddd;
-}
-.summary-detail{
-    display:flex;
-    justify-content:space-between;
-    gap:20px;
-    padding:13px 0;
-    border-bottom:1px solid #ddd;
-    font-size:12px;
-}
-.summary-detail span{
-    color:#777;
-}
-.summary-options{
-    margin-top:20px;
-}
-.summary-options h4{
-    margin:0 0 10px;
-    font-size:13px;
-}
-.summary-option{
+
+.summary-row{
     display:flex;
     justify-content:space-between;
     border-bottom:1px solid #ddd;
-    padding:9px 0;
+    padding:8px 0;
     font-size:11px;
 }
-.summary-total{
-    margin-top:25px;
-    background:#111;
-    color:white;
-    padding:22px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+
+.summary-row span{
+    color:#777;
 }
-.summary-total span{
-    color:#aaa;
-    font-size:10px;
-    text-transform:uppercase;
-}
-.summary-total strong{
-    font-size:25px;
-}
-/* =========================================================
-   SAVE BAR
-========================================================= */
-.save-bar{
+
+.price-bar{
     position:fixed;
     bottom:0;
-    left:0;
     right:0;
-    height:72px;
+    width:42%;
     background:#111;
     color:white;
-    z-index:200;
+    padding:16px 25px;
     display:flex;
-    justify-content:center;
-}
-.save-inner{
-    width:min(1200px,92%);
-    display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+    z-index:50;
 }
-.save-price small{
-    display:block;
-    color:#aaa;
+
+.total-label{
     font-size:9px;
+    color:#aaa;
     text-transform:uppercase;
 }
-.save-price strong{
+
+.total-price{
     font-size:21px;
-}
-.save-button{
-    border:0;
-    background:var(--yellow);
-    padding:14px 28px;
     font-weight:bold;
 }
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-@media(max-width:1000px){
-    .configurator-inner{
+
+.save-button{
+    border:none;
+    background:#ffd500;
+    padding:12px 18px;
+    font-weight:bold;
+}
+
+@media(max-width:900px){
+
+    .container{
         grid-template-columns:1fr;
     }
-    .gallery{
+
+    .visual{
         position:relative;
-        top:auto;
+        height:430px;
     }
-    .main-image{
-        height:400px;
+
+    .price-bar{
+        width:100%;
     }
 }
-@media(max-width:700px){
-    .configurator{
-        padding:25px 15px 40px;
-    }
-    .equipment-section,
-    .summary-section{
-        padding-left:15px;
-        padding-right:15px;
-    }
-    .choice-grid,
+
+@media(max-width:600px){
+
+    .grid,
+    .colors,
     .wheel-grid,
-    .upholstery-grid,
-    .option-list{
+    .option-grid,
+    .upholstery-grid{
         grid-template-columns:1fr;
     }
-    .color-grid{
-        grid-template-columns:repeat(3,1fr);
+
+    header{
+        padding:0 15px;
     }
-    .gallery-thumbs{
-        grid-template-columns:repeat(3,1fr);
-    }
-    .summary-specs{
-        grid-template-columns:1fr;
-    }
-    .option-card{
-        grid-template-columns:110px 1fr;
-    }
-    .main-image{
-        height:300px;
-    }
-    .model-title h1,
-    .equipment-header h2,
-    .summary-header h2{
-        font-size:29px;
-    }
-    .save-inner{
-        width:94%;
-    }
-}
-@media(max-width:450px){
-    .color-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-    .gallery-thumb{
-        height:65px;
-    }
-    .save-button{
-        padding:12px 16px;
+
+    .header-title{
+        display:none;
     }
 }
 </style>
 </head>
+
 <body>
+
 <header>
-    <div class="header-model">Mégane</div>
+    <div class="logo">RENAULT</div>
+    <div class="header-title">Mégane IV · Configurateur</div>
 </header>
-<!-- ======================================================
-     CONFIGURATEUR PRINCIPAL
-====================================================== -->
-<section class="configurator">
-<div class="configurator-inner">
-<!-- ======================================================
-     GALERIE GAUCHE
-====================================================== -->
-<div class="gallery">
-<div class="main-image" id="mainImage">
-    <div class="image-placeholder">
-        <strong>Votre Renault Mégane</strong>
-        <br>
-        Ajoutez vos images dans les fichiers correspondants.
-    </div>
+
+<div class="container">
+
+<section class="visual">
+
+<div id="carVisual" class="no-image">
+    <strong>Votre Renault Mégane</strong>
+    <br><br>
+    Ajoutez une photo appelée :
+    <br><br>
+    <strong>front.jpg</strong>
 </div>
-<div class="gallery-thumbs">
-    <button class="gallery-thumb active"
-            onclick="changeGalleryImage('three_quarter_front.jpg',this)">
-        <div class="thumb-placeholder">
-            3/4 avant<br>three_quarter_front.jpg
-        </div>
-    </button>
-    <button class="gallery-thumb"
-            onclick="changeGalleryImage('three_quarter_rear.jpg',this)">
-        <div class="thumb-placeholder">
-            3/4 arrière<br>three_quarter_rear.jpg
-        </div>
-    </button>
-    <button class="gallery-thumb"
-            onclick="changeGalleryImage('side.jpg',this)">
-        <div class="thumb-placeholder">
-            Profil<br>side.jpg
-        </div>
-    </button>
-    <button class="gallery-thumb"
-            onclick="changeGalleryImage('wheel.jpg',this)">
-        <div class="thumb-placeholder">
-            Jante<br>wheel.jpg
-        </div>
-    </button>
-    <button class="gallery-thumb"
-            onclick="changeGalleryImage('dashboard.jpg',this)">
-        <div class="thumb-placeholder">
-            Tableau de bord<br>dashboard.jpg
-        </div>
-    </button>
-    <button class="gallery-thumb"
-            onclick="changeGalleryImage('seats.jpg',this)">
-        <div class="thumb-placeholder">
-            Sièges<br>seats.jpg
-        </div>
-    </button>
+
+<div class="view-buttons">
+    <button onclick="changeView('front.jpg')">Avant</button>
+    <button onclick="changeView('side.jpg')">Profil</button>
+    <button onclick="changeView('rear.jpg')">Arrière</button>
+    <button onclick="changeView('interior.jpg')">Intérieur</button>
 </div>
+
+</section>
+
+<main class="panel">
+
+<div class="title">
+    <small>CONFIGUREZ VOTRE VÉHICULE</small>
+    <h1>Renault Mégane</h1>
+    <p>Personnalisez votre Mégane selon vos envies.</p>
 </div>
-<!-- ======================================================
-     MENU DROIT
-====================================================== -->
-<div class="right-panel">
-<div class="model-title">
-    <small>CONFIGURATEUR RENAULT</small>
-    <h1>Mégane</h1>
-</div>
-<!-- CARROSSERIE -->
-<div class="step">
-<div class="step-number">01 · Carrosserie</div>
-<h2>Choisissez votre carrosserie</h2>
-<div class="choice-grid" id="bodyChoices"></div>
-</div>
-<!-- VERSION -->
-<div class="step">
-<div class="step-number">02 · Version</div>
-<h2>Choisissez votre version</h2>
-<div class="choice-grid" id="trimChoices"></div>
-</div>
-<!-- DISPONIBILITE -->
-<div class="step">
-<div class="step-number">03 · Informations</div>
-<h2>Motorisation disponible</h2>
-<div class="info-card">
-    <div class="info-card-title">
-        Motorisations disponibles
-    </div>
-    <div class="info-list" id="availableEngines"></div>
-</div>
-<div class="info-card">
-    <div class="info-card-title">
-        Couleurs disponibles
-    </div>
-    <div class="info-line">
-        <span>Nombre de couleurs</span>
-        <strong id="colorCount"></strong>
-    </div>
-</div>
-<div class="info-card">
-    <div class="info-card-title">
-        Éléments principaux inclus
-    </div>
-    <div class="info-list" id="includedEquipment"></div>
-</div>
-</div>
-<!-- MOTORISATION -->
-<div class="step">
-<div class="step-number">04 · Motorisation</div>
-<h2>Choisissez votre motorisation</h2>
-<div class="engine-list" id="engineChoices"></div>
-<div class="info-card" id="engineTechnicalInfo"></div>
-</div>
-<!-- COULEUR -->
-<div class="step">
-<div class="step-number">05 · Couleur</div>
-<h2 id="selectedColorHeading">Couleur</h2>
-<div class="selected-color">
-    <div>
-        <div class="selected-color-name" id="selectedColorName"></div>
-    </div>
-    <div class="selected-color-price" id="selectedColorPrice"></div>
-</div>
-<div class="color-grid" id="colorChoices"></div>
-</div>
-<!-- JANTES -->
-<div class="step">
-<div class="step-number">06 · Jantes</div>
-<h2>Choisissez vos jantes</h2>
-<div class="wheel-grid" id="wheelChoices"></div>
-</div>
-<!-- SELLERIE -->
-<div class="step">
-<div class="step-number">07 · Sellerie</div>
-<h2>Choisissez votre sellerie</h2>
+
+<section class="section">
+<h2>Carrosserie</h2>
+<div class="grid" id="bodyChoices"></div>
+</section>
+
+<section class="section">
+<h2>Finition</h2>
+<div class="grid" id="trimChoices"></div>
+</section>
+
+<section class="section">
+<h2>Motorisation</h2>
+<div id="engineChoices"></div>
+</section>
+
+<section class="section">
+<h2>Couleur</h2>
+<div class="colors" id="colorChoices"></div>
+</section>
+
+<section class="section">
+<h2>Sellerie</h2>
 <div class="upholstery-grid" id="upholsteryChoices"></div>
-</div>
-</div>
-</div>
 </section>
-<!-- ======================================================
-     EQUIPEMENTS
-====================================================== -->
-<section class="equipment-section">
-<div class="equipment-inner">
-<div class="equipment-header">
-    <small>PERSONNALISATION</small>
-    <h2>Choisissez vos équipements</h2>
-    <div class="equipment-count" id="equipmentCount"></div>
-</div>
-<div id="equipmentCategories"></div>
-</div>
+
+<section class="section">
+<h2>Jantes</h2>
+<div class="wheel-grid" id="wheelChoices"></div>
 </section>
-<!-- ======================================================
-     RESUME
-====================================================== -->
-<section class="summary-section">
-<div class="summary-inner">
-<div class="summary-header">
-    <small>CONFIGURATION FINALE</small>
-    <h2>Votre Mégane</h2>
-</div>
-<div class="summary-car">
-    <h3>Mégane</h3>
-    <div class="summary-version" id="summaryVersion"></div>
-    <div class="summary-specs">
-        <div class="spec-box">
-            <span>Moteur</span>
-            <strong id="summaryEngine"></strong>
-        </div>
-        <div class="spec-box">
-            <span>Classe énergétique</span>
-            <strong id="summaryEnergy"></strong>
-        </div>
-        <div class="spec-box">
-            <span>Crit'Air</span>
-            <strong id="summaryCritAir"></strong>
-        </div>
-        <div class="spec-box">
-            <span>CO₂ WLTP</span>
-            <strong id="summaryCO2"></strong>
-        </div>
-    </div>
-</div>
-<div class="summary-details">
-    <div class="summary-detail">
-        <span>Carrosserie</span>
-        <strong id="summaryBody"></strong>
-    </div>
-    <div class="summary-detail">
-        <span>Couleur</span>
-        <strong id="summaryColor"></strong>
-    </div>
-    <div class="summary-detail">
-        <span>Jantes</span>
-        <strong id="summaryWheel"></strong>
-    </div>
-    <div class="summary-detail">
-        <span>Sellerie</span>
-        <strong id="summaryUpholstery"></strong>
-    </div>
-</div>
-<div class="summary-options">
-    <h4>Équipements et options</h4>
-    <div id="summaryOptions"></div>
-</div>
-<div class="summary-total">
-    <span>Prix total</span>
-    <strong id="summaryTotal"></strong>
-</div>
-</div>
+
+<section class="section">
+<h2>Options et équipements</h2>
+<div id="optionChoices"></div>
 </section>
-<!-- ======================================================
-     BARRE FIXE
-====================================================== -->
-<div class="save-bar">
-<div class="save-inner">
-<div class="save-price">
-    <small>Prix total</small>
-    <strong id="bottomPrice"></strong>
+
+<section class="summary">
+<div class="summary-title">Votre configuration</div>
+<div id="summary"></div>
+</section>
+
+</main>
 </div>
-<button class="save-button"
-        onclick="saveConfiguration()">
+
+<div class="price-bar">
+
+<div>
+    <div class="total-label">Prix total</div>
+    <div class="total-price" id="totalPrice">—</div>
+</div>
+
+<button class="save-button" onclick="saveConfiguration()">
     ENREGISTRER
 </button>
+
 </div>
-</div>
+
 <script>
+
 /* =========================================================
    MOTORISATIONS
 ========================================================= */
+
 const engines={
+
     evolution:[
-        {
-            name:"1.3 TCe 140 ch BVM6",
-            type:"Essence manuel",
-            fuel:"Essence",
-            power:"103 kW (140 ch)",
-            co2:"131 g/km",
-            consumption:"5,8 L/100 km",
-            energy:"C",
-            critair:"Crit'Air 1",
-            price:28800
-        },
-        {
-            name:"1.6 E-Tech 160 ch BVA",
-            type:"Essence hybride rechargeable automatique",
-            fuel:"E-Tech",
-            power:"117 kW (160 ch)",
-            co2:"28 g/km",
-            consumption:"1,2 L/100 km",
-            energy:"A+",
-            critair:"Crit'Air 1",
-            price:38750
-        },
-        {
-            name:"1.5 Blue dCi 115 ch BVM6",
-            type:"Diesel manuel",
-            fuel:"Diesel",
-            power:"85 kW (115 ch)",
-            co2:"120 g/km",
-            consumption:"4,6 L/100 km",
-            energy:"C",
-            critair:"Crit'Air 2",
-            price:30800
-        },
-        {
-            name:"1.5 Blue dCi 115 ch EDC7",
-            type:"Diesel automatique",
-            fuel:"Diesel",
-            power:"85 kW (115 ch)",
-            co2:"124 g/km",
-            consumption:"4,7 L/100 km",
-            energy:"C",
-            critair:"Crit'Air 2",
-            price:32800
-        }
+        ["1.3 TCe 140 ch BVM6","Essence",28800],
+        ["1.6 E-Tech 160 ch BVA","Essence hybride rechargeable",38750],
+        ["1.5 Blue dCi 115 ch BVM6","Diesel",30800],
+        ["1.5 Blue dCi 115 ch EDC7","Diesel",32800]
     ],
+
     techno:[
-        {
-            name:"1.3 TCe 140 ch BVM6",
-            type:"Essence manuel",
-            fuel:"Essence",
-            power:"103 kW (140 ch)",
-            co2:"131 g/km",
-            consumption:"5,8 L/100 km",
-            energy:"C",
-            critair:"Crit'Air 1",
-            price:30750
-        },
-        {
-            name:"1.3 TCe 140 ch EDC7",
-            type:"Essence automatique",
-            fuel:"Essence",
-            power:"103 kW (140 ch)",
-            co2:"133 g/km",
-            consumption:"5,9 L/100 km",
-            energy:"C",
-            critair:"Crit'Air 1",
-            price:32750
-        },
-        {
-            name:"1.6 E-Tech 160 ch BVA",
-            type:"Essence hybride rechargeable automatique",
-            fuel:"E-Tech",
-            power:"117 kW (160 ch)",
-            co2:"28 g/km",
-            consumption:"1,2 L/100 km",
-            energy:"A+",
-            critair:"Crit'Air 1",
-            price:40700
-        },
-        {
-            name:"1.5 Blue dCi 115 ch BVM6",
-            type:"Diesel manuel",
-            fuel:"Diesel",
-            power:"85 kW (115 ch)",
-            co2:"120 g/km",
-            consumption:"4,6 L/100 km",
-            energy:"C",
-            critair:"Crit'Air 2",
-            price:32750
-        },
-        {
-            name:"1.5 Blue dCi 115 ch EDC7",
-            type:"Diesel automatique",
-            fuel:"Diesel",
-            power:"85 kW (115 ch)",
-            co2:"124 g/km",
-            consumption:"4,7 L/100 km",
-            energy:"C",
-            critair:"Crit'Air 2",
-            price:34750
-        }
+        ["1.3 TCe 140 ch BVM6","Essence",30750],
+        ["1.3 TCe 140 ch EDC7","Essence",32750],
+        ["1.6 E-Tech 160 ch BVA","Essence hybride rechargeable",40700],
+        ["1.5 Blue dCi 115 ch BVM6","Diesel",32750],
+        ["1.5 Blue dCi 115 ch EDC7","Diesel",34750]
     ],
+
     rsline:[
-        {
-            name:"1.3 TCe 160 ch EDC7",
-            type:"Essence automatique",
-            fuel:"Essence",
-            power:"118 kW (160 ch)",
-            co2:"134 g/km",
-            consumption:"5,9 L/100 km",
-            energy:"C",
-            critair:"Crit'Air 1",
-            price:35050
-        }
+        ["1.3 TCe 160 ch EDC7","Essence",35050]
     ],
+
     rs:[
-        {
-            name:"1.8 TCe 300 ch EDC7",
-            type:"Essence automatique",
-            fuel:"Essence",
-            power:"221 kW (300 ch)",
-            co2:"191 g/km",
-            consumption:"8,5 L/100 km",
-            energy:"G",
-            critair:"Crit'Air 1",
-            price:44000
-        }
+        ["1.8 300 ch EDC7","Essence",44000]
     ],
+
     rstrophy:[
-        {
-            name:"1.8 TCe 300 ch EDC7",
-            type:"Essence automatique",
-            fuel:"Essence",
-            power:"221 kW (300 ch)",
-            co2:"191 g/km",
-            consumption:"8,5 L/100 km",
-            energy:"G",
-            critair:"Crit'Air 1",
-            price:49000
-        }
+        ["1.8 300 ch EDC7","Essence",49000]
     ]
 };
-/* =========================================================
-   FINITIONS
-========================================================= */
+
 const trimNames={
     evolution:"Evolution",
     techno:"Techno",
@@ -1104,10 +607,14 @@ const trimNames={
     rs:"RS",
     rstrophy:"RS Trophy"
 };
+
+
 /* =========================================================
    COULEURS
 ========================================================= */
+
 const normalColors=[
+
     ["Blanc Glacier","#eeeeee",0],
     ["Blanc Nacré","#f5f5f2",850],
     ["Bleu Iron","#304b67",750],
@@ -1115,8 +622,11 @@ const normalColors=[
     ["Gris Titanium","#555555",650],
     ["Noir Étoilé","#111111",650],
     ["Rouge Flamme","#8b2020",850]
+
 ];
+
 const rsColors=[
+
     ["Blanc Glacier","#eeeeee",0],
     ["Blanc Nacré","#f5f5f2",850],
     ["Gris Highland","#777777",650],
@@ -1125,11 +635,12 @@ const rsColors=[
     ["Noir Étoilé","#111111",650],
     ["Orange Tonic","#e66f17",1600],
     ["Rouge Flamme","#8c2020",850]
+
 ];
-/* =========================================================
-   ETAT
-========================================================= */
+
+
 let config={
+
     body:"berline",
     trim:"evolution",
     engine:0,
@@ -1137,441 +648,513 @@ let config={
     upholstery:0,
     wheel:0,
     options:[]
+
 };
-/* =========================================================
-   OUTILS
-========================================================= */
+
+
 function euro(value){
+
     return new Intl.NumberFormat("fr-FR",{
         style:"currency",
         currency:"EUR",
         maximumFractionDigits:0
     }).format(value);
+
 }
+
+
 function currentEngine(){
     return engines[config.trim][config.engine];
 }
+
+
 function isHybrid(){
-    return currentEngine().fuel==="E-Tech";
+    return currentEngine()[1].includes("hybride");
 }
+
+
 function isDiesel(){
-    return currentEngine().fuel==="Diesel";
+    return currentEngine()[1]==="Diesel";
 }
+
+
 function isRS(){
-    return config.trim==="rs" ||
-           config.trim==="rstrophy";
+    return config.trim==="rs" || config.trim==="rstrophy";
 }
-function currentColors(){
-    return isRS()?rsColors:normalColors;
-}
+
+
 /* =========================================================
-   ELEMENTS PRINCIPAUX INCLUS
+   MODIFICATION 1 :
+   TYPES DE MOTORISATIONS DISPONIBLES UNIQUEMENT
 ========================================================= */
-function getIncludedEquipment(){
-    if(config.trim==="evolution"){
-        return[
-            "Régulateur de vitesse",
-            "Frein de parking assisté automatique",
-            "Système multimédia Easy Link",
-            "Jantes alliage 16\""
-        ];
-    }
-    if(config.trim==="techno"){
-        return[
-            "Caméra de recul",
-            "Accès et démarrage mains libres",
-            "Aide au maintien dans la voie",
-            "Jantes alliage 17\""
-        ];
-    }
-    if(config.trim==="rsline"){
-        return[
-            "Kit carrosserie RS Line",
-            "Jantes alliage 17\" Monthléry",
-            "Pédalier aluminium",
-            "Sellerie RS Line"
-        ];
-    }
-    if(config.trim==="rs"){
-        return[
-            "Châssis Renault Sport",
-            "4Control",
-            "Freinage haute performance",
-            "Jantes alliage 18\""
-        ];
-    }
-    return[
-        "Châssis Cup",
-        "Freinage renforcé",
-        "Régulateur de vitesse",
-        "Jantes 19\" Triple Tone Jerez"
-    ];
+
+function getAvailableFuelTypes(){
+
+    const types=[];
+
+    engines[config.trim].forEach(engine=>{
+
+        let type=engine[1];
+
+        if(type==="Essence hybride rechargeable"){
+            type="Hybride rechargeable";
+        }
+
+        if(!types.includes(type)){
+            types.push(type);
+        }
+
+    });
+
+    return types;
+
 }
+
+
 /* =========================================================
    CARROSSERIE
 ========================================================= */
+
 function renderBodies(){
+
     const c=document.getElementById("bodyChoices");
+
     c.innerHTML="";
+
     ["berline","estate"].forEach(body=>{
+
         const b=document.createElement("button");
-        b.className="choice "+
-            (config.body===body?"active":"");
+
+        b.className="choice "+(config.body===body?"active":"");
+
         b.innerHTML=`
-            <strong>
-                ${body==="berline"?"Berline":"Break"}
-            </strong>
-            <small>
-                ${body==="estate"
-                    ?"+ 1 000 €"
-                    :"Mégane 5 portes"}
-            </small>
+            <strong>Mégane ${body==="berline"?"Berline":"Estate"}</strong>
+            <span>${body==="estate"?"+ 1 000 €":"Carrosserie berline"}</span>
         `;
+
         b.onclick=()=>{
+
             config.body=body;
+
             if(body==="estate" &&
-               (config.trim==="rs" ||
-                config.trim==="rstrophy")){
+               (config.trim==="rs" || config.trim==="rstrophy")){
+
                 config.trim="evolution";
                 config.engine=0;
-                config.options=[];
-                config.wheel=0;
-                config.upholstery=0;
-                config.color=0;
+
             }
+
             render();
+
         };
+
         c.appendChild(b);
+
     });
+
 }
+
+
 /* =========================================================
    FINITIONS
 ========================================================= */
+
 function renderTrims(){
+
     const c=document.getElementById("trimChoices");
+
     c.innerHTML="";
+
     Object.keys(trimNames).forEach(trim=>{
+
         if(config.body==="estate" &&
-           (trim==="rs" ||
-            trim==="rstrophy")){
-            return;
-        }
+           (trim==="rs" || trim==="rstrophy")) return;
+
         const b=document.createElement("button");
-        b.className="choice "+
-            (config.trim===trim?"active":"");
-        b.innerHTML=`
-            <strong>${trimNames[trim]}</strong>
-            <small>
-                ${engines[trim].length}
-                motorisation${engines[trim].length>1?"s":""}
-            </small>
-        `;
+
+        b.className="choice "+(config.trim===trim?"active":"");
+
+        b.innerHTML=`<strong>${trimNames[trim]}</strong>`;
+
         b.onclick=()=>{
+
             config.trim=trim;
             config.engine=0;
             config.options=[];
             config.wheel=0;
             config.upholstery=0;
             config.color=0;
+
             render();
+
         };
+
         c.appendChild(b);
+
     });
+
 }
-/* =========================================================
-   DISPONIBILITE
-========================================================= */
-function renderAvailability(){
-    const c=document.getElementById("availableEngines");
-    c.innerHTML="";
-    engines[config.trim].forEach(engine=>{
-        const d=document.createElement("div");
-        d.className="info-line";
-        d.innerHTML=`
-            <span>${engine.type}</span>
-            <strong>${engine.name}</strong>
-        `;
-        c.appendChild(d);
-    });
-    document.getElementById("colorCount").textContent=
-        currentColors().length;
-    const included=
-        document.getElementById("includedEquipment");
-    included.innerHTML="";
-    getIncludedEquipment().forEach(item=>{
-        const d=document.createElement("div");
-        d.className="info-line";
-        d.innerHTML=`
-            <span>✓</span>
-            <strong>${item}</strong>
-        `;
-        included.appendChild(d);
-    });
-}
+
+
 /* =========================================================
    MOTORISATIONS
 ========================================================= */
+
 function renderEngines(){
+
     const c=document.getElementById("engineChoices");
+
     c.innerHTML="";
+
+    /*
+       Affichage des motorisations disponibles :
+       uniquement Essence / Diesel / Hybride rechargeable
+    */
+
+    const types=getAvailableFuelTypes();
+
+    const available=document.createElement("div");
+
+    available.style.marginBottom="15px";
+    available.style.fontSize="11px";
+    available.style.color="#777";
+
+    available.innerHTML=`
+        <strong style="color:#111">Motorisations disponibles :</strong>
+        ${types.join(" · ")}
+    `;
+
+    c.appendChild(available);
+
+
+    /*
+       Les moteurs précis restent sélectionnables
+       dans la partie "Motorisation".
+    */
+
     engines[config.trim].forEach((engine,index)=>{
+
         const d=document.createElement("div");
-        d.className="engine "+
-            (config.engine===index?"active":"");
-        let price=engine.price;
+
+        d.className="engine "+(config.engine===index?"active":"");
+
+        let price=engine[2];
+
         if(config.body==="estate"){
             price+=1000;
         }
+
         d.innerHTML=`
+
             <div>
-                <div class="engine-name">
-                    ${engine.name}
-                </div>
-                <div class="engine-type">
-                    ${engine.type}
-                </div>
+                <strong>${engine[0]}</strong>
+                <small>${engine[1]}</small>
             </div>
+
             <div class="engine-price">
                 ${euro(price)}
             </div>
+
         `;
+
         d.onclick=()=>{
+
             config.engine=index;
             config.options=[];
+
             render();
+
         };
+
         c.appendChild(d);
+
     });
-    const e=currentEngine();
-    document.getElementById("engineTechnicalInfo").innerHTML=`
-        <div class="info-card-title">
-            Caractéristiques de la motorisation
-        </div>
-        <div class="info-list">
-            <div class="info-line">
-                <span>Énergie</span>
-                <strong>${e.type}</strong>
-            </div>
-            <div class="info-line">
-                <span>Puissance maxi</span>
-                <strong>${e.power}</strong>
-            </div>
-            <div class="info-line">
-                <span>CO₂ cycle mixte WLTP</span>
-                <strong>${e.co2}</strong>
-            </div>
-            <div class="info-line">
-                <span>Consommation mixte WLTP</span>
-                <strong>${e.consumption}</strong>
-            </div>
-        </div>
-    `;
+
 }
+
+
 /* =========================================================
    COULEURS
 ========================================================= */
+
 function renderColors(){
-    const colors=currentColors();
+
+    const c=document.getElementById("colorChoices");
+
+    c.innerHTML="";
+
+    const colors=isRS()?rsColors:normalColors;
+
     if(config.color>=colors.length){
         config.color=0;
     }
-    const selected=colors[config.color];
-    document.getElementById("selectedColorName")
-        .textContent=selected[0];
-    document.getElementById("selectedColorPrice")
-        .textContent=
-        selected[2]>0
-        ?"+ "+euro(selected[2])
-        :"Peinture incluse";
-    const c=document.getElementById("colorChoices");
-    c.innerHTML="";
+
     colors.forEach((color,index)=>{
+
         const b=document.createElement("button");
-        b.className=
-            "color-choice "+
-            (config.color===index?"active":"");
+
+        b.className="color "+(config.color===index?"active":"");
+
         b.innerHTML=`
-            <div class="color-circle"
-                 style="background:${color[1]}">
-            </div>
-            <div class="color-choice-name">
+
+            <span class="color-dot"
+                  style="background:${color[1]}"></span>
+
+            <span class="color-name">
                 ${color[0]}
-            </div>
-            <div class="color-choice-price">
-                ${
-                    color[2]>0
-                    ?"+ "+euro(color[2])
-                    :"Inclus de série"
-                }
-            </div>
+            </span>
+
+            <span class="color-price">
+                ${color[2]>0?"+ "+euro(color[2]):"Prix de base"}
+            </span>
+
         `;
+
         b.onclick=()=>{
+
             config.color=index;
+
             render();
+
         };
+
         c.appendChild(b);
+
     });
+
 }
+
+
 /* =========================================================
-   SELLERIES
+   SELLERIE
 ========================================================= */
+
 function getUpholsteries(){
+
     if(config.trim==="rstrophy"){
+
         return[
             ["Sellerie RS Trophy","upholstery_rs_trophy.jpg",0],
             ["Sièges baquet Recaro","recaro.jpg",1900]
         ];
+
     }
+
     if(config.trim==="rs"){
+
         return[
             ["Sellerie RS","upholstery_rs.jpg",0],
             ["Pack Alcantara","alcantara.jpg",1500]
         ];
+
     }
+
     if(config.trim==="rsline"){
+
         return[
             ["Sellerie RS Line","upholstery_rsline.jpg",0]
         ];
+
     }
+
     if(config.trim==="techno"){
+
         return[
             ["Sellerie Techno","upholstery_techno.jpg",0]
         ];
+
     }
+
     return[
         ["Sellerie Evolution","upholstery_evolution.jpg",0]
     ];
+
 }
+
+
 function renderUpholstery(){
+
+    const c=document.getElementById("upholsteryChoices");
+
+    c.innerHTML="";
+
     const items=getUpholsteries();
+
     if(config.upholstery>=items.length){
         config.upholstery=0;
     }
-    const c=document.getElementById("upholsteryChoices");
-    c.innerHTML="";
+
     items.forEach((item,index)=>{
+
         const b=document.createElement("button");
-        b.className=
-            "upholstery-card "+
-            (config.upholstery===index?"active":"");
+
+        b.className="upholstery "+(config.upholstery===index?"active":"");
+
         b.innerHTML=`
-            <strong>${item[0]}</strong>
-            <span>
-                ${
-                    item[2]>0
-                    ?"+ "+euro(item[2])
-                    :"Inclus de série"
-                }
-            </span>
-            <div class="upholstery-image">
-                <img src="${item[1]}"
-                     alt="${item[0]}"
-                     onerror="imageError(this,'${item[1]}')">
+
+            <img src="${item[1]}"
+                 alt="${item[0]}"
+                 onerror="imageError(this,'${item[1]}')">
+
+            <div class="upholstery-info">
+
+                <strong>${item[0]}</strong>
+
+                <small>
+                    ${item[2]>0?"+ "+euro(item[2]):"Équipement de série"}
+                </small>
+
             </div>
+
         `;
+
         b.onclick=()=>{
+
             config.upholstery=index;
+
             render();
+
         };
+
         c.appendChild(b);
+
     });
+
 }
+
+
 /* =========================================================
    JANTES
 ========================================================= */
+
 function getWheels(){
+
     if(config.trim==="evolution"){
+
+        if(config.options.includes("allweather")){
+
+            return[
+                ["Enjoliveurs 16\" Elliptik","elliptik.jpg",0]
+            ];
+
+        }
+
         return[
-            ["Jantes alliage 16\" Impulse","impulse.jpg",0],
-            ["Enjoliveurs 16\" Elliptik","elliptik.jpg",0]
+            ["Jantes alliage 16\" Impulse","impulse.jpg",0]
         ];
+
     }
+
+
     if(config.trim==="techno"){
+
         return[
             ["Jantes alliage 17\" Allium","jantes_techno.jpg",0],
             ["Jantes alliage 18\" Hightek","hightek.jpg",700]
         ];
+
     }
+
+
     if(config.trim==="rsline"){
+
         return[
             ["Jantes alliage 17\" Montlhéry","montlhery.jpg",0],
             ["Jantes alliage 18\" Magny-Cours","magny_cours.jpg",500]
         ];
+
     }
+
+
     if(config.trim==="rs"){
+
         return[
+
             ["Jantes aluminium 18\" Estoril","jantes_rs.jpg",0],
+
             ["Jantes 19\" Interlagos noires","interlagos.jpg",1000],
+
             ["Jantes Alu 19\" RS Interlagos Diam Noir","interlagos_diamant_noir.jpg",1000]
+
         ];
+
     }
+
+
     return[
-        ["Jantes 19\" Triple Tone Jerez","jantes_rs_trophy.jpg",0],
-        ["Jantes alliage 19\" Trophy Fuji Light","fuji_light.jpg",2000]
+
+        ["Jantes aluminium 19\" Jerez","jantes_rs_trophy.jpg",0],
+
+        ["Jantes aluminium 19\" Fuji Light","fuji_light.jpg",2000]
+
     ];
+
 }
+
+
 function renderWheels(){
+
+    const c=document.getElementById("wheelChoices");
+
+    c.innerHTML="";
+
     const wheels=getWheels();
+
     if(config.wheel>=wheels.length){
         config.wheel=0;
     }
-    const c=document.getElementById("wheelChoices");
-    c.innerHTML="";
+
     wheels.forEach((wheel,index)=>{
+
         const b=document.createElement("button");
-        b.className=
-            "wheel-card "+
-            (config.wheel===index?"active":"");
+
+        b.className="wheel "+(config.wheel===index?"active":"");
+
         b.innerHTML=`
-            <div class="wheel-image">
-                <img src="${wheel[1]}"
-                     alt="${wheel[0]}"
-                     onerror="imageError(this,'${wheel[1]}')">
+
+            <img src="${wheel[1]}"
+                 alt="${wheel[0]}"
+                 onerror="imageError(this,'${wheel[1]}')">
+
+            <div class="wheel-info">
+
+                <strong>${wheel[0]}</strong>
+
+                <span>
+                    ${wheel[2]>0?"+ "+euro(wheel[2]):"Équipement de série"}
+                </span>
+
             </div>
-            <strong>${wheel[0]}</strong>
-            <span>
-                ${
-                    wheel[2]>0
-                    ?"+ "+euro(wheel[2])
-                    :"Inclus de série"
-                }
-            </span>
+
         `;
+
         b.onclick=()=>{
+
             config.wheel=index;
-            if(config.trim==="evolution"){
-                if(index===0){
-                    config.options=
-                        config.options.filter(
-                            id=>id!=="allweather"
-                        );
-                }
-                if(index===1){
-                    if(!config.options.includes("allweather")){
-                        config.options.push("allweather");
-                    }
-                }
-            }
+
             render();
+
         };
+
         c.appendChild(b);
+
     });
+
 }
+
+
 /* =========================================================
    OPTIONS
 ========================================================= */
+
 function getOptions(){
+
     const options=[];
-    function add(
-        id,
-        name,
-        price,
-        image,
-        description,
-        category,
-        available=true
-    ){
+
+    function add(id,name,price,image,description="",available=true,category="Autres"){
+
         if(available){
+
             options.push({
                 id,
                 name,
@@ -1580,531 +1163,685 @@ function getOptions(){
                 description,
                 category
             });
+
         }
+
     }
+
+
     if(config.trim==="evolution"){
+
         add(
             "spare",
             "Roue de secours",
             200,
             "roue_secours.jpg",
-            "Roue de secours pour motorisation essence.",
-            "confort",
-            !isHybrid() && !isDiesel()
+            "Essence uniquement",
+            !isHybrid() && !isDiesel(),
+            "Confort"
         );
+
         add(
             "galette",
             "Roue de secours galette",
             150,
             "galette.jpg",
-            "Roue galette pour motorisation diesel.",
-            "confort",
-            isDiesel()
+            "Diesel uniquement",
+            isDiesel(),
+            "Confort"
         );
+
         add(
             "allweather",
             "Pneus tout temps",
             300,
             "pneus_tout_temps.jpg",
-            "Association avec les enjoliveurs Elliptik.",
-            "confort",
-            config.wheel===1
+            "Ajoute les enjoliveurs Elliptik et supprime les jantes Impulse",
+            true,
+            "Confort"
         );
+
         add(
             "camera",
             "Caméra de recul",
             250,
             "camera_recul.jpg",
-            "Facilite les manœuvres de stationnement.",
-            "conduite"
+            "",
+            true,
+            "Conduite et sécurité"
         );
+
         add(
             "safety",
             "Safety Pack",
             650,
             "safety_pack.jpg",
-            "Ensemble d'aides à la conduite et à la sécurité.",
-            "conduite"
+            "",
+            true,
+            "Conduite et sécurité"
         );
+
         add(
             "dash42",
             "Tableau de bord numérique 4,2 pouces + compteurs analogiques",
             -100,
             "tableau_42.jpg",
-            "Alternative au combiné numérique supérieur.",
-            "multimedia",
-            !isHybrid()
+            "Non disponible sur hybride",
+            !isHybrid(),
+            "Multimédia"
         );
+
         add(
             "mirrors",
             "Rétroviseurs extérieurs électriques et dégivrants",
             0,
             "retroviseurs.jpg",
-            "Équipement inclus.",
-            "confort",
-            !isHybrid()
+            "Non disponible sur hybride",
+            !isHybrid(),
+            "Confort"
         );
+
         add(
             "wallbox",
             "Câble de recharge Wallbox",
             300,
             "wallbox.jpg",
-            "Pour la recharge de la motorisation E-Tech.",
-            "multimedia",
-            isHybrid()
+            "Hybride uniquement",
+            isHybrid(),
+            "Multimédia"
         );
+
     }
+
+
     if(config.trim==="techno"){
-        add(
-            "spare",
-            "Roue de secours",
-            200,
-            "roue_secours.jpg",
-            "Essence uniquement.",
-            "confort",
-            !isHybrid() && !isDiesel()
-        );
-        add(
-            "galette",
-            "Roue de secours galette",
-            150,
-            "galette.jpg",
-            "Diesel uniquement.",
-            "confort",
-            isDiesel()
-        );
+
         add(
             "hud",
             "Affichage tête haute",
             400,
             "affichage_tete_haute.jpg",
-            "Projection des informations de conduite.",
-            "conduite"
+            "",
+            true,
+            "Conduite et sécurité"
         );
+
         add(
             "sunroof",
             "Toit ouvrant",
             900,
             "toit_ouvrant.jpg",
-            "Toit ouvrant vitré.",
-            "confort"
+            "",
+            true,
+            "Confort"
         );
+
         add(
             "dash10",
             "Tableau de bord numérique 10 pouces",
             100,
             "tableau_10.jpg",
-            "Combiné d'instrumentation numérique.",
-            "multimedia"
+            "",
+            true,
+            "Multimédia"
         );
+
         add(
             "winter",
             "Winter Pack",
             400,
             "winter_pack.jpg",
-            "Équipements dédiés au confort hivernal.",
-            "confort"
+            "",
+            true,
+            "Confort"
         );
+
         add(
             "easypark",
             "Pack Easy Park",
             550,
             "easy_park.jpg",
-            "Aide au stationnement.",
-            "conduite"
+            "",
+            true,
+            "Conduite et sécurité"
         );
+
         add(
             "wallbox",
             "Câble de recharge Wallbox",
             300,
             "wallbox.jpg",
-            "Pour la recharge de la motorisation E-Tech.",
-            "multimedia",
-            isHybrid()
+            "Hybride uniquement",
+            isHybrid(),
+            "Multimédia"
         );
+
     }
+
+
     if(config.trim==="rsline"){
-        add(
-            "spare",
-            "Roue de secours",
-            200,
-            "roue_secours.jpg",
-            "Essence uniquement.",
-            "confort",
-            !isHybrid() && !isDiesel()
-        );
-        add(
-            "galette",
-            "Roue de secours galette",
-            150,
-            "galette.jpg",
-            "Diesel uniquement.",
-            "confort",
-            isDiesel()
-        );
+
         add(
             "bose",
             "Bose",
             700,
             "bose.jpg",
-            "Système audio premium.",
-            "multimedia"
+            "",
+            true,
+            "Multimédia"
         );
+
         add(
             "hud",
             "Affichage tête haute",
             400,
             "affichage_tete_haute.jpg",
-            "Projection des informations de conduite.",
-            "conduite"
+            "",
+            true,
+            "Conduite et sécurité"
         );
+
         add(
             "easydrive",
             "Pack Easy Drive E-Tech",
             600,
             "easy_drive.jpg",
-            "Ensemble d'aides à la conduite.",
-            "conduite"
+            "",
+            true,
+            "Conduite et sécurité"
         );
+
         add(
             "sunroof",
             "Toit ouvrant",
             900,
             "toit_ouvrant.jpg",
-            "Toit ouvrant vitré.",
-            "confort"
+            "",
+            true,
+            "Confort"
         );
+
+        add(
+            "spareRS",
+            "Roue de secours",
+            150,
+            "roue_secours.jpg",
+            "",
+            true,
+            "Confort"
+        );
+
     }
+
+
     if(config.trim==="rs"){
+
         add(
             "sunroof",
             "Toit ouvrant",
             900,
             "toit_ouvrant.jpg",
-            "Toit ouvrant vitré.",
-            "confort"
+            "",
+            true,
+            "Confort"
         );
+
         add(
             "rsmonitor",
             "RS Monitor",
             250,
             "rs_monitor.jpg",
-            "Affichage des paramètres sportifs.",
-            "multimedia"
+            "",
+            true,
+            "Multimédia"
         );
+
         add(
             "alcantara",
             "Pack Alcantara",
             1500,
             "alcantara.jpg",
-            "Sellerie et éléments intérieurs Alcantara.",
-            "confort"
+            "",
+            true,
+            "Confort"
         );
+
     }
+
+
     if(config.trim==="rstrophy"){
+
         add(
             "adaptive",
             "Régulateur de vitesse adaptatif",
             300,
             "regulateur_adaptatif.jpg",
-            "Adaptation automatique de la vitesse.",
-            "conduite"
+            "",
+            true,
+            "Conduite et sécurité"
         );
+
         add(
             "sunroof",
             "Toit ouvrant",
             900,
             "toit_ouvrant.jpg",
-            "Toit ouvrant vitré.",
-            "confort"
+            "",
+            true,
+            "Confort"
         );
+
         add(
             "rsmonitor",
             "RS Monitor",
             250,
             "rs_monitor.jpg",
-            "Affichage des paramètres sportifs.",
-            "multimedia"
+            "",
+            true,
+            "Multimédia"
         );
+
         add(
             "recaro",
             "Sièges baquet Recaro",
             1900,
             "recaro.jpg",
-            "Sièges baquet non chauffants.",
-            "confort"
+            "Non chauffants",
+            true,
+            "Confort"
         );
+
     }
+
     return options;
+
 }
+
+
 /* =========================================================
-   EQUIPEMENTS
+   AFFICHAGE OPTIONS
 ========================================================= */
-function renderEquipment(){
-    const options=getOptions();
-    document.getElementById("equipmentCount").textContent=
-        options.length+
-        " équipement"+
-        (options.length>1?"s":"")+
-        " disponible"+
-        (options.length>1?"s":"")+" pour cette configuration";
-    const categories={
-        multimedia:{
-            name:"Multimédia",
-            options:[]
-        },
-        conduite:{
-            name:"Conduite & sécurité",
-            options:[]
-        },
-        confort:{
-            name:"Confort",
-            options:[]
-        }
-    };
-    options.forEach(option=>{
-        if(categories[option.category]){
-            categories[option.category].options.push(option);
-        }
-    });
-    const c=document.getElementById("equipmentCategories");
+
+function renderOptions(){
+
+    const c=document.getElementById("optionChoices");
+
     c.innerHTML="";
-    Object.values(categories).forEach(category=>{
-        if(category.options.length===0){
-            return;
+
+    const options=getOptions();
+
+    const categories={};
+
+    options.forEach(option=>{
+
+        if(!categories[option.category]){
+            categories[option.category]=[];
         }
+
+        categories[option.category].push(option);
+
+    });
+
+
+    Object.keys(categories).forEach(category=>{
+
+        const categoryOptions=categories[category];
+
+        const selectedCount=categoryOptions.filter(option =>
+            config.options.includes(option.id)
+        ).length;
+
+
         const section=document.createElement("div");
-        section.className="category";
-        section.innerHTML=`
-            <div class="category-title">
-                ${category.name}
-            </div>
-            <div class="option-list"></div>
+
+        section.className="option-category";
+
+
+        const title=document.createElement("h3");
+
+        title.className="option-category-title";
+
+        title.innerHTML=`
+            ${category}
+            ${
+                selectedCount>0
+                ?`<span class="option-category-count">${selectedCount}</span>`
+                :""
+            }
         `;
-        const list=
-            section.querySelector(".option-list");
-        category.options.forEach(option=>{
+
+        section.appendChild(title);
+
+
+        const grid=document.createElement("div");
+
+        grid.className="option-grid";
+
+
+        categoryOptions.forEach(option=>{
+
             const b=document.createElement("button");
-            b.className=
-                "option-card "+
-                (config.options.includes(option.id)
-                    ?"active":"");
+
+            b.className="option "+
+                (config.options.includes(option.id)?"active":"");
+
+
+            const checked=config.options.includes(option.id);
+
+
             b.innerHTML=`
-                <div class="option-image">
-                    <img src="${option.image}"
-                         alt="${option.name}"
-                         onerror="imageError(this,'${option.image}')">
-                </div>
-                <div class="option-info">
+
+                <img src="${option.image}"
+                     alt="${option.name}"
+                     onerror="imageError(this,'${option.image}')">
+
+                <div class="option-content">
+
                     <strong>${option.name}</strong>
-                    <p>${option.description}</p>
+
                     <div class="option-bottom">
+
+                        <label class="option-check"
+                               onclick="event.stopPropagation()">
+
+                            <input
+                                type="checkbox"
+                                ${checked?"checked":""}
+                            >
+
+                            <span>
+                                ${checked?"Sélectionné":"Sélectionner"}
+                            </span>
+
+                        </label>
+
                         <span class="option-price">
+
                             ${
                                 option.price<0
                                 ?"− "+euro(-option.price)
                                 :option.price===0
-                                ?"Inclus"
+                                ?"0 €"
                                 :"+ "+euro(option.price)
                             }
+
                         </span>
-                        <span class="checkbox"></span>
+
                     </div>
-                </div>
-            `;
-            b.onclick=()=>{
-                if(config.options.includes(option.id)){
-                    config.options=
-                        config.options.filter(
-                            id=>id!==option.id
-                        );
-                }else{
-                    config.options.push(option.id);
-                }
-                if(option.id==="spare"){
-                    config.options=
-                        config.options.filter(
-                            id=>id!=="galette"
-                        );
-                }
-                if(option.id==="galette"){
-                    config.options=
-                        config.options.filter(
-                            id=>id!=="spare"
-                        );
-                }
-                if(option.id==="allweather"){
-                    if(config.options.includes("allweather")){
-                        config.wheel=1;
-                    }else{
-                        config.wheel=0;
-                    }
-                }
-                render();
-            };
-            list.appendChild(b);
-        });
-        c.appendChild(section);
-    });
-}
-/* =========================================================
-   PRIX
-========================================================= */
-function calculatePrice(){
-    let total=currentEngine().price;
-    if(config.body==="estate"){
-        total+=1000;
-    }
-    const colors=currentColors();
-    total+=colors[config.color][2];
-    const wheels=getWheels();
-    total+=wheels[config.wheel][2];
-    const upholstery=getUpholsteries();
-    total+=upholstery[config.upholstery][2];
-    getOptions().forEach(option=>{
-        if(config.options.includes(option.id)){
-            total+=option.price;
-        }
-    });
-    return total;
-}
-/* =========================================================
-   RESUME
-========================================================= */
-function renderSummary(){
-    const e=currentEngine();
-    const colors=currentColors();
-    const wheels=getWheels();
-    const upholstery=getUpholsteries();
-    document.getElementById("summaryVersion")
-        .textContent=
-        trimNames[config.trim];
-    document.getElementById("summaryEngine")
-        .textContent=e.name;
-    document.getElementById("summaryEnergy")
-        .textContent=e.energy;
-    document.getElementById("summaryCritAir")
-        .textContent=e.critair;
-    document.getElementById("summaryCO2")
-        .textContent=e.co2;
-    document.getElementById("summaryBody")
-        .textContent=
-        config.body==="berline"
-        ?"Berline"
-        :"Break";
-    document.getElementById("summaryColor")
-        .textContent=colors[config.color][0];
-    document.getElementById("summaryWheel")
-        .textContent=wheels[config.wheel][0];
-    document.getElementById("summaryUpholstery")
-        .textContent=upholstery[config.upholstery][0];
-    const c=document.getElementById("summaryOptions");
-    c.innerHTML="";
-    const selectedOptions=
-        getOptions().filter(
-            option=>config.options.includes(option.id)
-        );
-    if(selectedOptions.length===0){
-        c.innerHTML=`
-            <div class="summary-option">
-                <span>Aucune option sélectionnée</span>
-                <strong>—</strong>
-            </div>
-        `;
-    }else{
-        selectedOptions.forEach(option=>{
-            const d=document.createElement("div");
-            d.className="summary-option";
-            d.innerHTML=`
-                <span>${option.name}</span>
-                <strong>
+
                     ${
-                        option.price<0
-                        ?"− "+euro(-option.price)
-                        :option.price===0
-                        ?"Inclus"
-                        :"+ "+euro(option.price)
+                        option.description
+                        ?`<span class="option-description">
+                            ${option.description}
+                          </span>`
+                        :""
                     }
-                </strong>
+
+                </div>
+
             `;
-            c.appendChild(d);
+
+
+            b.onclick=()=>{
+
+                if(config.options.includes(option.id)){
+
+                    config.options=
+                        config.options.filter(id=>id!==option.id);
+
+                }else{
+
+                    config.options.push(option.id);
+
+                }
+
+
+                if(option.id==="spare"){
+
+                    config.options=
+                        config.options.filter(id=>id!=="galette");
+
+                }
+
+
+                if(option.id==="galette"){
+
+                    config.options=
+                        config.options.filter(id=>id!=="spare");
+
+                }
+
+
+                render();
+
+            };
+
+
+            const checkbox=b.querySelector("input");
+
+            checkbox.onchange=(event)=>{
+
+                event.stopPropagation();
+
+                b.click();
+
+            };
+
+
+            grid.appendChild(b);
+
         });
-    }
-    const total=euro(calculatePrice());
-    document.getElementById("summaryTotal")
-        .textContent=total;
-    document.getElementById("bottomPrice")
-        .textContent=total;
+
+
+        section.appendChild(grid);
+
+        c.appendChild(section);
+
+    });
+
 }
-/* =========================================================
-   GALERIE
-========================================================= */
-function changeGalleryImage(file,button){
-    const container=
-        document.getElementById("mainImage");
-    const img=document.createElement("img");
-    img.src=file;
-    img.alt="Renault Mégane";
-    img.onload=()=>{
-        container.innerHTML="";
-        container.appendChild(img);
-    };
-    img.onerror=()=>{
-        container.innerHTML=`
-            <div class="image-placeholder">
-                <strong>Image à ajouter</strong>
-                <br>
-                ${file}
-            </div>
-        `;
-    };
-    document.querySelectorAll(".gallery-thumb")
-        .forEach(btn=>{
-            btn.classList.remove("active");
-        });
-    button.classList.add("active");
-}
+
+
 /* =========================================================
    IMAGE ERROR
 ========================================================= */
+
 function imageError(img,file){
-    const parent=img.parentElement;
-    parent.innerHTML=`
-        <div class="option-image-placeholder">
-            Image à ajouter<br><br>${file}
-        </div>
-    `;
+
+    const box=document.createElement("div");
+
+    box.className="image-missing";
+
+    box.innerHTML=
+        "Image introuvable<br><br>"+file;
+
+    img.replaceWith(box);
+
 }
+
+
+/* =========================================================
+   PRIX
+========================================================= */
+
+function calculatePrice(){
+
+    let total=currentEngine()[2];
+
+    if(config.body==="estate"){
+        total+=1000;
+    }
+
+    const colors=isRS()?rsColors:normalColors;
+
+    total+=colors[config.color][2];
+
+    const wheels=getWheels();
+
+    total+=wheels[config.wheel][2];
+
+    const upholstery=getUpholsteries();
+
+    total+=upholstery[config.upholstery][2];
+
+    getOptions().forEach(option=>{
+
+        if(config.options.includes(option.id)){
+            total+=option.price;
+        }
+
+    });
+
+    return total;
+
+}
+
+
+/* =========================================================
+   RÉCAPITULATIF
+========================================================= */
+
+function renderSummary(){
+
+    const c=document.getElementById("summary");
+
+    const colors=isRS()?rsColors:normalColors;
+
+    const wheels=getWheels();
+
+    const upholstery=getUpholsteries();
+
+    c.innerHTML=`
+
+        <div class="summary-row">
+            <span>Carrosserie</span>
+            <strong>
+                ${config.body==="berline"?"Berline":"Estate"}
+            </strong>
+        </div>
+
+        <div class="summary-row">
+            <span>Finition</span>
+            <strong>
+                ${trimNames[config.trim]}
+            </strong>
+        </div>
+
+        <div class="summary-row">
+            <span>Motorisation</span>
+            <strong>
+                ${currentEngine()[0]}
+            </strong>
+        </div>
+
+        <div class="summary-row">
+            <span>Couleur</span>
+            <strong>
+                ${colors[config.color][0]}
+            </strong>
+        </div>
+
+        <div class="summary-row">
+            <span>Sellerie</span>
+            <strong>
+                ${upholstery[config.upholstery][0]}
+            </strong>
+        </div>
+
+        <div class="summary-row">
+            <span>Jantes</span>
+            <strong>
+                ${wheels[config.wheel][0]}
+            </strong>
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   GRANDE IMAGE
+========================================================= */
+
+function changeView(file){
+
+    const container=document.getElementById("carVisual");
+
+    const img=document.createElement("img");
+
+    img.src=file;
+
+    img.alt="Renault Mégane";
+
+    img.onerror=()=>{
+
+        container.innerHTML=`
+
+            <div class="no-image">
+
+                <strong>Image introuvable</strong>
+
+                <br><br>
+
+                ${file}
+
+            </div>
+
+        `;
+
+    };
+
+    img.onload=()=>{
+
+        container.innerHTML="";
+
+        container.appendChild(img);
+
+    };
+
+}
+
+
 /* =========================================================
    SAUVEGARDE
 ========================================================= */
+
 function saveConfiguration(){
+
     localStorage.setItem(
         "meganeConfiguration",
         JSON.stringify(config)
     );
-    alert(
-        "Configuration enregistrée sur cet appareil."
-    );
+
+    alert("Configuration enregistrée sur cet appareil.");
+
 }
+
+
 /* =========================================================
-   RENDER GLOBAL
+   AFFICHAGE
 ========================================================= */
+
 function render(){
+
     renderBodies();
     renderTrims();
-    renderAvailability();
     renderEngines();
     renderColors();
-    renderWheels();
     renderUpholstery();
-    renderEquipment();
+    renderWheels();
+    renderOptions();
     renderSummary();
+
+    document.getElementById("totalPrice").textContent=
+        euro(calculatePrice());
+
 }
-/* =========================================================
-   INITIALISATION
-========================================================= */
+
 render();
+
 </script>
+
 </body>
 </html>
