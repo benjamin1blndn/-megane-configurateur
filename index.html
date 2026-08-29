@@ -1,312 +1,464 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Renault Mégane IV — Configurateur</title>
+<title>Renault Mégane IV — Configurateur Phase 2</title>
 
 <style>
-*{
-    box-sizing:border-box;
+*{box-sizing:border-box}
+
+:root{
+    font-family:Arial,Helvetica,sans-serif;
+    color:#111;
+    background:#f4f4f4
 }
 
 body{
     margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    color:#111;
-    background:#f4f4f4;
+    background:#f4f4f4
 }
 
-/* =========================
-   HEADER
-========================= */
-
-.top{
+header{
     height:64px;
     background:#111;
     color:#fff;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 24px;
+    padding:0 26px;
+    position:sticky;
+    top:0;
+    z-index:20
 }
 
 .logo{
-    font-size:24px;
+    font-size:25px;
     font-weight:900;
+    letter-spacing:-2px
 }
 
-.top-title{
-    font-size:13px;
-    font-weight:700;
+.sub{
+    font-size:11px;
+    color:#bbb
 }
 
-/* =========================
-   STRUCTURE
-========================= */
-
-.layout{
+main{
     display:grid;
-    grid-template-columns:58% 42%;
-    min-height:calc(100vh - 64px);
+    grid-template-columns:minmax(0,1fr) 430px;
+    min-height:calc(100vh - 64px)
 }
 
-/* =========================
-   ZONE VISUELLE
-========================= */
-
-.visual{
-    background:#eee;
-    position:sticky;
-    top:0;
-    height:calc(100vh - 64px);
+.viewer{
+    background:#f3f3f3;
     display:flex;
     flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-    overflow:hidden;
+    min-width:0
 }
 
-.car{
-    width:100%;
-    height:calc(100% - 88px);
+.hero{
+    flex:1;
+    min-height:520px;
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:25px;
+    position:relative;
+    padding:25px
+}
+
+.car{
+    width:min(92%,900px);
+    aspect-ratio:16/9;
+    background:linear-gradient(145deg,#eee,#ddd);
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 20px 60px #0002;
+    overflow:hidden
 }
 
 .car img{
-    max-width:94%;
-    max-height:78%;
-    object-fit:contain;
+    width:100%;
+    height:100%;
+    object-fit:contain
 }
 
 .placeholder{
     text-align:center;
     color:#777;
-    line-height:1.7;
+    font-size:14px;
+    line-height:1.7
 }
 
-/* =========================
-   LES 6 VUES — SEUL ESPACE
-   D'IMAGES CONSERVÉ
-========================= */
+.summary{
+    position:absolute;
+    left:30px;
+    bottom:25px;
+    background:#fff;
+    padding:13px 17px;
+    box-shadow:0 4px 18px #0002;
+    font-size:12px
+}
+
+.summary b{
+    font-size:16px
+}
+
+
+/* =====================================================
+   LES 6 VUES DU HAUT
+   C'est le seul système de navigation d'images.
+===================================================== */
 
 .views{
-    width:100%;
-    height:88px;
+    display:flex;
+    gap:7px;
     background:#fff;
     border-top:1px solid #ddd;
-    display:grid;
-    grid-template-columns:repeat(6,1fr);
-    gap:6px;
-    padding:8px;
-    overflow:hidden;
+    padding:11px 18px;
+    overflow-x:auto;
+    overflow-y:hidden
 }
 
 .views button{
-    border:1px solid #ccc;
     background:#fff;
-    padding:6px;
-    cursor:pointer;
-    font-size:11px;
-    font-weight:600;
-}
-
-.views button:hover{
-    background:#f5f5f5;
+    border:1px solid #ccc;
+    padding:9px 12px;
+    white-space:nowrap;
+    cursor:pointer
 }
 
 .views button.active{
-    border:2px solid #111;
-    font-weight:800;
+    border-color:#111;
+    font-weight:700
 }
 
-/* =========================
+
+/* =====================================================
    PANNEAU
-========================= */
+===================================================== */
 
 .panel{
     background:#fff;
-    padding-bottom:100px;
-    min-width:0;
+    border-left:1px solid #ddd;
+    overflow:auto;
+    padding-bottom:100px
 }
 
-.head,
-.section{
-    padding:24px;
-    border-bottom:1px solid #ddd;
+.step{
+    padding:25px 25px 4px
 }
 
-.head h1{
-    margin:5px 0;
-    font-size:30px;
-}
-
-.head p,
-.hint{
-    font-size:12px;
+.step small,
+.category{
     color:#777;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    font-size:11px
 }
 
-/* =========================
-   CARTES
-========================= */
+.step h1{
+    font-size:28px;
+    margin:7px 0 20px
+}
 
-.grid{
+.section{
+    padding:21px 25px;
+    border-bottom:1px solid #ddd
+}
+
+.section h2{
+    font-size:18px;
+    margin:0 0 13px
+}
+
+
+/* =====================================================
+   CARROSSERIE / FINITION
+===================================================== */
+
+.cards{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:9px;
+    gap:9px
 }
 
-.choice{
+.card{
     border:1px solid #ccc;
     background:#fff;
     text-align:left;
-    padding:13px;
-    cursor:pointer;
+    padding:14px;
+    cursor:pointer
 }
 
-.choice.selected{
+.card.selected{
     border:2px solid #111;
-    padding:12px;
+    padding:13px
 }
 
-.choice b{
-    font-size:12px;
+.card strong{
+    display:block
 }
 
-.choice small{
+.card span{
     display:block;
-    color:#777;
-    font-size:10px;
-    margin-top:5px;
+    color:#666;
+    font-size:12px;
+    margin-top:5px
 }
 
-/* =========================
-   MOTORISATIONS
-========================= */
 
-.item{
-    border:1px solid #ccc;
+/* =====================================================
+   MOTORISATION
+===================================================== */
+
+select{
+    width:100%;
+    padding:13px;
+    border:1px solid #aaa;
     background:#fff;
-    text-align:left;
-    padding:13px;
-    cursor:pointer;
-    margin:8px 0;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
+    font-size:14px
 }
 
-.item.selected{
-    border:2px solid #111;
-    padding:12px;
-}
 
-.item b{
-    font-size:12px;
-}
-
-.item small{
-    display:block;
-    color:#777;
-    font-size:10px;
-    margin-top:5px;
-}
-
-/* =========================
+/* =====================================================
    COULEURS
-========================= */
+   Les images sont maintenant de vrais ronds.
+===================================================== */
 
 .colors{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:14px;
+    gap:12px
 }
 
 .color{
     border:1px solid #ccc;
     background:#fff;
     cursor:pointer;
-    padding:12px 8px;
+    padding:11px 7px;
     text-align:center;
-    min-height:105px;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
     gap:6px;
+    min-height:116px
 }
 
 .color.selected{
     border:2px solid #111;
-    padding:11px 7px;
+    padding:10px 6px
 }
 
-/* PASTILLE PARFAITEMENT RONDE */
+.color input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none
+}
 
-.dot{
-    display:block;
-    width:42px;
-    height:42px;
-    min-width:42px;
+.color-photo{
+    width:58px;
+    height:58px;
     border-radius:50%;
-    border:1px solid #aaa;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.04);
+    object-fit:cover;
+    display:block;
+    border:1px solid #aaa
 }
 
 .color b{
-    display:block;
-    font-size:11px;
+    font-size:10px;
+    line-height:1.2
 }
 
 .color small{
+    font-size:9px;
+    color:#777
+}
+
+
+/* =====================================================
+   JANTES
+   L'image de la jante est indépendante de la vue
+   "Jantes" des 6 vues du haut.
+===================================================== */
+
+.wheels{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px
+}
+
+.wheel{
+    border:1px solid #ccc;
+    background:#fff;
+    cursor:pointer;
+    padding:0;
+    overflow:hidden;
+    text-align:left
+}
+
+.wheel.selected{
+    border:2px solid #111
+}
+
+.wheel img{
+    width:100%;
+    height:105px;
+    object-fit:contain;
+    background:#f2f2f2;
+    display:block
+}
+
+.wtxt{
+    display:block;
+    padding:9px
+}
+
+.wheel b{
+    display:block;
+    font-size:11px
+}
+
+.wheel small{
     display:block;
     color:#777;
     font-size:9px;
+    margin-top:4px
 }
 
-/* =========================
-   OPTIONS
-========================= */
 
-.opt{
-    display:block;
-    border:1px solid #ddd;
-    padding:11px;
-    margin:7px 0;
-    font-size:11px;
+/* =====================================================
+   SELLERIES
+   Indépendantes de la vue "Sièges" du haut.
+===================================================== */
+
+.selleries{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px
+}
+
+.sellerie{
+    border:1px solid #ccc;
+    background:#fff;
     cursor:pointer;
+    padding:0;
+    overflow:hidden;
+    text-align:left
 }
 
-.opt:hover{
-    background:#fafafa;
+.sellerie.selected{
+    border:2px solid #111
 }
 
-.opt input{
-    width:16px;
-    height:16px;
-    vertical-align:middle;
-    margin-right:7px;
+.sellerie img{
+    width:100%;
+    height:100px;
+    object-fit:cover;
+    display:block
 }
 
-.opt small{
+.stxt{
+    display:block;
+    padding:9px
+}
+
+.sellerie b{
+    display:block;
+    font-size:11px
+}
+
+.sellerie small{
     display:block;
     color:#777;
-    margin-top:4px;
-    margin-left:25px;
+    font-size:9px;
+    margin-top:4px
 }
 
-/* =========================
+
+/* =====================================================
+   OPTIONS
+===================================================== */
+
+.option{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    border:1px solid #ddd;
+    padding:9px;
+    margin:7px 0;
+    cursor:pointer;
+    background:#fff
+}
+
+.option:hover{
+    background:#fafafa
+}
+
+.option input{
+    width:18px;
+    height:18px;
+    accent-color:#111;
+    flex:none
+}
+
+.thumb{
+    width:82px;
+    height:58px;
+    background:#eee;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:9px;
+    color:#777;
+    flex:none;
+    overflow:hidden;
+    border-radius:5px
+}
+
+.thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block
+}
+
+.txt{
+    flex:1
+}
+
+.txt b{
+    display:block;
+    font-size:13px
+}
+
+.txt small{
+    display:block;
+    color:#777;
+    margin-top:3px
+}
+
+.hint{
+    font-size:12px;
+    color:#777;
+    line-height:1.45
+}
+
+.hidden{
+    display:none!important
+}
+
+
+/* =====================================================
    RÉCAPITULATIF
-========================= */
+===================================================== */
 
 .recap{
     padding:18px;
-    background:#f5f5f5;
+    background:#f5f5f5
 }
 
 .row{
@@ -315,102 +467,98 @@ body{
     gap:15px;
     border-bottom:1px solid #ddd;
     padding:7px;
-    font-size:10px;
+    font-size:10px
 }
 
-/* =========================
-   BARRE PRIX
-========================= */
+.row:last-child{
+    border-bottom:0
+}
 
-.bottom{
+
+/* =====================================================
+   PRIX
+===================================================== */
+
+.total{
     position:fixed;
     right:0;
     bottom:0;
-    width:42%;
+    width:430px;
     background:#111;
     color:#fff;
-    padding:14px 20px;
+    padding:15px 24px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    z-index:20;
+    z-index:30
 }
 
-.bottom button{
-    background:#ffd500;
+.total small{
+    font-size:10px
+}
+
+.total strong{
+    font-size:21px
+}
+
+.total button{
     border:0;
-    padding:10px 15px;
-    font-weight:bold;
-    cursor:pointer;
+    background:#ffd500;
+    padding:12px 16px;
+    font-weight:800;
+    cursor:pointer
 }
 
-/* =========================
+
+/* =====================================================
    RESPONSIVE
-========================= */
+===================================================== */
 
-@media(max-width:850px){
+@media(max-width:900px){
 
-    .layout{
-        grid-template-columns:1fr;
+    main{
+        grid-template-columns:1fr
     }
 
-    .visual{
-        position:relative;
-        height:430px;
+    .panel{
+        border:0
     }
 
-    .car{
-        height:340px;
+    .total{
+        width:100%
     }
 
-    .bottom{
-        width:100%;
+    .hero{
+        min-height:420px
+    }
+}
+
+@media(max-width:520px){
+
+    header{
+        padding:0 14px
     }
 
-    .grid{
-        grid-template-columns:1fr;
+    .sub{
+        font-size:9px
     }
 
     .colors{
-        grid-template-columns:repeat(3,1fr);
+        grid-template-columns:repeat(3,1fr)
+    }
+
+    .selleries,
+    .wheels{
+        grid-template-columns:1fr 1fr
     }
 
     .views{
-        height:90px;
-        grid-template-columns:repeat(6,1fr);
+        padding:9px
     }
 
     .views button{
         font-size:9px;
-        padding:4px 2px;
-    }
-}
-
-@media(max-width:500px){
-
-    .top{
-        padding:0 14px;
-    }
-
-    .logo{
-        font-size:20px;
-    }
-
-    .top-title{
-        font-size:10px;
-    }
-
-    .colors{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .views{
-        gap:3px;
-        padding:6px 4px;
-    }
-
-    .views button{
-        font-size:8px;
+        padding:8px 9px
     }
 }
 </style>
@@ -418,130 +566,192 @@ body{
 
 <body>
 
-<header class="top">
+<header>
     <div class="logo">RENAULT</div>
-    <div class="top-title">MÉGANE IV · CONFIGURATEUR</div>
+    <div class="sub">MÉGANE IV PHASE 2 · CONFIGURATEUR FRANCE</div>
 </header>
 
-<div class="layout">
 
-    <!-- =====================
-         ZONE IMAGE
-    ====================== -->
+<main>
 
-    <section class="visual">
+<!-- =====================================================
+     PARTIE GAUCHE
+===================================================== -->
 
-        <div class="car" id="car">
-            <div class="placeholder">
-                <b>Votre Mégane</b><br>
-                Ajoutez vos photos dans <b>images/</b> :
-                <br>
-                front.jpg · side.jpg · rear.jpg · wheels.jpg · seats.jpg · dashboard.jpg
-            </div>
+<section class="viewer">
+
+    <div class="hero">
+
+        <div class="car" id="car"></div>
+
+        <div class="summary">
+
+            <b id="name">
+                Mégane Berline Evolution
+            </b>
+
+            <br>
+
+            <span id="spec"></span>
+
         </div>
 
-        <!-- SEUL ESPACE D'IMAGES -->
-        <div class="views" id="views"></div>
+    </div>
+
+
+    <!-- LES 6 VUES UNIQUEMENT -->
+
+    <div class="views" id="views"></div>
+
+</section>
+
+
+<!-- =====================================================
+     PARTIE DROITE
+===================================================== -->
+
+<section class="panel">
+
+    <div class="step">
+
+        <small>Configuration</small>
+
+        <h1>
+            Configurez votre Mégane
+        </h1>
+
+    </div>
+
+
+    <!-- CARROSSERIE -->
+
+    <div class="section">
+
+        <h2>Carrosserie</h2>
+
+        <div
+            class="cards"
+            id="body">
+        </div>
+
+    </div>
+
+
+    <!-- FINITION -->
+
+    <div class="section">
+
+        <h2>Finition</h2>
+
+        <div
+            class="cards"
+            id="trim">
+        </div>
+
+    </div>
+
+
+    <!-- MOTORISATION -->
+
+    <div class="section">
+
+        <h2>Motorisation</h2>
+
+        <select id="engine"></select>
+
+    </div>
+
+
+    <!-- COULEURS -->
+
+    <div class="section">
+
+        <h2>Couleur</h2>
+
+        <div
+            class="colors"
+            id="color">
+        </div>
+
+    </div>
+
+
+    <!-- JANTES -->
+
+    <div class="section">
+
+        <h2>Jantes</h2>
+
+        <div
+            class="wheels"
+            id="wheel">
+        </div>
+
+    </div>
+
+
+    <!-- SELLERIES -->
+
+    <div class="section">
+
+        <h2>Sellerie</h2>
+
+        <div
+            class="selleries"
+            id="upholstery">
+        </div>
+
+    </div>
+
+
+    <!-- OPTIONS -->
+
+    <div class="section">
+
+        <h2>Options</h2>
+
+        <p class="hint">
+            Les options incompatibles avec la finition
+            ou la motorisation sont automatiquement masquées.
+        </p>
+
+        <div id="options"></div>
+
+    </div>
+
+
+    <!-- RÉCAP -->
+
+    <section class="recap">
+
+        <b>Récapitulatif</b>
+
+        <div id="recap"></div>
 
     </section>
 
-    <!-- =====================
-         CONFIGURATION
-    ====================== -->
+</section>
 
-    <main class="panel">
+</main>
 
-        <div class="head">
-            <small>CONFIGURATION</small>
-            <h1>Mégane</h1>
-            <p>
-                Configurateur inspiré de la gamme Renault Mégane IV.
-            </p>
-        </div>
-
-        <!-- CARROSSERIE -->
-
-        <section class="section">
-
-            <h3>Carrosserie</h3>
-
-            <div class="grid" id="body"></div>
-
-        </section>
-
-        <!-- FINITION -->
-
-        <section class="section">
-
-            <h3>Finition</h3>
-
-            <div class="grid" id="trim"></div>
-
-        </section>
-
-        <!-- MOTORISATION -->
-
-        <section class="section">
-
-            <h3>Motorisation</h3>
-
-            <div id="engine"></div>
-
-        </section>
-
-        <!-- COULEUR -->
-
-        <section class="section">
-
-            <h3>Couleur</h3>
-
-            <div class="colors" id="color"></div>
-
-        </section>
-
-        <!-- JANTES -->
-
-        <section class="section">
-
-            <h3>Jantes</h3>
-
-            <div id="wheel"></div>
-
-        </section>
-
-        <!-- OPTIONS -->
-
-        <section class="section">
-
-            <h3>Options</h3>
-
-            <p class="hint">
-                Les options incompatibles avec la motorisation ou la finition sont automatiquement masquées.
-            </p>
-
-            <div id="options"></div>
-
-        </section>
-
-        <!-- RÉCAP -->
-
-        <section class="recap">
-
-            <b>Récapitulatif</b>
-
-            <div id="recap"></div>
-
-        </section>
-
-    </main>
-
-</div>
 
 <!-- PRIX -->
 
-<div class="bottom">
+<div class="total">
 
-    <strong id="price">—</strong>
+    <div>
+
+        <small>
+            PRIX TOTAL
+        </small>
+
+        <br>
+
+        <strong id="price">
+            —
+        </strong>
+
+    </div>
 
     <button onclick="save()">
         ENREGISTRER
@@ -549,23 +759,27 @@ body{
 
 </div>
 
+
 <script>
 
-/* =========================================================
-   OUTILS
-========================================================= */
+/* =====================================================
+   FORMAT PRIX
+===================================================== */
 
 const E = n =>
-    new Intl.NumberFormat('fr-FR',{
-        style:'currency',
-        currency:'EUR',
-        maximumFractionDigits:0
-    }).format(n);
+    new Intl.NumberFormat(
+        'fr-FR',
+        {
+            style:'currency',
+            currency:'EUR',
+            maximumFractionDigits:0
+        }
+    ).format(n);
 
 
-/* =========================================================
+/* =====================================================
    FINITIONS
-========================================================= */
+===================================================== */
 
 const trims = {
 
@@ -582,85 +796,331 @@ const trims = {
 };
 
 
-/* =========================================================
+/* =====================================================
    MOTORISATIONS
-========================================================= */
+===================================================== */
 
 const engines = {
 
     evolution:[
-        ['1.3 TCe 140 ch BVM6','Essence',28800],
-        ['1.6 E-Tech 160 ch BVA','Essence hybride rechargeable',38750],
-        ['1.5 Blue dCi 115 ch BVM6','Diesel',30800],
-        ['1.5 Blue dCi 115 ch EDC7','Diesel',32800]
+
+        [
+            'tce140bvm',
+            '1.3 TCe 140 ch BVM6',
+            'Essence',
+            28800
+        ],
+
+        [
+            'e160',
+            '1.6 E-Tech 160 ch BVA',
+            'Essence hybride rechargeable',
+            38750
+        ],
+
+        [
+            'blue115',
+            '1.5 Blue dCi 115 ch BVM6',
+            'Diesel',
+            30800
+        ],
+
+        [
+            'blue115edc',
+            '1.5 Blue dCi 115 ch EDC7',
+            'Diesel',
+            32800
+        ]
+
     ],
+
 
     techno:[
-        ['1.3 TCe 140 ch BVM6','Essence',30750],
-        ['1.3 TCe 140 ch EDC7','Essence',32750],
-        ['1.6 E-Tech 160 ch BVA','Essence hybride rechargeable',40700],
-        ['1.5 Blue dCi 115 ch BVM6','Diesel',32750],
-        ['1.5 Blue dCi 115 ch EDC7','Diesel',34750]
+
+        [
+            'tce140bvm',
+            '1.3 TCe 140 ch BVM6',
+            'Essence',
+            30750
+        ],
+
+        [
+            'tce140edc',
+            '1.3 TCe 140 ch EDC7',
+            'Essence',
+            32750
+        ],
+
+        [
+            'e160',
+            '1.6 E-Tech 160 ch BVA',
+            'Essence hybride rechargeable',
+            40700
+        ],
+
+        [
+            'blue115',
+            '1.5 Blue dCi 115 ch BVM6',
+            'Diesel',
+            32750
+        ],
+
+        [
+            'blue115edc',
+            '1.5 Blue dCi 115 ch EDC7',
+            'Diesel',
+            34750
+        ]
+
     ],
+
 
     rsline:[
-        ['1.3 TCe 160 ch EDC7','Essence',35050]
+
+        [
+            'tce160edc',
+            '1.3 TCe 160 ch EDC7',
+            'Essence',
+            35050
+        ]
+
     ],
+
 
     rs:[
-        ['1.8 300 ch EDC7','Essence',44000]
+
+        [
+            'rs300',
+            '1.8 300 ch EDC7',
+            'Essence',
+            44000
+        ]
+
     ],
 
+
     rstrophy:[
-        ['1.8 300 ch EDC7','Essence',49000]
+
+        [
+            'rs300',
+            '1.8 300 ch EDC7',
+            'Essence',
+            49000
+        ]
+
     ]
 
 };
 
 
-/* =========================================================
+/* =====================================================
    COULEURS
-========================================================= */
+===================================================== */
 
-const normal = [
+const colors = [
 
-    ['Blanc Glacier','#eeeeee',0],
+    [
+        'Blanc Glacier',
+        'images/couleurs/blanc_glacier.jpg',
+        0
+    ],
 
-    ['Gris Highland','#777777',0],
+    [
+        'Blanc Nacré',
+        'images/couleurs/blanc_nacre.jpg',
+        850
+    ],
 
-    ['Gris Titanium','#555555',0],
+    [
+        'Bleu Iron',
+        'images/couleurs/bleu_iron.jpg',
+        0
+    ],
 
-    ['Noir Étoilé','#111111',0],
+    [
+        'Bleu Cosmos',
+        'images/couleurs/bleu_cosmos.jpg',
+        0
+    ],
 
-    ['Bleu Iron','#34506d',0],
+    [
+        'Cuivre Solar',
+        'images/couleurs/cuivre_solar.jpg',
+        0
+    ],
 
-    ['Rouge Flamme','#8d2020',0]
+    [
+        'Rouge Flamme',
+        'images/couleurs/rouge_flamme.jpg',
+        0
+    ],
+
+    [
+        'Gris Highland',
+        'images/couleurs/gris_highland.jpg',
+        0
+    ],
+
+    [
+        'Gris Baltique',
+        'images/couleurs/gris_baltique.jpg',
+        0
+    ],
+
+    [
+        'Gris Titanium',
+        'images/couleurs/gris_titanium.jpg',
+        0
+    ],
+
+    [
+        'Noir Étoilé',
+        'images/couleurs/noir_etoile.jpg',
+        0
+    ],
+
+    [
+        'Orange Tonic',
+        'images/couleurs/orange_tonic.jpg',
+        1600
+    ],
+
+    [
+        'Jaune Sirius',
+        'images/couleurs/jaune_sirius.jpg',
+        1600
+    ]
 
 ];
 
 
-const rscols = [
+/* =====================================================
+   SELLERIES
+===================================================== */
 
-    ['Blanc nacré','#fafafa',850],
+const selleries = [
 
-    ['Gris Highland','#777777',650],
+    [
+        'Sellerie tissu Carbone foncé',
+        'images/selleries/tissu_carbone_fonce.jpg',
+        ['evolution','techno']
+    ],
 
-    ['Gris Titanium','#555555',650],
+    [
+        'Sellerie tissu SL Limited',
+        'images/selleries/tissu_sl_limited.jpg',
+        []
+    ],
 
-    ['Jaune Sirius','#d4b000',1600],
+    [
+        'Sellerie mixte similicuir / tissu Carbone texturé',
+        'images/selleries/mixte_similicuir_tissu_carbone_texture.jpg',
+        ['techno']
+    ],
 
-    ['Noir Étoilé','#111111',650],
+    [
+        'Sellerie cuir perforé Noir Titane',
+        'images/selleries/cuir_perfore_noir_titane.jpg',
+        ['techno']
+    ],
 
-    ['Orange Tonic','#e76d16',1600],
+    [
+        'Sellerie Alcantara Gris Foncé avec surpiqûres rouges R.S. line',
+        'images/selleries/alcantara_gris_fonce_rs_line.jpg',
+        ['rsline']
+    ],
 
-    ['Rouge Flamme','#8d2020',850]
+    [
+        'Sellerie tissu spécifique R.S.',
+        'images/selleries/tissu_specifique_rs.jpg',
+        ['rs']
+    ],
+
+    [
+        'Sellerie Alcantara R.S.',
+        'images/selleries/alcantara_rs.jpg',
+        ['rs','rstrophy']
+    ]
 
 ];
 
 
-/* =========================================================
+/* =====================================================
+   JANTES
+   Les fichiers existants sont conservés.
+===================================================== */
+
+const wheelData = {
+
+    elliptik:[
+        'Jante 16" avec enjoliveur Elliptik',
+        'images/elliptik.jpg',
+        0,
+        ['evolution']
+    ],
+
+    impulse:[
+        'Jante alliage Impulse 16"',
+        'images/impulse.jpg',
+        0,
+        ['evolution']
+    ],
+
+    allium:[
+        'Jante alliage Allium 17"',
+        'images/allium.jpg',
+        0,
+        ['evolution','techno']
+    ],
+
+    techno:[
+        'Jante alliage Techno 17"',
+        'images/techno.jpg',
+        0,
+        ['techno']
+    ],
+
+    hightek:[
+        'Jante alliage Hightek 18"',
+        'images/hightek.jpg',
+        700,
+        ['techno','rsline']
+    ],
+
+    montlhery:[
+        'Jante Montlhéry 17"',
+        'images/montlhéry.jpg',
+        0,
+        ['rsline']
+    ],
+
+    magny:[
+        'Jante Magny-Cours 18"',
+        'images/magny-cours.jpg',
+        500,
+        ['rsline']
+    ],
+
+    interlagos:[
+        'Jantes 19" RS Interlagos Diam Noir',
+        'images/interlagos.jpg',
+        1000,
+        ['rs']
+    ],
+
+    fuji:[
+        'Jantes 19" RS Trophy Fuji Light',
+        'images/fuji.jpg',
+        2000,
+        ['rstrophy']
+    ]
+
+};
+
+
+/* =====================================================
    ÉTAT
-========================================================= */
+===================================================== */
 
 let s = {
 
@@ -672,330 +1132,56 @@ let s = {
 
     color:0,
 
-    wheel:0,
+    wheel:'impulse',
+
+    sellerie:'Sellerie tissu Carbone foncé',
 
     opts:new Set()
 
 };
 
 
-/* =========================================================
+/* =====================================================
    MOTEUR ACTUEL
-========================================================= */
+===================================================== */
 
-const list = () => engines[s.trim];
+const list = () =>
+    engines[s.trim];
 
 const eng = () =>
     list()[s.engine] || list()[0];
 
-const hyb = () =>
-    eng()[1].includes('hybride');
+const hybrid = () =>
+    eng()[2].includes('hybride');
 
-const dies = () =>
-    eng()[1] === 'Diesel';
+const diesel = () =>
+    eng()[2] === 'Diesel';
 
-
-/* =========================================================
-   OPTIONS
-========================================================= */
-
-function options(){
-
-    let o = [];
-
-    const a = (id,n,p,d='',ok=1) =>
-        ok && o.push([id,n,p,d]);
+const petrol = () =>
+    eng()[2] === 'Essence';
 
 
-    /* =========================
-       EVOLUTION
-    ========================= */
+/* =====================================================
+   IMAGE AVEC SOLUTION DE SECOURS
+===================================================== */
 
-    if(s.trim === 'evolution'){
-
-        a(
-            'spare',
-            'Roue de secours',
-            200,
-            'Essence uniquement',
-            !hyb() && !dies()
-        );
-
-        a(
-            'galette',
-            'Roue de secours galette',
-            150,
-            'Diesel uniquement',
-            dies()
-        );
-
-        a(
-            'allweather',
-            'Pneus tout temps',
-            300,
-            'Ajoute les enjoliveurs Elliptik et supprime les jantes Impulse'
-        );
-
-        a(
-            'camera',
-            'Caméra de recul',
-            250
-        );
-
-        a(
-            'safety',
-            'Safety Pack',
-            650
-        );
-
-        a(
-            'dash42',
-            'Tableau de bord : écran numérique 4,2 pouces + compteurs analogiques',
-            -100,
-            'Non disponible sur hybride',
-            !hyb()
-        );
-
-        a(
-            'mirrors',
-            'Rétroviseurs extérieurs électriques et dégivrants',
-            0,
-            'Non disponible sur hybride',
-            !hyb()
-        );
-
-        a(
-            'wallbox',
-            'Câble de recharge Wallbox',
-            300,
-            'Hybride uniquement',
-            hyb()
-        );
-    }
-
-
-    /* =========================
-       TECHNO
-    ========================= */
-
-    if(s.trim === 'techno'){
-
-        a(
-            'spareTechno',
-            'Roue de secours',
-            200,
-            'Essence uniquement',
-            !hyb() && !dies()
-        );
-
-        a(
-            'galetteTechno',
-            'Roue de secours galette',
-            150,
-            'Diesel uniquement',
-            dies()
-        );
-
-        a(
-            'hud',
-            'Affichage tête haute',
-            400
-        );
-
-        a(
-            'hightek',
-            'Jantes Hightek',
-            700
-        );
-
-        a(
-            'sunroof',
-            'Toit ouvrant',
-            900
-        );
-
-        a(
-            'dash10',
-            'Tableau de bord numérique 10 pouces',
-            100
-        );
-
-        a(
-            'winter',
-            'Winter Pack',
-            400
-        );
-
-        a(
-            'easypark',
-            'Pack Easy Park',
-            550
-        );
-
-        a(
-            'wallbox',
-            'Câble de recharge Wallbox',
-            300,
-            'Hybride uniquement',
-            hyb()
-        );
-    }
-
-
-    /* =========================
-       RS LINE
-    ========================= */
-
-    if(s.trim === 'rsline'){
-
-        a(
-            'spareRS',
-            'Roue de secours',
-            200,
-            'Essence uniquement',
-            !hyb() && !dies()
-        );
-
-        a(
-            'galetteRS',
-            'Roue de secours galette',
-            150,
-            'Diesel uniquement',
-            dies()
-        );
-
-        a(
-            'bose',
-            'Bose',
-            700
-        );
-
-        a(
-            'hud',
-            'Affichage tête haute',
-            400
-        );
-
-        a(
-            'easydrive',
-            'Pack Easy Drive E-Tech',
-            600
-        );
-
-        a(
-            'magny',
-            'Jantes 18 pouces Magny-Cours',
-            500
-        );
-
-        a(
-            'sunroof',
-            'Toit ouvrant',
-            900
-        );
-    }
-
-
-    /* =========================
-       RS
-    ========================= */
-
-    if(s.trim === 'rs'){
-
-        a(
-            'interlagos',
-            'Jantes 19 pouces Interlagos noires',
-            1000
-        );
-
-        a(
-            'sunroof',
-            'Toit ouvrant',
-            900
-        );
-
-        a(
-            'rsmonitor',
-            'RS Monitor',
-            250
-        );
-
-        a(
-            'alcantara',
-            'Pack Alcantara',
-            1500
-        );
-    }
-
-
-    /* =========================
-       RS TROPHY
-    ========================= */
-
-    if(s.trim === 'rstrophy'){
-
-        a(
-            'adaptive',
-            'Régulateur de vitesse adaptatif',
-            300
-        );
-
-        a(
-            'fuji',
-            'Jantes 19 pouces RS Trophy Fuji Light',
-            2000
-        );
-
-        a(
-            'sunroof',
-            'Toit ouvrant',
-            900
-        );
-
-        a(
-            'rsmonitor',
-            'RS Monitor',
-            250
-        );
-
-        a(
-            'recaro',
-            'Sièges baquet Recaro',
-            1900,
-            'Non chauffants'
-        );
-    }
-
-
-    return o;
-}
-
-
-/* =========================================================
-   LES 6 IMAGES DU HAUT
-========================================================= */
-
-function img(file,label){
+function safeImg(src,alt,cls=''){
 
     return `
         <img
-            src="images/${file}"
-            alt="${label}"
-            onerror="
-                this.replaceWith(
-                    Object.assign(
-                        document.createElement('span'),
-                        {
-                            className:'placeholder',
-                            textContent:'${label}'
-                        }
-                    )
-                )
-            "
+            class="${cls}"
+            src="${src}"
+            alt="${alt}"
+            onerror="this.style.display='none'"
         >
     `;
+
 }
 
+
+/* =====================================================
+   LES 6 VUES DU HAUT
+===================================================== */
 
 function views(){
 
@@ -1016,91 +1202,865 @@ function views(){
     ];
 
 
-    const box = document.getElementById('views');
+    const box =
+        document.getElementById('views');
+
 
     box.innerHTML = '';
 
 
     v.forEach((x,i)=>{
 
-        const b = document.createElement('button');
+        const b =
+            document.createElement('button');
 
         b.type = 'button';
 
         b.textContent = x[1];
 
+
         if(i === 0){
-            b.className = 'active';
+
+            b.classList.add('active');
+
         }
+
 
         b.onclick = ()=>{
 
             document
                 .querySelectorAll('.views button')
-                .forEach(z=>z.classList.remove('active'));
+                .forEach(z =>
+                    z.classList.remove('active')
+                );
+
 
             b.classList.add('active');
 
-            document.getElementById('car').innerHTML =
-                img(x[0],x[1]);
+
+            document
+                .getElementById('car')
+                .innerHTML =
+                    safeImg(
+                        'images/'+x[0],
+                        x[1]
+                    );
+
         };
+
 
         box.appendChild(b);
 
     });
 
 
-    document.getElementById('car').innerHTML =
-        img('front.jpg','Vue avant');
+    document
+        .getElementById('car')
+        .innerHTML =
+            safeImg(
+                'images/front.jpg',
+                'Vue avant'
+            );
+
 }
 
 
-/* =========================================================
-   RENDU
-========================================================= */
+/* =====================================================
+   COULEURS
+===================================================== */
+
+function renderColors(){
+
+    const root =
+        document.getElementById('color');
+
+
+    root.innerHTML = '';
+
+
+    colors.forEach((c,i)=>{
+
+        const b =
+            document.createElement('button');
+
+
+        b.type = 'button';
+
+
+        b.className =
+            'color ' +
+            (s.color === i ? 'selected' : '');
+
+
+        b.innerHTML = `
+
+            ${safeImg(
+                c[1],
+                c[0],
+                'color-photo'
+            )}
+
+            <b>
+                ${c[0]}
+            </b>
+
+            <small>
+                ${
+                    c[2]
+                    ? '+ '+E(c[2])
+                    : 'Série / selon finition'
+                }
+            </small>
+
+        `;
+
+
+        b.onclick = ()=>{
+
+            s.color = i;
+
+            render();
+
+        };
+
+
+        root.appendChild(b);
+
+    });
+
+}
+
+
+/* =====================================================
+   SELLERIES
+   Indépendantes de la vue "Sièges".
+===================================================== */
+
+function availableSelleries(){
+
+    return selleries.filter(
+        x =>
+            x[2].includes(s.trim)
+    );
+
+}
+
+
+function renderSelleries(){
+
+    const root =
+        document.getElementById('upholstery');
+
+
+    const a =
+        availableSelleries();
+
+
+    if(
+        !a.some(
+            x =>
+                x[0] === s.sellerie
+        )
+    ){
+
+        s.sellerie =
+            a[0]?.[0] || '';
+
+    }
+
+
+    root.innerHTML =
+        a.length
+
+        ? a.map(x=>`
+
+            <button
+                type="button"
+                class="sellerie ${
+                    s.sellerie === x[0]
+                    ? 'selected'
+                    : ''
+                }"
+                onclick="
+                    s.sellerie =
+                    ${JSON.stringify(x[0])};
+                    render();
+                "
+            >
+
+                ${safeImg(
+                    x[1],
+                    x[0]
+                )}
+
+                <span class="stxt">
+
+                    <b>
+                        ${x[0]}
+                    </b>
+
+                    <small>
+                        Sellerie de la finition sélectionnée
+                    </small>
+
+                </span>
+
+            </button>
+
+        `).join('')
+
+        :
+
+        `
+        <p class="hint">
+            Aucune sellerie renseignée pour cette finition.
+        </p>
+        `;
+
+}
+
+
+/* =====================================================
+   JANTES
+   Indépendantes de la vue "Jantes" du haut.
+===================================================== */
+
+function availableWheels(){
+
+    let a = [];
+
+
+    if(s.trim === 'evolution'){
+
+        a = [
+
+            wheelData.elliptik,
+
+            wheelData.impulse,
+
+            wheelData.allium
+
+        ];
+
+    }
+
+
+    if(s.trim === 'techno'){
+
+        a = [
+
+            wheelData.allium,
+
+            wheelData.techno,
+
+            wheelData.hightek
+
+        ];
+
+    }
+
+
+    if(s.trim === 'rsline'){
+
+        a = [
+
+            wheelData.montlhery,
+
+            wheelData.magny,
+
+            wheelData.hightek
+
+        ];
+
+    }
+
+
+    if(s.trim === 'rs'){
+
+        a = [
+
+            wheelData.interlagos
+
+        ];
+
+    }
+
+
+    if(s.trim === 'rstrophy'){
+
+        a = [
+
+            wheelData.fuji
+
+        ];
+
+    }
+
+
+    return a;
+
+}
+
+
+function renderWheels(){
+
+    const root =
+        document.getElementById('wheel');
+
+
+    const a =
+        availableWheels();
+
+
+    const current =
+        wheelData[s.wheel];
+
+
+    if(
+        !a.includes(current)
+    ){
+
+        s.wheel =
+            Object.keys(wheelData)
+                .find(
+                    k =>
+                        wheelData[k] === a[0]
+                );
+
+    }
+
+
+    root.innerHTML =
+        a.map(x=>{
+
+            const id =
+                Object.keys(wheelData)
+                    .find(
+                        k =>
+                            wheelData[k] === x
+                    );
+
+
+            return `
+
+                <button
+                    type="button"
+                    class="wheel ${
+                        s.wheel === id
+                        ? 'selected'
+                        : ''
+                    }"
+                    onclick="
+                        s.wheel='${id}';
+                        render();
+                    "
+                >
+
+                    ${safeImg(
+                        x[1],
+                        x[0]
+                    )}
+
+                    <span class="wtxt">
+
+                        <b>
+                            ${x[0]}
+                        </b>
+
+                        <small>
+                            ${
+                                x[2]
+                                ? '+ '+E(x[2])
+                                : 'Équipement de série'
+                            }
+                        </small>
+
+                    </span>
+
+                </button>
+
+            `;
+
+        }).join('');
+
+}
+
+
+/* =====================================================
+   OPTIONS
+===================================================== */
+
+function options(){
+
+    const o = [];
+
+
+    const add =
+        (
+            id,
+            name,
+            price,
+            note='',
+            ok=true,
+            img=''
+        ) => {
+
+            if(ok){
+
+                o.push({
+                    id,
+                    name,
+                    price,
+                    note,
+                    img
+                });
+
+            }
+
+        };
+
+
+    /* -------------------------------------------------
+       EVOLUTION / TECHNO / RS LINE
+    ------------------------------------------------- */
+
+    if(
+        s.trim === 'evolution' ||
+        s.trim === 'techno' ||
+        s.trim === 'rsline'
+    ){
+
+        /*
+         * Roue de secours normale :
+         * 200 € — essence uniquement
+         * incompatible E-Tech hybride
+         */
+
+        add(
+            'spare',
+            'Roue de secours',
+            200,
+            'Essence uniquement · incompatible E-Tech hybride rechargeable',
+            petrol(),
+            'options/roue_secours.jpg'
+        );
+
+
+        /*
+         * Roue galette Diesel :
+         * 150 €
+         */
+
+        add(
+            'galetteDiesel',
+            'Roue de secours galette — Diesel',
+            150,
+            'Diesel uniquement',
+            diesel(),
+            'options/roue_galette.jpg'
+        );
+
+    }
+
+
+    /*
+     * Roue galette Essence :
+     * ajoutée séparément comme demandé.
+     */
+
+    if(
+        s.trim === 'techno' ||
+        s.trim === 'rsline'
+    ){
+
+        add(
+            'galetteEssence',
+            'Roue de secours galette — Essence',
+            150,
+            'Essence uniquement',
+            petrol(),
+            'options/roue_galette.jpg'
+        );
+
+    }
+
+
+    /* -------------------------------------------------
+       EVOLUTION
+    ------------------------------------------------- */
+
+    if(s.trim === 'evolution'){
+
+        add(
+            'allweather',
+            'Pneus tout temps',
+            300
+        );
+
+        add(
+            'camera',
+            'Caméra de recul',
+            250
+        );
+
+        add(
+            'safety',
+            'Pack Safety',
+            650
+        );
+
+        add(
+            'dash42',
+            'Tableau de bord numérique 4,2 pouces + compteurs analogiques',
+            -100,
+            'Non disponible sur hybride',
+            !hybrid()
+        );
+
+        add(
+            'mirrors',
+            'Rétroviseurs extérieurs électriques et dégivrants',
+            0,
+            'Non disponible sur hybride',
+            !hybrid()
+        );
+
+        add(
+            'wallbox',
+            'Câble de recharge Wallbox',
+            300,
+            'Hybride uniquement',
+            hybrid()
+        );
+
+    }
+
+
+    /* -------------------------------------------------
+       TECHNO
+    ------------------------------------------------- */
+
+    if(s.trim === 'techno'){
+
+        add(
+            'hud',
+            'Affichage tête haute',
+            400
+        );
+
+        add(
+            'sunroof',
+            'Toit ouvrant électrique panoramique',
+            900
+        );
+
+        add(
+            'dash10',
+            'Tableau de bord numérique 10 pouces',
+            100
+        );
+
+        add(
+            'winter',
+            'Winter Pack',
+            400
+        );
+
+        add(
+            'easypark',
+            'Pack Easy Park',
+            550
+        );
+
+        add(
+            'wallbox',
+            'Câble de recharge Wallbox',
+            300,
+            'Hybride uniquement',
+            hybrid()
+        );
+
+    }
+
+
+    /* -------------------------------------------------
+       RS LINE
+    ------------------------------------------------- */
+
+    if(s.trim === 'rsline'){
+
+        add(
+            'bose',
+            'Bose',
+            700
+        );
+
+        add(
+            'hud',
+            'Affichage tête haute',
+            400
+        );
+
+        add(
+            'easydrive',
+            'Pack Easy Drive E-Tech',
+            600
+        );
+
+        add(
+            'sunroof',
+            'Toit ouvrant électrique panoramique',
+            900
+        );
+
+    }
+
+
+    /* -------------------------------------------------
+       RS
+    ------------------------------------------------- */
+
+    if(s.trim === 'rs'){
+
+        add(
+            'sunroof',
+            'Toit ouvrant électrique panoramique',
+            900
+        );
+
+        add(
+            'rsmonitor',
+            'RS Monitor',
+            250
+        );
+
+        add(
+            'alcantara',
+            'Pack Alcantara',
+            1500
+        );
+
+    }
+
+
+    /* -------------------------------------------------
+       RS TROPHY
+    ------------------------------------------------- */
+
+    if(s.trim === 'rstrophy'){
+
+        add(
+            'adaptive',
+            'Régulateur de vitesse adaptatif',
+            300
+        );
+
+        add(
+            'sunroof',
+            'Toit ouvrant électrique panoramique',
+            900
+        );
+
+        add(
+            'rsmonitor',
+            'RS Monitor',
+            250
+        );
+
+        add(
+            'recaro',
+            'Sièges baquet Recaro',
+            1900,
+            'Non chauffants'
+        );
+
+    }
+
+
+    return o;
+
+}
+
+
+/* =====================================================
+   AFFICHAGE OPTIONS
+===================================================== */
+
+function renderOptions(){
+
+    const root =
+        document.getElementById('options');
+
+
+    const a =
+        options();
+
+
+    const valid =
+        new Set(
+            a.map(x => x.id)
+        );
+
+
+    [...s.opts].forEach(id=>{
+
+        if(!valid.has(id)){
+
+            s.opts.delete(id);
+
+        }
+
+    });
+
+
+    root.innerHTML =
+
+        a.map(x=>`
+
+            <label class="option">
+
+                ${
+                    x.img
+
+                    ? safeImg(
+                        x.img,
+                        x.name,
+                        'thumb'
+                    )
+
+                    :
+
+                    '<span class="thumb">IMAGE</span>'
+                }
+
+
+                <input
+                    type="checkbox"
+                    ${
+                        s.opts.has(x.id)
+                        ? 'checked'
+                        : ''
+                    }
+                    onchange="
+                        toggle(
+                            '${x.id}',
+                            this.checked
+                        )
+                    "
+                >
+
+
+                <span class="txt">
+
+                    <b>
+
+                        ${x.name}
+
+                        —
+
+                        ${
+                            x.price < 0
+
+                            ? '− '+E(-x.price)
+
+                            :
+
+                            x.price
+
+                            ? '+'+E(x.price)
+
+                            : '0 €'
+                        }
+
+                    </b>
+
+
+                    <small>
+                        ${x.note}
+                    </small>
+
+                </span>
+
+            </label>
+
+        `).join('');
+
+}
+
+
+/* =====================================================
+   RENDU PRINCIPAL
+===================================================== */
 
 function render(){
 
-    /* Les versions RS ne sont pas disponibles sur Estate */
+    /*
+     * Les versions RS / RS Trophy
+     * ne sont pas disponibles sur Estate.
+     */
 
     if(
         s.body === 'estate' &&
-        (s.trim === 'rs' || s.trim === 'rstrophy')
+        (
+            s.trim === 'rs' ||
+            s.trim === 'rstrophy'
+        )
     ){
+
         s.trim = 'evolution';
-        s.engine = 0;
-        s.opts.clear();
+
     }
 
 
-    if(s.engine >= list().length){
+    if(
+        s.engine >= list().length
+    ){
+
         s.engine = 0;
+
     }
 
 
-    /* =========================
+    /* -------------------------------------------------
        CARROSSERIE
-    ========================= */
+    ------------------------------------------------- */
 
-    document.querySelector('#body').innerHTML =
+    document
+        .getElementById('body')
+        .innerHTML =
 
         ['berline','estate']
         .map(b=>`
 
             <button
                 type="button"
-                class="choice ${s.body===b?'selected':''}"
-                onclick="s.body='${b}';render()"
+                class="card ${
+                    s.body === b
+                    ? 'selected'
+                    : ''
+                }"
+                onclick="
+                    s.body='${b}';
+                    render();
+                "
             >
 
-                <b>
+                <strong>
                     Mégane
-                    ${b[0].toUpperCase()+b.slice(1)}
-                </b>
+                    ${
+                        b === 'estate'
+                        ? 'Estate'
+                        : 'Berline'
+                    }
+                </strong>
 
-                <small>
-                    ${b==='estate'?'+ 1 000 €':''}
-                </small>
+                <span>
+                    ${
+                        b === 'estate'
+                        ? 'Break · + 1 000 €'
+                        : 'Hatchback 5 portes'
+                    }
+                </span>
 
             </button>
 
@@ -1108,22 +2068,36 @@ function render(){
         .join('');
 
 
-    /* =========================
+    /* -------------------------------------------------
        FINITIONS
-    ========================= */
+    ------------------------------------------------- */
 
-    document.querySelector('#trim').innerHTML =
+    document
+        .getElementById('trim')
+        .innerHTML =
 
         Object.keys(trims)
-        .filter(t=>
-            !(s.body==='estate' &&
-            (t==='rs'||t==='rstrophy'))
+
+        .filter(
+            t =>
+                !(
+                    s.body === 'estate' &&
+                    (
+                        t === 'rs' ||
+                        t === 'rstrophy'
+                    )
+                )
         )
+
         .map(t=>`
 
             <button
                 type="button"
-                class="choice ${s.trim===t?'selected':''}"
+                class="card ${
+                    s.trim === t
+                    ? 'selected'
+                    : ''
+                }"
                 onclick="
                     s.trim='${t}';
                     s.engine=0;
@@ -1132,7 +2106,13 @@ function render(){
                 "
             >
 
-                <b>${trims[t]}</b>
+                <strong>
+                    ${trims[t]}
+                </strong>
+
+                <span>
+                    Équipements et personnalisation
+                </span>
 
             </button>
 
@@ -1140,341 +2120,169 @@ function render(){
         .join('');
 
 
-    /* =========================
+    /* -------------------------------------------------
        MOTORISATIONS
-    ========================= */
+    ------------------------------------------------- */
 
-    document.querySelector('#engine').innerHTML =
+    const sel =
+        document.getElementById('engine');
+
+
+    sel.innerHTML =
 
         list()
         .map((e,i)=>`
 
-            <div
-                class="item ${s.engine===i?'selected':''}"
-                onclick="
-                    s.engine=${i};
-                    s.opts.clear();
-                    render();
-                "
-            >
+            <option value="${i}">
 
-                <span>
+                ${e[1]}
 
-                    <b>${e[0]}</b>
+                —
 
-                    <small>${e[1]}</small>
+                ${e[2]}
 
-                </span>
+                —
 
-                <b>
-                    ${E(
-                        e[2] +
-                        (s.body==='estate'?1000:0)
-                    )}
-                </b>
+                ${E(
+                    e[3] +
+                    (
+                        s.body === 'estate'
+                        ? 1000
+                        : 0
+                    )
+                )}
 
-            </div>
+            </option>
 
         `)
         .join('');
 
 
-    /* =========================
+    sel.value = s.engine;
+
+
+    sel.onchange = e => {
+
+        s.engine =
+            Number(e.target.value);
+
+        s.opts.clear();
+
+        render();
+
+    };
+
+
+    /* -------------------------------------------------
        COULEURS
-    ========================= */
-
-    let cs =
-        (s.trim==='rs'||s.trim==='rstrophy')
-        ? rscols
-        : normal;
-
+    ------------------------------------------------- */
 
     s.color =
-        Math.min(s.color,cs.length-1);
-
-
-    document.querySelector('#color').innerHTML =
-
-        cs
-        .map((c,i)=>`
-
-            <button
-                type="button"
-                class="color ${s.color===i?'selected':''}"
-                onclick="
-                    s.color=${i};
-                    render();
-                "
-            >
-
-                <i
-                    class="dot"
-                    style="background:${c[1]}"
-                ></i>
-
-                <b>${c[0]}</b>
-
-                <small>
-                    ${
-                        c[2]
-                        ? '+ '+E(c[2])
-                        : 'Prix non renseigné'
-                    }
-                </small>
-
-            </button>
-
-        `)
-        .join('');
-
-
-    /* =========================
-       JANTES
-    ========================= */
-
-    let ws;
-
-
-    if(s.trim === 'evolution'){
-
-        ws = s.opts.has('allweather')
-
-            ? [
-                ['Enjoliveurs Elliptik',0]
-              ]
-
-            : [
-                ['Jantes Impulse',0]
-              ];
-
-    }
-
-    else if(s.trim === 'techno'){
-
-        ws = [
-
-            ['Jantes alliage de série',0],
-
-            ['Jantes Hightek',700]
-
-        ];
-
-    }
-
-    else if(s.trim === 'rsline'){
-
-        ws = [
-
-            ['Jantes de série RS Line',0],
-
-            ['Jantes 18 pouces Magny-Cours',500]
-
-        ];
-
-    }
-
-    else if(s.trim === 'rs'){
-
-        ws = [
-
-            ['Jantes de série RS',0],
-
-            ['Jantes 19 pouces Interlagos noires',1000]
-
-        ];
-
-    }
-
-    else{
-
-        ws = [
-
-            ['Jantes de série RS Trophy',0],
-
-            ['Jantes 19 pouces RS Trophy Fuji Light',2000]
-
-        ];
-
-    }
-
-
-    s.wheel =
-        Math.min(s.wheel,ws.length-1);
-
-
-    document.querySelector('#wheel').innerHTML =
-
-        ws
-        .map((w,i)=>`
-
-            <div
-                class="item ${s.wheel===i?'selected':''}"
-                onclick="
-                    s.wheel=${i};
-                    render();
-                "
-            >
-
-                <b>${w[0]}</b>
-
-                <b>
-                    ${
-                        w[1]
-                        ? '+ '+E(w[1])
-                        : 'Série'
-                    }
-                </b>
-
-            </div>
-
-        `)
-        .join('');
-
-
-    /* =========================
-       OPTIONS VALIDES
-    ========================= */
-
-    let o = options();
-
-    let valid =
-        new Set(
-            o.map(x=>x[0])
+        Math.min(
+            s.color,
+            colors.length - 1
         );
 
 
-    [...s.opts].forEach(x=>{
-
-        if(!valid.has(x)){
-            s.opts.delete(x);
-        }
-
-    });
+    renderColors();
 
 
-    /* Empêche de sélectionner
-       deux types de roue de secours */
+    /* -------------------------------------------------
+       JANTES
+    ------------------------------------------------- */
 
-    if(
-        s.opts.has('spare') ||
-        s.opts.has('spareTechno') ||
-        s.opts.has('spareRS')
-    ){
-
-        s.opts.delete('galette');
-        s.opts.delete('galetteTechno');
-        s.opts.delete('galetteRS');
-
-    }
+    renderWheels();
 
 
-    if(
-        s.opts.has('galette') ||
-        s.opts.has('galetteTechno') ||
-        s.opts.has('galetteRS')
-    ){
+    /* -------------------------------------------------
+       SELLERIES
+    ------------------------------------------------- */
 
-        s.opts.delete('spare');
-        s.opts.delete('spareTechno');
-        s.opts.delete('spareRS');
-
-    }
+    renderSelleries();
 
 
-    /* =========================
-       AFFICHAGE OPTIONS
-    ========================= */
+    /* -------------------------------------------------
+       OPTIONS
+    ------------------------------------------------- */
 
-    document.querySelector('#options').innerHTML =
-
-        o
-        .map(x=>`
-
-            <label class="opt">
-
-                <input
-                    type="checkbox"
-                    ${s.opts.has(x[0])?'checked':''}
-                    onchange="
-                        toggle('${x[0]}',this.checked)
-                    "
-                >
-
-                <b>
-
-                    ${x[1]}
-
-                    —
-
-                    ${
-                        x[2] < 0
-                        ? '− '+E(-x[2])
-                        : x[2]
-                        ? '+'+E(x[2])
-                        : '0 €'
-                    }
-
-                </b>
-
-                <small>
-                    ${x[3]}
-                </small>
-
-            </label>
-
-        `)
-        .join('');
+    renderOptions();
 
 
-    /* =========================
-       CALCUL DU PRIX
-    ========================= */
+    /* -------------------------------------------------
+       PRIX
+    ------------------------------------------------- */
+
+    const base =
+        eng()[3] +
+        (
+            s.body === 'estate'
+            ? 1000
+            : 0
+        );
+
+
+    const color =
+        colors[s.color]?.[2] || 0;
+
+
+    const wheel =
+        wheelData[s.wheel]?.[2] || 0;
+
 
     let total =
-
-        eng()[2]
-
-        +
-
-        (s.body==='estate'?1000:0)
-
-        +
-
-        cs[s.color][2]
-
-        +
-
-        ws[s.wheel][1];
+        base +
+        color +
+        wheel;
 
 
-    o.forEach(x=>{
+    options().forEach(x=>{
 
-        if(
-            s.opts.has(x[0]) &&
-            ![
-                'hightek',
-                'magny',
-                'interlagos',
-                'fuji'
-            ].includes(x[0])
-        ){
+        if(s.opts.has(x.id)){
 
-            total += x[2];
+            total += x.price;
 
         }
 
     });
 
 
-    document.querySelector('#price').textContent =
-        E(total);
+    document
+        .getElementById('price')
+        .textContent =
+            E(total);
 
 
-    /* =========================
+    /* -------------------------------------------------
        RÉCAPITULATIF
-    ========================= */
+    ------------------------------------------------- */
 
-    document.querySelector('#recap').innerHTML =
+    document
+        .getElementById('name')
+        .textContent =
+
+        `Mégane ${
+            s.body === 'estate'
+            ? 'Estate'
+            : 'Berline'
+        } ${trims[s.trim]}`;
+
+
+    document
+        .getElementById('spec')
+        .textContent =
+
+        `${eng()[1]} · ${
+            colors[s.color][0]
+        } · ${
+            wheelData[s.wheel]?.[0] || ''
+        } · ${
+            s.sellerie || 'Sellerie non renseignée'
+        }`;
+
+
+    document
+        .getElementById('recap')
+        .innerHTML =
 
         [
 
@@ -1492,17 +2300,22 @@ function render(){
 
             [
                 'Motorisation',
-                eng()[0]
+                eng()[1]
             ],
 
             [
                 'Couleur',
-                cs[s.color][0]
+                colors[s.color][0]
             ],
 
             [
                 'Jantes',
-                ws[s.wheel][0]
+                wheelData[s.wheel]?.[0] || ''
+            ],
+
+            [
+                'Sellerie',
+                s.sellerie || ''
             ]
 
         ]
@@ -1511,22 +2324,25 @@ function render(){
 
             <div class="row">
 
-                <span>${x[0]}</span>
+                <span>
+                    ${x[0]}
+                </span>
 
-                <b>${x[1]}</b>
+                <b>
+                    ${x[1]}
+                </b>
 
             </div>
 
         `)
-
         .join('');
 
 }
 
 
-/* =========================================================
-   OPTIONS
-========================================================= */
+/* =====================================================
+   GESTION DES OPTIONS
+===================================================== */
 
 function toggle(id,on){
 
@@ -1541,38 +2357,33 @@ function toggle(id,on){
     }
 
 
-    /* Roue de secours normale */
+    /*
+     * Une seule roue de secours à la fois.
+     */
 
     if(
+        on &&
         (
             id === 'spare' ||
-            id === 'spareTechno' ||
-            id === 'spareRS'
-        ) &&
-        on
+            id === 'galetteDiesel' ||
+            id === 'galetteEssence'
+        )
     ){
 
-        s.opts.delete('galette');
-        s.opts.delete('galetteTechno');
-        s.opts.delete('galetteRS');
+        [
+            'spare',
+            'galetteDiesel',
+            'galetteEssence'
 
-    }
+        ]
 
+        .filter(
+            x => x !== id
+        )
 
-    /* Roue galette */
-
-    if(
-        (
-            id === 'galette' ||
-            id === 'galetteTechno' ||
-            id === 'galetteRS'
-        ) &&
-        on
-    ){
-
-        s.opts.delete('spare');
-        s.opts.delete('spareTechno');
-        s.opts.delete('spareRS');
+        .forEach(
+            x => s.opts.delete(x)
+        );
 
     }
 
@@ -1582,9 +2393,9 @@ function toggle(id,on){
 }
 
 
-/* =========================================================
-   ENREGISTREMENT
-========================================================= */
+/* =====================================================
+   SAUVEGARDE
+===================================================== */
 
 function save(){
 
@@ -1612,9 +2423,9 @@ function save(){
 }
 
 
-/* =========================================================
+/* =====================================================
    INITIALISATION
-========================================================= */
+===================================================== */
 
 views();
 
