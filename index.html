@@ -149,6 +149,36 @@ header{
     font-size:11px;
 }
 
+/* MOTORISATIONS DISPONIBLES */
+.available-fuels{
+    margin-top:12px;
+    padding:12px 14px;
+    background:#f6f6f6;
+    border:1px solid #ddd;
+}
+
+.available-fuels-title{
+    font-size:10px;
+    color:#777;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:8px;
+}
+
+.fuel-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.fuel{
+    background:white;
+    border:1px solid #ccc;
+    padding:7px 10px;
+    font-size:10px;
+    font-weight:bold;
+}
+
 .engine{
     border:1px solid #ccc;
     padding:15px;
@@ -180,179 +210,119 @@ header{
 .colors{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:8px;
-}
-
-.color{
-    background:white;
-    border:1px solid #ccc;
-    padding:10px;
-    text-align:left;
-}
-
-.color.active{
-    border:2px solid #111;
-    padding:9px;
-}
-
-.color-dot{
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    display:inline-block;
-    vertical-align:middle;
-    margin-right:8px;
-    border:1px solid #999;
-}
-
-.color-name{
-    font-size:11px;
-    font-weight:bold;
-}
-
-.color-price{
-    display:block;
-    margin-left:40px;
-    margin-top:3px;
-    font-size:9px;
-    color:#777;
-}
-
-.upholstery-grid,
-.wheel-grid,
-.option-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
     gap:12px;
 }
 
-.upholstery,
+/* FORMAT COMMUN ROND COULEUR / JANTE / SELLERIE */
+.color,
 .wheel,
-.option{
+.upholstery{
     background:white;
     border:1px solid #ccc;
-    padding:0;
+    padding:12px;
     text-align:left;
-    overflow:hidden;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-height:92px;
 }
 
-.upholstery.active,
+.color.active,
 .wheel.active,
-.option.active{
+.upholstery.active{
     border:2px solid #111;
+    padding:11px;
 }
 
-.upholstery img,
-.wheel img{
-    width:100%;
-    height:140px;
-    object-fit:contain;
-    display:block;
-    background:#eee;
-}
-
-/* MODIFICATION 2 : SELLERIE RONDE */
-.upholstery img{
-    width:140px;
-    height:140px;
+.color-round,
+.wheel-round,
+.upholstery-round{
+    width:68px;
+    height:68px;
+    min-width:68px;
+    min-height:68px;
     border-radius:50%;
-    object-fit:cover;
-    margin:15px auto 0;
-}
-
-/* OPTIONS : IMAGE 16:9 */
-.option img{
-    width:100%;
-    aspect-ratio:16 / 9;
-    height:auto;
-    object-fit:cover;
-    display:block;
-    background:#eee;
-}
-
-.image-missing{
-    width:100%;
-    height:140px;
+    overflow:hidden;
     display:flex;
     align-items:center;
     justify-content:center;
-    text-align:center;
+    border:1px solid #aaa;
     background:#eee;
-    color:#999;
-    font-size:10px;
 }
 
-.option .image-missing{
-    aspect-ratio:16 / 9;
-    height:auto;
+.color-round{
+    position:relative;
 }
 
-.upholstery-info,
-.wheel-info{
-    padding:12px;
+.color-round-inner{
+    width:100%;
+    height:100%;
+    border-radius:50%;
 }
 
-.upholstery-info strong,
-.wheel-info strong{
+.wheel-round img,
+.upholstery-round img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+}
+
+.upholstery-round img{
+    object-fit:cover;
+}
+
+.color-info,
+.wheel-info,
+.upholstery-info{
+    min-width:0;
+    flex:1;
+}
+
+.color-name,
+.wheel-name,
+.upholstery-name{
+    display:block;
     font-size:11px;
+    font-weight:bold;
+    line-height:1.3;
 }
 
-.upholstery-info small,
-.wheel-info span{
+.color-price,
+.wheel-price,
+.upholstery-price{
     display:block;
     margin-top:5px;
     font-size:10px;
     color:#777;
 }
 
-/* NOUVELLE PRÉSENTATION DES OPTIONS */
-.option-content{
-    padding:12px;
+.wheel-grid,
+.upholstery-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
 }
 
-.option-content strong{
-    display:block;
-    font-size:11px;
-    margin-bottom:10px;
-}
-
-.option-bottom{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-}
-
-.option-check{
+.image-missing{
+    width:100%;
+    height:100%;
     display:flex;
     align-items:center;
-    gap:7px;
-    font-size:10px;
-    color:#555;
-}
-
-.option-check input{
-    width:16px;
-    height:16px;
-    margin:0;
-    accent-color:#111;
-}
-
-.option-price{
-    font-size:10px;
-    color:#777;
-    font-weight:bold;
-    white-space:nowrap;
-}
-
-.option-description{
-    display:block;
-    margin-top:7px;
-    font-size:9px;
+    justify-content:center;
+    text-align:center;
+    background:#eee;
     color:#999;
+    font-size:9px;
+    padding:5px;
 }
 
-/* COMPTEUR DES CATÉGORIES */
+.option-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
 .option-category{
     margin-bottom:25px;
 }
@@ -361,22 +331,109 @@ header{
     display:flex;
     align-items:center;
     gap:8px;
-    margin:0 0 12px;
-    font-size:15px;
+    margin-bottom:12px;
+    font-size:14px;
+    font-weight:bold;
 }
 
 .option-category-count{
-    min-width:20px;
-    height:20px;
-    padding:0 6px;
-    border-radius:10px;
+    display:none;
     background:#111;
     color:white;
-    display:inline-flex;
+    min-width:19px;
+    height:19px;
+    border-radius:50%;
     align-items:center;
     justify-content:center;
     font-size:10px;
+}
+
+.option-category-count.visible{
+    display:flex;
+}
+
+.option{
+    background:white;
+    border:1px solid #ccc;
+    padding:0;
+    text-align:left;
+    overflow:hidden;
+    width:100%;
+}
+
+.option.active{
+    border:2px solid #111;
+}
+
+.option img{
+    width:100%;
+    aspect-ratio:16/9;
+    height:auto;
+    object-fit:cover;
+    display:block;
+    background:#eee;
+}
+
+.option-content{
+    padding:12px;
+}
+
+.option-content strong{
+    font-size:11px;
+    display:block;
+}
+
+.option-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+}
+
+.option-check{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:10px;
+    color:#555;
+}
+
+.option-check-box{
+    width:15px;
+    height:15px;
+    border:1px solid #999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:white;
+}
+
+.option.active .option-check-box{
+    background:#111;
+    border-color:#111;
+}
+
+.option-check-box::after{
+    content:"✓";
+    color:white;
+    font-size:10px;
+    display:none;
+}
+
+.option.active .option-check-box::after{
+    display:block;
+}
+
+.option-price{
+    font-size:11px;
     font-weight:bold;
+}
+
+.option-description{
+    display:block;
+    margin-top:6px;
+    font-size:9px;
+    color:#777;
 }
 
 .summary{
@@ -436,7 +493,6 @@ header{
 }
 
 @media(max-width:900px){
-
     .container{
         grid-template-columns:1fr;
     }
@@ -452,7 +508,6 @@ header{
 }
 
 @media(max-width:600px){
-
     .grid,
     .colors,
     .wheel-grid,
@@ -509,43 +564,69 @@ header{
 </div>
 
 <section class="section">
+
 <h2>Carrosserie</h2>
+
 <div class="grid" id="bodyChoices"></div>
+
 </section>
 
 <section class="section">
+
 <h2>Finition</h2>
+
 <div class="grid" id="trimChoices"></div>
+
+<div id="availableFuelBox"></div>
+
 </section>
 
 <section class="section">
+
 <h2>Motorisation</h2>
+
 <div id="engineChoices"></div>
+
 </section>
 
 <section class="section">
+
 <h2>Couleur</h2>
+
 <div class="colors" id="colorChoices"></div>
+
 </section>
 
 <section class="section">
+
 <h2>Sellerie</h2>
+
 <div class="upholstery-grid" id="upholsteryChoices"></div>
+
 </section>
 
 <section class="section">
+
 <h2>Jantes</h2>
+
 <div class="wheel-grid" id="wheelChoices"></div>
+
 </section>
 
 <section class="section">
+
 <h2>Options et équipements</h2>
+
 <div id="optionChoices"></div>
+
 </section>
 
 <section class="summary">
+
 <div class="summary-title">Votre configuration</div>
+
 <div id="summary"></div>
+
 </section>
 
 </main>
@@ -684,29 +765,62 @@ function isRS(){
 
 
 /* =========================================================
-   MODIFICATION 1 :
-   TYPES DE MOTORISATIONS DISPONIBLES UNIQUEMENT
+   MOTORISATIONS DISPONIBLES
+   AFFICHÉ DANS LA PARTIE FINITION
 ========================================================= */
 
 function getAvailableFuelTypes(){
 
-    const types=[];
+    const fuels=[];
 
     engines[config.trim].forEach(engine=>{
 
         let type=engine[1];
 
-        if(type==="Essence hybride rechargeable"){
-            type="Hybride rechargeable";
+        if(type.includes("hybride")){
+            type="Hybride";
+        }else if(type==="Diesel"){
+            type="Diesel";
+        }else{
+            type="Essence";
         }
 
-        if(!types.includes(type)){
-            types.push(type);
+        if(!fuels.includes(type)){
+            fuels.push(type);
         }
 
     });
 
-    return types;
+    return fuels;
+
+}
+
+
+function renderAvailableFuels(){
+
+    const c=document.getElementById("availableFuelBox");
+
+    const fuels=getAvailableFuelTypes();
+
+    c.innerHTML=`
+
+        <div class="available-fuels">
+
+            <div class="available-fuels-title">
+                Motorisations disponibles
+            </div>
+
+            <div class="fuel-list">
+
+                ${fuels.map(fuel=>`
+                    <span class="fuel">${fuel}</span>
+                `).join("")}
+
+            </div>
+
+        </div>
+
+    `;
 
 }
 
@@ -806,32 +920,6 @@ function renderEngines(){
 
     c.innerHTML="";
 
-    /*
-       Affichage des motorisations disponibles :
-       uniquement Essence / Diesel / Hybride rechargeable
-    */
-
-    const types=getAvailableFuelTypes();
-
-    const available=document.createElement("div");
-
-    available.style.marginBottom="15px";
-    available.style.fontSize="11px";
-    available.style.color="#777";
-
-    available.innerHTML=`
-        <strong style="color:#111">Motorisations disponibles :</strong>
-        ${types.join(" · ")}
-    `;
-
-    c.appendChild(available);
-
-
-    /*
-       Les moteurs précis restent sélectionnables
-       dans la partie "Motorisation".
-    */
-
     engines[config.trim].forEach((engine,index)=>{
 
         const d=document.createElement("div");
@@ -897,16 +985,24 @@ function renderColors(){
 
         b.innerHTML=`
 
-            <span class="color-dot"
-                  style="background:${color[1]}"></span>
+            <div class="color-round">
+                <div
+                    class="color-round-inner"
+                    style="background:${color[1]}">
+                </div>
+            </div>
 
-            <span class="color-name">
-                ${color[0]}
-            </span>
+            <div class="color-info">
 
-            <span class="color-price">
-                ${color[2]>0?"+ "+euro(color[2]):"Prix de base"}
-            </span>
+                <span class="color-name">
+                    ${color[0]}
+                </span>
+
+                <span class="color-price">
+                    ${color[2]>0?"+ "+euro(color[2]):"Prix de base"}
+                </span>
+
+            </div>
 
         `;
 
@@ -992,17 +1088,24 @@ function renderUpholstery(){
 
         b.innerHTML=`
 
-            <img src="${item[1]}"
-                 alt="${item[0]}"
-                 onerror="imageError(this,'${item[1]}')">
+            <div class="upholstery-round">
+
+                <img
+                    src="${item[1]}"
+                    alt="${item[0]}"
+                    onerror="imageError(this,'${item[1]}')">
+
+            </div>
 
             <div class="upholstery-info">
 
-                <strong>${item[0]}</strong>
+                <span class="upholstery-name">
+                    ${item[0]}
+                </span>
 
-                <small>
+                <span class="upholstery-price">
                     ${item[2]>0?"+ "+euro(item[2]):"Équipement de série"}
-                </small>
+                </span>
 
             </div>
 
@@ -1074,7 +1177,8 @@ function getWheels(){
 
             ["Jantes 19\" Interlagos noires","interlagos.jpg",1000],
 
-            ["Jantes Alu 19\" RS Interlagos Diam Noir","interlagos_diamant_noir.jpg",1000]
+            ["Jantes Alu 19\" RS Interlagos Diam Noir",
+             "interlagos_diamant_noir.jpg",1000]
 
         ];
 
@@ -1083,9 +1187,11 @@ function getWheels(){
 
     return[
 
-        ["Jantes aluminium 19\" Jerez","jantes_rs_trophy.jpg",0],
+        ["Jantes 19\" Tripoton Jerez",
+         "jantes_rs_trophy.jpg",0],
 
-        ["Jantes aluminium 19\" Fuji Light","fuji_light.jpg",2000]
+        ["Jantes alliage 19\" Trophy Fuji Light",
+         "fuji_light.jpg",2000]
 
     ];
 
@@ -1112,15 +1218,22 @@ function renderWheels(){
 
         b.innerHTML=`
 
-            <img src="${wheel[1]}"
-                 alt="${wheel[0]}"
-                 onerror="imageError(this,'${wheel[1]}')">
+            <div class="wheel-round">
+
+                <img
+                    src="${wheel[1]}"
+                    alt="${wheel[0]}"
+                    onerror="imageError(this,'${wheel[1]}')">
+
+            </div>
 
             <div class="wheel-info">
 
-                <strong>${wheel[0]}</strong>
+                <span class="wheel-name">
+                    ${wheel[0]}
+                </span>
 
-                <span>
+                <span class="wheel-price">
                     ${wheel[2]>0?"+ "+euro(wheel[2]):"Équipement de série"}
                 </span>
 
@@ -1191,12 +1304,17 @@ function getOptions(){
             "Confort"
         );
 
+        /*
+          Les pneus tout temps sont liés aux enjoliveurs Elliptik.
+          L'option n'apparaît donc que lorsqu'elle est disponible
+          et sélectionnée.
+        */
         add(
             "allweather",
             "Pneus tout temps",
             300,
             "pneus_tout_temps.jpg",
-            "Ajoute les enjoliveurs Elliptik et supprime les jantes Impulse",
+            "Avec enjoliveurs 16\" Elliptik",
             true,
             "Confort"
         );
@@ -1316,6 +1434,26 @@ function getOptions(){
             "Multimédia"
         );
 
+        add(
+            "spare",
+            "Roue de secours",
+            200,
+            "roue_secours.jpg",
+            "Essence uniquement",
+            !isHybrid() && !isDiesel(),
+            "Confort"
+        );
+
+        add(
+            "galette",
+            "Roue de secours galette",
+            150,
+            "galette.jpg",
+            "Diesel uniquement",
+            isDiesel(),
+            "Confort"
+        );
+
     }
 
 
@@ -1366,8 +1504,18 @@ function getOptions(){
             "Roue de secours",
             150,
             "roue_secours.jpg",
-            "",
-            true,
+            "Essence uniquement",
+            !isHybrid() && !isDiesel(),
+            "Confort"
+        );
+
+        add(
+            "galetteRS",
+            "Roue de secours galette",
+            150,
+            "galette.jpg",
+            "Diesel uniquement",
+            isDiesel(),
             "Confort"
         );
 
@@ -1470,90 +1618,88 @@ function renderOptions(){
 
     const options=getOptions();
 
-    const categories={};
+    const categories=[
+        "Multimédia",
+        "Conduite et sécurité",
+        "Confort",
+        "Autres"
+    ];
 
-    options.forEach(option=>{
+    categories.forEach(category=>{
 
-        if(!categories[option.category]){
-            categories[option.category]=[];
-        }
+        const items=options.filter(
+            option=>option.category===category
+        );
 
-        categories[option.category].push(option);
+        if(!items.length) return;
 
-    });
+        const categoryBox=document.createElement("div");
 
+        categoryBox.className="option-category";
 
-    Object.keys(categories).forEach(category=>{
-
-        const categoryOptions=categories[category];
-
-        const selectedCount=categoryOptions.filter(option =>
-            config.options.includes(option.id)
+        const selectedCount=items.filter(
+            option=>config.options.includes(option.id)
         ).length;
 
+        categoryBox.innerHTML=`
 
-        const section=document.createElement("div");
+            <div class="option-category-title">
 
-        section.className="option-category";
+                <span>${category}</span>
 
+                <span class="option-category-count ${
+                    selectedCount>0?"visible":""
+                }">
+                    ${selectedCount}
+                </span>
 
-        const title=document.createElement("h3");
+            </div>
 
-        title.className="option-category-title";
+            <div class="option-grid"></div>
 
-        title.innerHTML=`
-            ${category}
-            ${
-                selectedCount>0
-                ?`<span class="option-category-count">${selectedCount}</span>`
-                :""
-            }
         `;
 
-        section.appendChild(title);
+        const grid=categoryBox.querySelector(".option-grid");
 
-
-        const grid=document.createElement("div");
-
-        grid.className="option-grid";
-
-
-        categoryOptions.forEach(option=>{
+        items.forEach(option=>{
 
             const b=document.createElement("button");
 
             b.className="option "+
                 (config.options.includes(option.id)?"active":"");
 
-
-            const checked=config.options.includes(option.id);
-
-
             b.innerHTML=`
 
-                <img src="${option.image}"
-                     alt="${option.name}"
-                     onerror="imageError(this,'${option.image}')">
+                <img
+                    src="${option.image}"
+                    alt="${option.name}"
+                    onerror="imageError(this,'${option.image}')">
 
                 <div class="option-content">
 
                     <strong>${option.name}</strong>
 
+                    ${
+                        option.description
+                        ? `<span class="option-description">
+                            ${option.description}
+                           </span>`
+                        : ""
+                    }
+
                     <div class="option-bottom">
 
-                        <label class="option-check"
-                               onclick="event.stopPropagation()">
+                        <div class="option-check">
 
-                            <input
-                                type="checkbox"
-                                ${checked?"checked":""}
-                            >
+                            <span class="option-check-box"></span>
 
                             <span>
-                                ${checked?"Sélectionné":"Sélectionner"}
+                                ${config.options.includes(option.id)
+                                ?"Sélectionné"
+                                :"Sélectionner"}
                             </span>
 
-                        </label>
+                        </div>
 
                         <span class="option-price">
 
@@ -1569,25 +1715,18 @@ function renderOptions(){
 
                     </div>
 
-                    ${
-                        option.description
-                        ?`<span class="option-description">
-                            ${option.description}
-                          </span>`
-                        :""
-                    }
-
                 </div>
 
             `;
-
 
             b.onclick=()=>{
 
                 if(config.options.includes(option.id)){
 
                     config.options=
-                        config.options.filter(id=>id!==option.id);
+                        config.options.filter(
+                            id=>id!==option.id
+                        );
 
                 }else{
 
@@ -1595,47 +1734,37 @@ function renderOptions(){
 
                 }
 
-
-                if(option.id==="spare"){
+                if(option.id==="spare" ||
+                   option.id==="spareRS"){
 
                     config.options=
-                        config.options.filter(id=>id!=="galette");
+                        config.options.filter(
+                            id=>id!=="galette" &&
+                            id!=="galetteRS"
+                        );
 
                 }
 
-
-                if(option.id==="galette"){
+                if(option.id==="galette" ||
+                   option.id==="galetteRS"){
 
                     config.options=
-                        config.options.filter(id=>id!=="spare");
+                        config.options.filter(
+                            id=>id!=="spare" &&
+                            id!=="spareRS"
+                        );
 
                 }
-
 
                 render();
 
             };
 
-
-            const checkbox=b.querySelector("input");
-
-            checkbox.onchange=(event)=>{
-
-                event.stopPropagation();
-
-                b.click();
-
-            };
-
-
             grid.appendChild(b);
 
         });
 
-
-        section.appendChild(grid);
-
-        c.appendChild(section);
+        c.appendChild(categoryBox);
 
     });
 
@@ -1711,6 +1840,10 @@ function renderSummary(){
 
     const upholstery=getUpholsteries();
 
+    const selectedOptions=getOptions().filter(
+        option=>config.options.includes(option.id)
+    );
+
     c.innerHTML=`
 
         <div class="summary-row">
@@ -1754,6 +1887,37 @@ function renderSummary(){
                 ${wheels[config.wheel][0]}
             </strong>
         </div>
+
+        ${
+            selectedOptions.length
+            ?
+            selectedOptions.map(option=>`
+
+                <div class="summary-row">
+
+                    <span>${option.name}</span>
+
+                    <strong>
+                        ${
+                            option.price<0
+                            ?"− "+euro(-option.price)
+                            :option.price===0
+                            ?"0 €"
+                            :"+ "+euro(option.price)
+                        }
+                    </strong>
+
+                </div>
+
+            `).join("")
+            :
+            `
+                <div class="summary-row">
+                    <span>Options</span>
+                    <strong>Aucune</strong>
+                </div>
+            `
+        }
 
     `;
 
@@ -1826,12 +1990,25 @@ function saveConfiguration(){
 function render(){
 
     renderBodies();
+
     renderTrims();
+
+    /*
+       Les motorisations disponibles sont volontairement
+       affichées dans la partie Finition.
+    */
+    renderAvailableFuels();
+
     renderEngines();
+
     renderColors();
+
     renderUpholstery();
+
     renderWheels();
+
     renderOptions();
+
     renderSummary();
 
     document.getElementById("totalPrice").textContent=
