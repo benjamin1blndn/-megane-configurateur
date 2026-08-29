@@ -531,6 +531,26 @@ header{
     color:#666;
 }
 
+.wishlist-item{
+    background:white;
+    border:1px solid #ddd;
+    padding:12px;
+    margin-top:10px;
+    border-radius:4px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.wishlist-actions button{
+    background:#e00;
+    color:white;
+    border:none;
+    padding:4px 8px;
+    font-size:10px;
+    border-radius:2px;
+}
+
 .price-bar{
     position:fixed;
     bottom:0;
@@ -636,69 +656,49 @@ header{
 </div>
 
 <section class="section">
-
 <h2>Carrosserie</h2>
-
 <div class="grid" id="bodyChoices"></div>
-
 </section>
 
 <section class="section">
-
 <h2>Choisissez votre version</h2>
-
 <div class="grid" id="trimChoices"></div>
-
 <div id="availableFuelBox"></div>
-
 </section>
 
 <section class="section">
-
 <h2>Choisissez votre motorisation</h2>
-
 <div id="engineChoices"></div>
-
 </section>
 
 <section class="section">
-
 <h2>Couleur extérieure</h2>
-
 <div class="colors" id="colorChoices"></div>
-
 </section>
 
 <section class="section">
-
 <h2>Jantes</h2>
-
 <div class="wheel-grid" id="wheelChoices"></div>
-
 </section>
 
 <section class="section">
-
 <h2>Sellerie</h2>
-
 <div class="upholstery-grid" id="upholsteryChoices"></div>
-
 </section>
 
 <section class="section">
-
 <h2>Choisissez vos équipements</h2>
-
 <div id="optionChoices"></div>
-
 </section>
 
 <section class="summary">
-
 <div class="summary-title">En résumé</div>
-
 <div id="summary"></div>
+</section>
 
+<section class="summary" style="margin-top:20px; background:#fff; border:1px solid #eee;">
+<div class="summary-title">Mes Souhaits</div>
+<div id="wishlist"></div>
 </section>
 
 </main>
@@ -711,8 +711,8 @@ header{
     <div class="total-price" id="totalPrice">—</div>
 </div>
 
-<button class="save-button" onclick="saveConfiguration()">
-    ENREGISTRER
+<button class="save-button" onclick="handleSaveWishlist()">
+    AJOUTER AUX SOUHAITS
 </button>
 
 </div>
@@ -720,1370 +720,520 @@ header{
 <script>
 
 /* =========================================================
-   MOTORISATIONS
+   STRUCTURE DE DONNÉES CONFORME AUX SPÉCIFICATIONS
 ========================================================= */
 
-const engines={
-
-    evolution:[
-        ["1.3 TCe 140 ch BVM6","Essence",28800],
-        ["1.6 E-Tech 160 ch BVA","Essence hybride rechargeable",38750],
-        ["1.5 Blue dCi 115 ch BVM6","Diesel",30800],
-        ["1.5 Blue dCi 115 ch EDC7","Diesel",32800]
+const meganeConfigurator = {
+    trims: [
+        { id: "evolution", name: "Évolution", basePrice: 28800 },
+        { id: "techno", name: "Techno", basePrice: 31400 },
+        { id: "rs", name: "R.S.", basePrice: 44600 },
+        { id: "rs_trophy", name: "R.S. Trophy", basePrice: 49600 }
     ],
 
-    techno:[
-        ["1.3 TCe 140 ch BVM6","Essence",30750],
-        ["1.3 TCe 140 ch EDC7","Essence",32750],
-        ["1.6 E-Tech 160 ch BVA","Essence hybride rechargeable",40700],
-        ["1.5 Blue dCi 115 ch BVM6","Diesel",32750],
-        ["1.5 Blue dCi 115 ch EDC7","Diesel",34750]
+    engines: [
+        { id: "tce_140", name: "1.3 TCe 140 ch", type: "Essence", price: 0, availableIn: ["evolution", "techno"] },
+        { id: "etech_160", name: "1.6 E-Tech Plug-in Hybrid 160 ch", type: "Essence hybride rechargeable", price: 4500, availableIn: ["evolution", "techno"] },
+        { id: "dci_115_manual", name: "1.5 Blue dCi 115 ch", type: "Diesel", price: 1200, availableIn: ["evolution", "techno"] },
+        { id: "dci_115_edc", name: "1.5 Blue dCi 115 ch EDC", type: "Diesel", price: 3200, availableIn: ["evolution", "techno"] },
+        { id: "tce_300_rs", name: "1.8 TCe 300 ch EDC", type: "Essence", price: 0, availableIn: ["rs", "rs_trophy"] }
     ],
 
-    rsline:[
-        ["1.3 TCe 160 ch EDC7","Essence",35050]
+    colors: [
+        { id: "blanc_glacier", name: "Blanc Glacier", hex: "#ffffff", price: 0 },
+        { id: "noir_etoile", name: "Noir Étoilé", hex: "#111111", price: 650 },
+        { id: "gris_highland", name: "Gris Highland", hex: "#8a8d8f", price: 650 },
+        { id: "gris_titanium", name: "Gris Titanium", hex: "#555555", price: 650 },
+        { id: "rouge_flamme", name: "Rouge Flamme", hex: "#b30000", price: 850 },
+        { id: "jaune_sirius", name: "Jaune Sirius", hex: "#e5ad00", price: 1050, availableIn: ["rs", "rs_trophy"] },
+        { id: "orange_tonic", name: "Orange Tonic", hex: "#e65c00", price: 1050, availableIn: ["rs", "rs_trophy"] }
     ],
 
-    rs:[
-        ["1.8 300 ch EDC7","Essence",44000]
+    upholsteries: [
+        { id: "uph_tissu_carbone", name: "Sellerie tissu carbone", image: "upholstery_tissu_carbone.jpg", price: 0, availableIn: ["evolution"] },
+        { id: "uph_mixte_similicuir", name: "Sellerie mixte similicuir / tissu carbone texturé", image: "upholstery_mixte_similicuir.jpg", price: 0, availableIn: ["techno"] },
+        { id: "uph_alcantara_rs", name: "Sellerie en Alcantara® avec surpiqûres Rouge", image: "upholstery_alcantara_rs.jpg", price: 0, availableIn: ["rs", "rs_trophy"] },
+        { id: "uph_recaro_alcantara", name: "Sellerie Recaro® en Alcantara", image: "upholstery_recaro.jpg", price: 1200, availableIn: ["rs", "rs_trophy"] }
     ],
 
-    rstrophy:[
-        ["1.8 300 ch EDC7","Essence",49000]
+    options: [
+        // Évolution
+        { id: "tdb_42", name: 'Tableau de bord écran numérique 4,2" // + compteur analogique', image: "tableau_42.jpg", price: 0, category: "Intérieur & Écrans", availableIn: ["evolution"] },
+        { id: "frein_parking_assiste", name: "Frein de parking assisté", image: "frein_parking.jpg", price: 200, category: "Conduite et sécurité", availableIn: ["evolution"] },
+        { id: "camera_recul", name: "Caméra de recul", image: "camera_recul.jpg", price: 350, category: "Conduite et sécurité", availableIn: ["evolution"] },
+
+        // Techno (Exclusion Hybride pour écran 10")
+        { id: "tdb_10", name: "Tableau de bord avec écran numérique 10’’", image: "tableau_10.jpg", price: 500, category: "Intérieur & Écrans", availableIn: ["techno"], disabledForEngine: ["etech_160"] },
+
+        // Multi-finitions
+        { id: "bose_sound_system", name: "Bose® Sound System", image: "bose.jpg", price: 800, category: "Audio & Multimédia", availableIn: ["techno", "rs", "rs_trophy"] },
+        { id: "toit_ouvrant_elec", name: "Toit Ouvrant elec", image: "toit_ouvrant.jpg", price: 900, category: "Confort & Extérieur", availableIn: ["techno", "rs", "rs_trophy"] },
+
+        // R.S. & R.S. Trophy
+        { id: "head_up_display", name: "Affichage tête haute", image: "head_up_display.jpg", price: 400, category: "Conduite et sécurité", availableIn: ["rs", "rs_trophy"] },
+        { id: "acc_rs", name: "Régulateur de vitesse adaptatif", image: "acc.jpg", price: 300, category: "Conduite et sécurité", availableIn: ["rs", "rs_trophy"] },
+        { id: "pack_alcantara_opt", name: "Pack Alcantara (volant+sellerie)", image: "alcantara.jpg", price: 1500, category: "Personnalisation R.S.", availableIn: ["rs", "rs_trophy"] },
+        { id: "sieges_recaro_opt", name: "Sièges baquet Recaro (Non chauffants)", image: "recaro.jpg", price: 1600, category: "Sièges & Sport", availableIn: ["rs", "rs_trophy"] },
+        { id: "rs_monitor", name: "R.S. Monitor", image: "rs_monitor.jpg", price: 300, category: "Personnalisation R.S.", availableIn: ["rs", "rs_trophy"] }
     ]
 };
 
-const trimNames={
-    evolution:"Evolution",
-    techno:"Techno",
-    rsline:"RS Line",
-    rs:"RS",
-    rstrophy:"RS Trophy"
+// État courant de la sélection
+let config = {
+    body: "berline",
+    trimId: "evolution",
+    engineId: "tce_140",
+    colorId: "blanc_glacier",
+    upholsteryId: "uph_tissu_carbone",
+    wheelIndex: 0,
+    selectedOptionIds: []
 };
 
+// Liste des Souhaits
+const userWishlist = [];
 
-/* =========================================================
-   COULEURS
-========================================================= */
-
-const normalColors=[
-
-    ["Blanc Glacier","#eeeeee",0],
-    ["Blanc Nacré","#f5f5f2",850],
-    ["Bleu Iron","#304b67",750],
-    ["Gris Island","#777777",650],
-    ["Gris Titanium","#555555",650],
-    ["Noir Étoilé","#111111",650],
-    ["Rouge Flamme","#8b2020",850]
-
-];
-
-const rsColors=[
-
-    ["Blanc Glacier","#eeeeee",0],
-    ["Blanc Nacré","#f5f5f2",850],
-    ["Gris Highland","#777777",650],
-    ["Gris Titanium","#555555",650],
-    ["Jaune Sirius","#d6b500",1600],
-    ["Noir Étoilé","#111111",650],
-    ["Orange Tonic","#e66f17",1600],
-    ["Rouge Flamme","#8c2020",850]
-
-];
-
-
-let config={
-
-    body:"berline",
-    trim:"evolution",
-    engine:0,
-    color:0,
-    upholstery:0,
-    wheel:0,
-    options:[]
-
-};
-
-
-function euro(value){
-
-    return new Intl.NumberFormat("fr-FR",{
-        style:"currency",
-        currency:"EUR",
-        maximumFractionDigits:0
+function euro(value) {
+    return new Intl.NumberFormat("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+        maximumFractionDigits: 0
     }).format(value);
-
 }
 
-
-function currentEngine(){
-    return engines[config.trim][config.engine];
+function imageError(img, file) {
+    const box = document.createElement("div");
+    box.className = "image-missing";
+    box.innerHTML = "Image<br>introuvable";
+    img.replaceWith(box);
 }
 
-
-function isHybrid(){
-    return currentEngine()[1].includes("hybride");
+function changeView(file) {
+    const container = document.getElementById("carVisual");
+    const img = document.createElement("img");
+    img.src = file;
+    img.alt = "Renault Mégane";
+    img.onerror = () => {
+        container.innerHTML = `<div class="no-image"><strong>Image introuvable</strong><br><br>${file}</div>`;
+    };
+    img.onload = () => {
+        container.innerHTML = "";
+        container.appendChild(img);
+    };
 }
-
-
-function isDiesel(){
-    return currentEngine()[1]==="Diesel";
-}
-
-
-function isRS(){
-    return config.trim==="rs" || config.trim==="rstrophy";
-}
-
 
 /* =========================================================
-   MOTORISATIONS DISPONIBLES
-   AFFICHÉ DANS LA PARTIE FINITION
+   RENDU CARROSSERIE & FINITIONS
 ========================================================= */
 
-function getAvailableFuelTypes(){
-
-    const fuels=[];
-
-    engines[config.trim].forEach(engine=>{
-
-        let type=engine[1];
-
-        if(type.includes("hybride")){
-            type="Hybride";
-        }else if(type==="Diesel"){
-            type="Diesel";
-        }else{
-            type="Essence";
-        }
-
-        if(!fuels.includes(type)){
-            fuels.push(type);
-        }
-
-    });
-
-    return fuels;
-
-}
-
-
-function renderAvailableFuels(){
-
-    const c=document.getElementById("availableFuelBox");
-
-    const fuels=getAvailableFuelTypes();
-
-    c.innerHTML=`
-
-        <div class="available-fuels">
-
-            <div class="available-fuels-title">
-                Motorisations disponibles
-            </div>
-
-            <div class="fuel-list">
-
-                ${fuels.map(fuel=>`
-                    <span class="fuel">${fuel}</span>
-                `).join("")}
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   CARROSSERIE
-========================================================= */
-
-function renderBodies(){
-
-    const c=document.getElementById("bodyChoices");
-
-    c.innerHTML="";
-
-    ["berline","estate"].forEach(body=>{
-
-        const b=document.createElement("button");
-
-        b.className="choice "+(config.body===body?"active":"");
-
-        b.innerHTML=`
+function renderBodies() {
+    const c = document.getElementById("bodyChoices");
+    c.innerHTML = "";
+    ["berline", "estate"].forEach(body => {
+        const b = document.createElement("button");
+        b.className = "choice " + (config.body === body ? "active" : "");
+        b.innerHTML = `
             <div class="badge-ok">✓</div>
-            <strong>Mégane ${body==="berline"?"Berline":"Estate"}</strong>
-            <span>${body==="estate"?"+ 1 000 €":"Carrosserie berline"}</span>
+            <strong>Mégane ${body === "berline" ? "Berline" : "Estate"}</strong>
+            <span>${body === "estate" ? "+ 1 000 €" : "Carrosserie berline"}</span>
         `;
+        b.onclick = () => {
+            config.body = body;
+            if (body === "estate" && (config.trimId === "rs" || config.trimId === "rs_trophy")) {
+                config.trimId = "evolution";
+                config.engineId = "tce_140";
+            }
+            render();
+        };
+        c.appendChild(b);
+    });
+}
 
-        b.onclick=()=>{
+function renderTrims() {
+    const c = document.getElementById("trimChoices");
+    c.innerHTML = "";
+    meganeConfigurator.trims.forEach(t => {
+        if (config.body === "estate" && (t.id === "rs" || t.id === "rs_trophy")) return;
 
-            config.body=body;
-
-            if(body==="estate" &&
-               (config.trim==="rs" || config.trim==="rstrophy")){
-
-                config.trim="evolution";
-                config.engine=0;
-
+        const b = document.createElement("button");
+        b.className = "choice " + (config.trimId === t.id ? "active" : "");
+        b.innerHTML = `
+            <div class="badge-ok">✓</div>
+            <strong>${t.name}</strong>
+        `;
+        b.onclick = () => {
+            config.trimId = t.id;
+            const availableEngines = meganeConfigurator.engines.filter(e => e.availableIn.includes(t.id));
+            config.engineId = availableEngines[0].id;
+            
+            const availableColors = meganeConfigurator.colors.filter(c => !c.availableIn || c.availableIn.includes(t.id));
+            if(!availableColors.find(col => col.id === config.colorId)) {
+                config.colorId = availableColors[0].id;
             }
 
+            const availableUph = meganeConfigurator.upholsteries.filter(u => u.availableIn.includes(t.id));
+            config.upholsteryId = availableUph[0].id;
+
+            config.wheelIndex = 0;
+            config.selectedOptionIds = [];
             render();
-
         };
-
         c.appendChild(b);
-
     });
-
 }
 
-
-/* =========================================================
-   FINITIONS
-========================================================= */
-
-function renderTrims(){
-
-    const c=document.getElementById("trimChoices");
-
-    c.innerHTML="";
-
-    Object.keys(trimNames).forEach(trim=>{
-
-        if(config.body==="estate" &&
-           (trim==="rs" || trim==="rstrophy")) return;
-
-        const b=document.createElement("button");
-
-        b.className="choice "+(config.trim===trim?"active":"");
-
-        b.innerHTML=`
-            <div class="badge-ok">✓</div>
-            <strong>${trimNames[trim]}</strong>
-        `;
-
-        b.onclick=()=>{
-
-            config.trim=trim;
-            config.engine=0;
-            config.options=[];
-            config.wheel=0;
-            config.upholstery=0;
-            config.color=0;
-
-            render();
-
-        };
-
-        c.appendChild(b);
-
+function renderAvailableFuels() {
+    const c = document.getElementById("availableFuelBox");
+    const fuels = [];
+    meganeConfigurator.engines.filter(e => e.availableIn.includes(config.trimId)).forEach(e => {
+        let type = e.type.includes("hybride") ? "Hybride" : (e.type === "Diesel" ? "Diesel" : "Essence");
+        if (!fuels.includes(type)) fuels.push(type);
     });
 
+    c.innerHTML = `
+        <div class="available-fuels">
+            <div class="available-fuels-title">Motorisations disponibles</div>
+            <div class="fuel-list">
+                ${fuels.map(fuel => `<span class="fuel">${fuel}</span>`).join("")}
+            </div>
+        </div>
+    `;
 }
-
 
 /* =========================================================
    MOTORISATIONS
 ========================================================= */
 
-function renderEngines(){
+function renderEngines() {
+    const c = document.getElementById("engineChoices");
+    c.innerHTML = "";
+    const engines = meganeConfigurator.engines.filter(e => e.availableIn.includes(config.trimId));
 
-    const c=document.getElementById("engineChoices");
+    engines.forEach(engine => {
+        const d = document.createElement("div");
+        d.className = "engine " + (config.engineId === engine.id ? "active" : "");
+        
+        let price = engine.price;
+        if (config.body === "estate") price += 1000;
 
-    c.innerHTML="";
-
-    engines[config.trim].forEach((engine,index)=>{
-
-        const d=document.createElement("div");
-
-        d.className="engine "+(config.engine===index?"active":"");
-
-        let price=engine[2];
-
-        if(config.body==="estate"){
-            price+=1000;
-        }
-
-        d.innerHTML=`
+        d.innerHTML = `
             <div class="badge-ok">✓</div>
             <div>
-                <strong>${engine[0]}</strong>
-                <small>${engine[1]}</small>
+                <strong>${engine.name}</strong>
+                <small>${engine.type}</small>
             </div>
-
-            <div class="engine-price">
-                ${euro(price)}
-            </div>
-
+            <div class="engine-price">${price > 0 ? euro(price) : "Inclus"}</div>
         `;
 
-        d.onclick=()=>{
-
-            config.engine=index;
-            config.options=[];
-
+        d.onclick = () => {
+            config.engineId = engine.id;
+            config.selectedOptionIds = config.selectedOptionIds.filter(optId => {
+                const opt = meganeConfigurator.options.find(o => o.id === optId);
+                return !(opt && opt.disabledForEngine && opt.disabledForEngine.includes(engine.id));
+            });
             render();
-
         };
-
         c.appendChild(d);
-
     });
-
 }
 
-
 /* =========================================================
-   COULEURS
+   COULEURS, SELLERIES & JANTES
 ========================================================= */
 
-function renderColors(){
+function renderColors() {
+    const c = document.getElementById("colorChoices");
+    c.innerHTML = "";
+    const colors = meganeConfigurator.colors.filter(col => !col.availableIn || col.availableIn.includes(config.trimId));
 
-    const c=document.getElementById("colorChoices");
-
-    c.innerHTML="";
-
-    const colors=isRS()?rsColors:normalColors;
-
-    if(config.color>=colors.length){
-        config.color=0;
-    }
-
-    colors.forEach((color,index)=>{
-
-        const b=document.createElement("button");
-
-        b.className="color "+(config.color===index?"active":"");
-
-        b.innerHTML=`
+    colors.forEach(col => {
+        const b = document.createElement("button");
+        b.className = "color " + (config.colorId === col.id ? "active" : "");
+        b.innerHTML = `
             <div class="badge-ok">✓</div>
             <div class="color-round">
-                <div
-                    class="color-round-inner"
-                    style="background:${color[1]}">
-                </div>
+                <div class="color-round-inner" style="background:${col.hex}"></div>
             </div>
-
             <div class="color-info">
-
-                <span class="color-name">
-                    ${color[0]}
-                </span>
-
-                <span class="color-price">
-                    ${color[2]>0?"+ "+euro(color[2]):"Inclus"}
-                </span>
-
+                <span class="color-name">${col.name}</span>
+                <span class="color-price">${col.price > 0 ? "+ " + euro(col.price) : "Inclus"}</span>
             </div>
-
         `;
-
-        b.onclick=()=>{
-
-            config.color=index;
-
+        b.onclick = () => {
+            config.colorId = col.id;
             render();
-
         };
-
         c.appendChild(b);
-
     });
-
 }
 
+function renderUpholstery() {
+    const c = document.getElementById("upholsteryChoices");
+    c.innerHTML = "";
+    const items = meganeConfigurator.upholsteries.filter(u => u.availableIn.includes(config.trimId));
 
-/* =========================================================
-   SELLERIE
-========================================================= */
-
-function getUpholsteries(){
-
-    if(config.trim==="rstrophy"){
-
-        return[
-            ["Sellerie RS Trophy","upholstery_rs_trophy.jpg",0],
-            ["Sièges baquet Recaro","recaro.jpg",1900]
-        ];
-
-    }
-
-    if(config.trim==="rs"){
-
-        return[
-            ["Sellerie RS","upholstery_rs.jpg",0],
-            ["Pack Alcantara","alcantara.jpg",1500]
-        ];
-
-    }
-
-    if(config.trim==="rsline"){
-
-        return[
-            ["Sellerie RS Line","upholstery_rsline.jpg",0]
-        ];
-
-    }
-
-    if(config.trim==="techno"){
-
-        return[
-            ["Sellerie Techno","upholstery_techno.jpg",0]
-        ];
-
-    }
-
-    return[
-        ["Sellerie Evolution","upholstery_evolution.jpg",0]
-    ];
-
-}
-
-
-function renderUpholstery(){
-
-    const c=document.getElementById("upholsteryChoices");
-
-    c.innerHTML="";
-
-    const items=getUpholsteries();
-
-    if(config.upholstery>=items.length){
-        config.upholstery=0;
-    }
-
-    items.forEach((item,index)=>{
-
-        const b=document.createElement("button");
-
-        b.className="upholstery "+(config.upholstery===index?"active":"");
-
-        b.innerHTML=`
+    items.forEach(item => {
+        const b = document.createElement("button");
+        b.className = "upholstery " + (config.upholsteryId === item.id ? "active" : "");
+        b.innerHTML = `
             <div class="badge-ok">✓</div>
             <div class="upholstery-round">
-
-                <img
-                    src="${item[1]}"
-                    alt="${item[0]}"
-                    onerror="imageError(this,'${item[1]}')">
-
+                <img src="${item.image}" alt="${item.name}" onerror="imageError(this,'${item.image}')">
             </div>
-
             <div class="upholstery-info">
-
-                <span class="upholstery-name">
-                    ${item[0]}
-                </span>
-
-                <span class="upholstery-price">
-                    ${item[2]>0?"+ "+euro(item[2]):"Inclus"}
-                </span>
-
+                <span class="upholstery-name">${item.name}</span>
+                <span class="upholstery-price">${item.price > 0 ? "+ " + euro(item.price) : "Inclus"}</span>
             </div>
-
         `;
-
-        b.onclick=()=>{
-
-            config.upholstery=index;
-
+        b.onclick = () => {
+            config.upholsteryId = item.id;
             render();
-
         };
-
         c.appendChild(b);
-
     });
-
 }
 
-
-/* =========================================================
-   JANTES
-========================================================= */
-
-function getWheels(){
-
-    if(config.trim==="evolution"){
-
-        if(config.options.includes("allweather")){
-
-            return[
-                ["Enjoliveurs 16\" Elliptik","elliptik.jpg",0]
-            ];
-
-        }
-
-        return[
-            ["Jantes alliage 16\" Impulse","impulse.jpg",0]
-        ];
-
+function getWheels() {
+    if (config.trimId === "evolution") {
+        return [["Jantes alliage 16\" Impulse", "impulse.jpg", 0]];
     }
-
-
-    if(config.trim==="techno"){
-
-        return[
-            ["Jantes alliage 17\" Allium","jantes_techno.jpg",0],
-            ["Jantes alliage 18\" Hightek","hightek.jpg",700]
+    if (config.trimId === "techno") {
+        return [
+            ["Jantes alliage 17\" Allium", "jantes_techno.jpg", 0],
+            ["Jantes alliage 18\" Hightek", "hightek.jpg", 700]
         ];
-
     }
-
-
-    if(config.trim==="rsline"){
-
-        return[
-            ["Jantes alliage 17\" Montlhéry","montlhery.jpg",0],
-            ["Jantes alliage 18\" Magny-Cours","magny_cours.jpg",500]
+    if (config.trimId === "rs") {
+        return [
+            ["Jantes aluminium 18\" Estoril", "jantes_rs.jpg", 0],
+            ["Jantes 19\" Interlagos noires", "interlagos.jpg", 1000]
         ];
-
     }
-
-
-    if(config.trim==="rs"){
-
-        return[
-
-            ["Jantes aluminium 18\" Estoril","jantes_rs.jpg",0],
-
-            ["Jantes 19\" Interlagos noires","interlagos.jpg",1000],
-
-            ["Jantes Alu 19\" RS Interlagos Diam Noir",
-             "interlagos_diamant_noir.jpg",1000]
-
-        ];
-
-    }
-
-
-    return[
-
-        ["Jantes 19\" Tripoton Jerez",
-         "jantes_rs_trophy.jpg",0],
-
-        ["Jantes alliage 19\" Trophy Fuji Light",
-         "fuji_light.jpg",2000]
-
+    return [
+        ["Jantes 19\" Tripoton Jerez", "jantes_rs_trophy.jpg", 0],
+        ["Jantes alliage 19\" Trophy Fuji Light", "fuji_light.jpg", 2000]
     ];
-
 }
 
+function renderWheels() {
+    const c = document.getElementById("wheelChoices");
+    c.innerHTML = "";
+    const wheels = getWheels();
+    if (config.wheelIndex >= wheels.length) config.wheelIndex = 0;
 
-function renderWheels(){
-
-    const c=document.getElementById("wheelChoices");
-
-    c.innerHTML="";
-
-    const wheels=getWheels();
-
-    if(config.wheel>=wheels.length){
-        config.wheel=0;
-    }
-
-    wheels.forEach((wheel,index)=>{
-
-        const b=document.createElement("button");
-
-        b.className="wheel "+(config.wheel===index?"active":"");
-
-        b.innerHTML=`
+    wheels.forEach((wheel, index) => {
+        const b = document.createElement("button");
+        b.className = "wheel " + (config.wheelIndex === index ? "active" : "");
+        b.innerHTML = `
             <div class="badge-ok">✓</div>
             <div class="wheel-round">
-
-                <img
-                    src="${wheel[1]}"
-                    alt="${wheel[0]}"
-                    onerror="imageError(this,'${wheel[1]}')">
-
+                <img src="${wheel[1]}" alt="${wheel[0]}" onerror="imageError(this,'${wheel[1]}')">
             </div>
-
             <div class="wheel-info">
-
-                <span class="wheel-name">
-                    ${wheel[0]}
-                </span>
-
-                <span class="wheel-price">
-                    ${wheel[2]>0?"+ "+euro(wheel[2]):"Inclus"}
-                </span>
-
+                <span class="wheel-name">${wheel[0]}</span>
+                <span class="wheel-price">${wheel[2] > 0 ? "+ " + euro(wheel[2]) : "Inclus"}</span>
             </div>
-
         `;
-
-        b.onclick=()=>{
-
-            config.wheel=index;
-
+        b.onclick = () => {
+            config.wheelIndex = index;
             render();
-
         };
-
         c.appendChild(b);
+    });
+}
 
+/* =========================================================
+   OPTIONS & ÉQUIPEMENTS
+========================================================= */
+
+function renderOptions() {
+    const c = document.getElementById("optionChoices");
+    c.innerHTML = "";
+
+    const availableOptions = meganeConfigurator.options.filter(o => {
+        const isTrimValid = o.availableIn.includes(config.trimId);
+        const isEngineExcluded = o.disabledForEngine && o.disabledForEngine.includes(config.engineId);
+        return isTrimValid && !isEngineExcluded;
     });
 
-}
+    const categories = [...new Set(availableOptions.map(o => o.category))];
 
+    categories.forEach(category => {
+        const items = availableOptions.filter(o => o.category === category);
+        if (!items.length) return;
 
-/* =========================================================
-   OPTIONS
-========================================================= */
+        const categoryBox = document.createElement("div");
+        categoryBox.className = "option-category";
+        const selectedCount = items.filter(o => config.selectedOptionIds.includes(o.id)).length;
 
-function getOptions(){
-
-    const options=[];
-
-    function add(id,name,price,image,description="",available=true,category="Autres"){
-
-        if(available){
-
-            options.push({
-                id,
-                name,
-                price,
-                image,
-                description,
-                category
-            });
-
-        }
-
-    }
-
-
-    if(config.trim==="evolution"){
-
-        add(
-            "spare",
-            "Roue de secours",
-            200,
-            "roue_secours.jpg",
-            "Essence uniquement",
-            !isHybrid() && !isDiesel(),
-            "Confort"
-        );
-
-        add(
-            "galette",
-            "Roue de secours galette",
-            150,
-            "galette.jpg",
-            "Diesel uniquement",
-            isDiesel(),
-            "Confort"
-        );
-
-        add(
-            "allweather",
-            "Pneus tout temps",
-            300,
-            "pneus_tout_temps.jpg",
-            "Avec enjoliveurs 16\" Elliptik",
-            true,
-            "Confort"
-        );
-
-        add(
-            "camera",
-            "Caméra de recul",
-            250,
-            "camera_recul.jpg",
-            "",
-            true,
-            "Conduite et sécurité"
-        );
-
-        add(
-            "safety",
-            "Safety Pack",
-            650,
-            "safety_pack.jpg",
-            "",
-            true,
-            "Conduite et sécurité"
-        );
-
-        add(
-            "dash42",
-            "Tableau de bord numérique 4,2 pouces + compteurs analogiques",
-            -100,
-            "tableau_42.jpg",
-            "Non disponible sur hybride",
-            !isHybrid(),
-            "Multimédia"
-        );
-
-        add(
-            "mirrors",
-            "Rétroviseurs extérieurs électriques et dégivrants",
-            0,
-            "retroviseurs.jpg",
-            "Non disponible sur hybride",
-            !isHybrid(),
-            "Confort"
-        );
-
-        add(
-            "wallbox",
-            "Câble de recharge Wallbox",
-            300,
-            "wallbox.jpg",
-            "Hybride uniquement",
-            isHybrid(),
-            "Multimédia"
-        );
-
-    }
-
-
-    if(config.trim==="techno"){
-
-        add(
-            "hud",
-            "Affichage tête haute",
-            400,
-            "affichage_tete_haute.jpg",
-            "",
-            true,
-            "Conduite et sécurité"
-        );
-
-        add(
-            "sunroof",
-            "Toit ouvrant",
-            900,
-            "toit_ouvrant.jpg",
-            "",
-            true,
-            "Confort"
-        );
-
-        add(
-            "dash10",
-            "Tableau de bord numérique 10 pouces",
-            100,
-            "tableau_10.jpg",
-            "",
-            true,
-            "Multimédia"
-        );
-
-        add(
-            "winter",
-            "Winter Pack",
-            400,
-            "winter_pack.jpg",
-            "",
-            true,
-            "Confort"
-        );
-
-        add(
-            "easypark",
-            "Pack Easy Park",
-            550,
-            "easy_park.jpg",
-            "",
-            true,
-            "Conduite et sécurité"
-        );
-
-        add(
-            "wallbox",
-            "Câble de recharge Wallbox",
-            300,
-            "wallbox.jpg",
-            "Hybride uniquement",
-            isHybrid(),
-            "Multimédia"
-        );
-
-        add(
-            "spare",
-            "Roue de secours",
-            200,
-            "roue_secours.jpg",
-            "Essence uniquement",
-            !isHybrid() && !isDiesel(),
-            "Confort"
-        );
-
-        add(
-            "galette",
-            "Roue de secours galette",
-            150,
-            "galette.jpg",
-            "Diesel uniquement",
-            isDiesel(),
-            "Confort"
-        );
-
-    }
-
-
-    if(config.trim==="rsline"){
-
-        add(
-            "bose",
-            "Bose",
-            700,
-            "bose.jpg",
-            "",
-            true,
-            "Multimédia"
-        );
-
-        add(
-            "hud",
-            "Affichage tête haute",
-            400,
-            "affichage_tete_haute.jpg",
-            "",
-            true,
-            "Conduite et sécurité"
-        );
-
-        add(
-            "easydrive",
-            "Pack Easy Drive E-Tech",
-            600,
-            "easy_drive.jpg",
-            "",
-            true,
-            "Conduite et sécurité"
-        );
-
-        add(
-            "sunroof",
-            "Toit ouvrant",
-            900,
-            "toit_ouvrant.jpg",
-            "",
-            true,
-            "Confort"
-        );
-
-        add(
-            "spareRS",
-            "Roue de secours",
-            150,
-            "roue_secours.jpg",
-            "Essence uniquement",
-            !isHybrid() && !isDiesel(),
-            "Confort"
-        );
-
-        add(
-            "galetteRS",
-            "Roue de secours galette",
-            150,
-            "galette.jpg",
-            "Diesel uniquement",
-            isDiesel(),
-            "Confort"
-        );
-
-    }
-
-
-    if(config.trim==="rs"){
-
-        add(
-            "sunroof",
-            "Toit ouvrant",
-            900,
-            "toit_ouvrant.jpg",
-            "",
-            true,
-            "Confort"
-        );
-
-        add(
-            "rsmonitor",
-            "RS Monitor",
-            250,
-            "rs_monitor.jpg",
-            "",
-            true,
-            "Multimédia"
-        );
-
-        add(
-            "alcantara",
-            "Pack Alcantara",
-            1500,
-            "alcantara.jpg",
-            "",
-            true,
-            "Confort"
-        );
-
-    }
-
-
-    if(config.trim==="rstrophy"){
-
-        add(
-            "adaptive",
-            "Régulateur de vitesse adaptatif",
-            300,
-            "regulateur_adaptatif.jpg",
-            "",
-            true,
-            "Conduite et sécurité"
-        );
-
-        add(
-            "sunroof",
-            "Toit ouvrant",
-            900,
-            "toit_ouvrant.jpg",
-            "",
-            true,
-            "Confort"
-        );
-
-        add(
-            "rsmonitor",
-            "RS Monitor",
-            250,
-            "rs_monitor.jpg",
-            "",
-            true,
-            "Multimédia"
-        );
-
-        add(
-            "recaro",
-            "Sièges baquet Recaro",
-            1900,
-            "recaro.jpg",
-            "Non chauffants",
-            true,
-            "Confort"
-        );
-
-    }
-
-    return options;
-
-}
-
-
-/* =========================================================
-   AFFICHAGE OPTIONS
-========================================================= */
-
-function renderOptions(){
-
-    const c=document.getElementById("optionChoices");
-
-    c.innerHTML="";
-
-    const options=getOptions();
-
-    const categories=[
-        "Multimédia",
-        "Conduite et sécurité",
-        "Confort",
-        "Autres"
-    ];
-
-    categories.forEach(category=>{
-
-        const items=options.filter(
-            option=>option.category===category
-        );
-
-        if(!items.length) return;
-
-        const categoryBox=document.createElement("div");
-
-        categoryBox.className="option-category";
-
-        const selectedCount=items.filter(
-            option=>config.options.includes(option.id)
-        ).length;
-
-        categoryBox.innerHTML=`
-
+        categoryBox.innerHTML = `
             <div class="option-category-title">
-
                 <span>${category}</span>
-
-                <span class="option-category-count ${
-                    selectedCount>0?"visible":""
-                }">
-                    ${selectedCount}
-                </span>
-
+                <span class="option-category-count ${selectedCount > 0 ? "visible" : ""}">${selectedCount}</span>
             </div>
-
             <div class="option-grid"></div>
-
         `;
 
-        const grid=categoryBox.querySelector(".option-grid");
+        const grid = categoryBox.querySelector(".option-grid");
 
-        items.forEach(option=>{
-
-            const b=document.createElement("button");
-
-            b.className="option "+
-                (config.options.includes(option.id)?"active":"");
-
-            b.innerHTML=`
+        items.forEach(option => {
+            const b = document.createElement("button");
+            const isSelected = config.selectedOptionIds.includes(option.id);
+            b.className = "option " + (isSelected ? "active" : "");
+            b.innerHTML = `
                 <div class="badge-ok">✓</div>
                 <div class="option-img-wrapper">
-                    <img
-                        src="${option.image}"
-                        alt="${option.name}"
-                        onerror="imageError(this,'${option.image}')">
+                    <img src="${option.image}" alt="${option.name}" onerror="imageError(this,'${option.image}')">
                 </div>
-
                 <div class="option-content">
-
                     <div class="option-header">
                         <strong>${option.name}</strong>
-
-                        ${
-                            option.description
-                            ? `<span class="option-description">
-                                ${option.description}
-                               </span>`
-                            : ""
-                        }
                     </div>
-
                     <div class="option-bottom">
-
                         <div class="option-check">
-
                             <span class="option-check-box"></span>
-
-                            <span>
-                                ${config.options.includes(option.id)
-                                ?"Sélectionné"
-                                :"Sélectionner"}
-                            </span>
-
+                            <span>${isSelected ? "Sélectionné" : "Sélectionner"}</span>
                         </div>
-
-                        <span class="option-price">
-
-                            ${
-                                option.price<0
-                                ?"− "+euro(-option.price)
-                                :option.price===0
-                                ?"Inclus"
-                                :"+ "+euro(option.price)
-                            }
-
-                        </span>
-
+                        <span class="option-price">${option.price === 0 ? "Inclus" : "+ " + euro(option.price)}</span>
                     </div>
-
                 </div>
-
             `;
-
-            b.onclick=()=>{
-
-                if(config.options.includes(option.id)){
-
-                    config.options=
-                        config.options.filter(
-                            id=>id!==option.id
-                        );
-
-                }else{
-
-                    config.options.push(option.id);
-
+            b.onclick = () => {
+                if (isSelected) {
+                    config.selectedOptionIds = config.selectedOptionIds.filter(id => id !== option.id);
+                } else {
+                    config.selectedOptionIds.push(option.id);
                 }
-
-                if(option.id==="spare" ||
-                   option.id==="spareRS"){
-
-                    config.options=
-                        config.options.filter(
-                            id=>id!=="galette" &&
-                            id!=="galetteRS"
-                        );
-
-                }
-
-                if(option.id==="galette" ||
-                   option.id==="galetteRS"){
-
-                    config.options=
-                        config.options.filter(
-                            id=>id!=="spare" &&
-                            id!=="spareRS"
-                        );
-
-                }
-
                 render();
-
             };
-
             grid.appendChild(b);
-
         });
 
         c.appendChild(categoryBox);
-
     });
-
 }
 
-
 /* =========================================================
-   IMAGE ERROR
+   CALCUL DU PRIX TOTAL
 ========================================================= */
 
-function imageError(img,file){
+function calculatePrice() {
+    let total = 0;
+    const trim = meganeConfigurator.trims.find(t => t.id === config.trimId);
+    if (trim) total += trim.basePrice;
 
-    const box=document.createElement("div");
+    if (config.body === "estate") total += 1000;
 
-    box.className="image-missing";
+    const engine = meganeConfigurator.engines.find(e => e.id === config.engineId);
+    if (engine) total += engine.price;
 
-    box.innerHTML="Image<br>introuvable";
+    const color = meganeConfigurator.colors.find(c => c.id === config.colorId);
+    if (color) total += color.price;
 
-    img.replaceWith(box);
+    const uph = meganeConfigurator.upholsteries.find(u => u.id === config.upholsteryId);
+    if (uph) total += uph.price;
 
-}
+    const wheels = getWheels();
+    if (wheels[config.wheelIndex]) total += wheels[config.wheelIndex][2];
 
-
-/* =========================================================
-   PRIX
-========================================================= */
-
-function calculatePrice(){
-
-    let total=currentEngine()[2];
-
-    if(config.body==="estate"){
-        total+=1000;
-    }
-
-    const colors=isRS()?rsColors:normalColors;
-
-    total+=colors[config.color][2];
-
-    const wheels=getWheels();
-
-    total+=wheels[config.wheel][2];
-
-    const upholstery=getUpholsteries();
-
-    total+=upholstery[config.upholstery][2];
-
-    getOptions().forEach(option=>{
-
-        if(config.options.includes(option.id)){
-            total+=option.price;
-        }
-
+    config.selectedOptionIds.forEach(optId => {
+        const opt = meganeConfigurator.options.find(o => o.id === optId);
+        if (opt) total += opt.price;
     });
 
     return total;
-
 }
 
-
 /* =========================================================
-   RÉCAPITULATIF
+   RÉCAPITULATIF & SOUHAITS
 ========================================================= */
 
-function renderSummary(){
+function renderSummary() {
+    const c = document.getElementById("summary");
+    const trim = meganeConfigurator.trims.find(t => t.id === config.trimId);
+    const engine = meganeConfigurator.engines.find(e => e.id === config.engineId);
+    const color = meganeConfigurator.colors.find(col => col.id === config.colorId);
+    const uph = meganeConfigurator.upholsteries.find(u => u.id === config.upholsteryId);
+    const wheels = getWheels();
 
-    const c=document.getElementById("summary");
+    const selectedOptions = meganeConfigurator.options.filter(o => config.selectedOptionIds.includes(o.id));
 
-    const colors=isRS()?rsColors:normalColors;
-
-    const wheels=getWheels();
-
-    const upholstery=getUpholsteries();
-
-    const selectedOptions=getOptions().filter(
-        option=>config.options.includes(option.id)
-    );
-
-    c.innerHTML=`
-
-        <div class="summary-row">
-            <span>Carrosserie</span>
-            <strong>
-                ${config.body==="berline"?"Berline":"Estate"}
-            </strong>
-        </div>
-
-        <div class="summary-row">
-            <span>Version</span>
-            <strong>
-                ${trimNames[config.trim]}
-            </strong>
-        </div>
-
-        <div class="summary-row">
-            <span>Motorisation</span>
-            <strong>
-                ${currentEngine()[0]}
-            </strong>
-        </div>
-
-        <div class="summary-row">
-            <span>Couleur extérieure</span>
-            <strong>
-                ${colors[config.color][0]}
-            </strong>
-        </div>
-
-        <div class="summary-row">
-            <span>Jantes</span>
-            <strong>
-                ${wheels[config.wheel][0]}
-            </strong>
-        </div>
-
-        <div class="summary-row">
-            <span>Sellerie</span>
-            <strong>
-                ${upholstery[config.upholstery][0]}
-            </strong>
-        </div>
-
+    c.innerHTML = `
+        <div class="summary-row"><span>Carrosserie</span><strong>${config.body === "berline" ? "Berline" : "Estate"}</strong></div>
+        <div class="summary-row"><span>Version</span><strong>${trim ? trim.name : ""}</strong></div>
+        <div class="summary-row"><span>Motorisation</span><strong>${engine ? engine.name : ""}</strong></div>
+        <div class="summary-row"><span>Couleur extérieure</span><strong>${color ? color.name : ""}</strong></div>
+        <div class="summary-row"><span>Jantes</span><strong>${wheels[config.wheelIndex] ? wheels[config.wheelIndex][0] : ""}</strong></div>
+        <div class="summary-row"><span>Sellerie</span><strong>${uph ? uph.name : ""}</strong></div>
         ${
             selectedOptions.length
-            ?
-            selectedOptions.map(option=>`
-
+            ? selectedOptions.map(opt => `
                 <div class="summary-row">
-
-                    <span>${option.name}</span>
-
-                    <strong>
-                        ${
-                            option.price<0
-                            ?"− "+euro(-option.price)
-                            :option.price===0
-                            ?"Inclus"
-                            :"+ "+euro(option.price)
-                        }
-                    </strong>
-
+                    <span>${opt.name}</span>
+                    <strong>${opt.price === 0 ? "Inclus" : "+ " + euro(opt.price)}</strong>
                 </div>
-
             `).join("")
-            :
-            `
-                <div class="summary-row">
-                    <span>Équipements</span>
-                    <strong>Aucun</strong>
-                </div>
-            `
+            : `<div class="summary-row"><span>Équipements</span><strong>Aucun</strong></div>`
         }
-
     `;
-
 }
 
-
-/* =========================================================
-   GRANDE IMAGE
-========================================================= */
-
-function changeView(file){
-
-    const container=document.getElementById("carVisual");
-
-    const img=document.createElement("img");
-
-    img.src=file;
-
-    img.alt="Renault Mégane";
-
-    img.onerror=()=>{
-
-        container.innerHTML=`
-
-            <div class="no-image">
-
-                <strong>Image introuvable</strong>
-
-                <br><br>
-
-                ${file}
-
+function renderWishlist() {
+    const c = document.getElementById("wishlist");
+    if (userWishlist.length === 0) {
+        c.innerHTML = "<p style='font-size:12px; color:#666;'>Aucun souhait enregistré.</p>";
+        return;
+    }
+    c.innerHTML = userWishlist.map(item => `
+        <div class="wishlist-item">
+            <div>
+                <strong>${item.name}</strong> - <small>${item.date}</small>
+                <br><span style="font-size:11px; color:#555;">Prix : ${euro(item.totalPrice)}</span>
             </div>
-
-        `;
-
-    };
-
-    img.onload=()=>{
-
-        container.innerHTML="";
-
-        container.appendChild(img);
-
-    };
-
+            <div class="wishlist-actions">
+                <button onclick="removeWish('${item.id}')">Supprimer</button>
+            </div>
+        </div>
+    `).join("");
 }
 
-
-/* =========================================================
-   SAUVEGARDE
-========================================================= */
-
-function saveConfiguration(){
-
-    localStorage.setItem(
-        "meganeConfiguration",
-        JSON.stringify(config)
-    );
-
-    alert("Configuration enregistrée sur cet appareil.");
-
+function handleSaveWishlist() {
+    const trim = meganeConfigurator.trims.find(t => t.id === config.trimId);
+    const name = prompt("Nom de votre souhait :", "Mégane " + (trim ? trim.name : ""));
+    if (name) {
+        userWishlist.push({
+            id: "wish_" + Date.now(),
+            name: name,
+            date: new Date().toLocaleDateString("fr-FR"),
+            totalPrice: calculatePrice()
+        });
+        renderWishlist();
+    }
 }
 
+function removeWish(wishId) {
+    const idx = userWishlist.findIndex(i => i.id === wishId);
+    if (idx !== -1) {
+        userWishlist.splice(idx, 1);
+        renderWishlist();
+    }
+}
 
 /* =========================================================
-   AFFICHAGE
+   INITIALISATION
 ========================================================= */
 
-function render(){
-
+function render() {
     renderBodies();
-
     renderTrims();
-
     renderAvailableFuels();
-
     renderEngines();
-
     renderColors();
-
     renderUpholstery();
-
     renderWheels();
-
     renderOptions();
-
     renderSummary();
-
-    document.getElementById("totalPrice").textContent=
-        euro(calculatePrice());
-
+    renderWishlist();
+    document.getElementById("totalPrice").textContent = euro(calculatePrice());
 }
 
 render();
