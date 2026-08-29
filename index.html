@@ -649,13 +649,9 @@ function renderUpholstery(){
 ========================================================= */
 function getWheels(){
     if(config.trim==="evolution"){
-        if(config.options.includes("allweather")){
-            return[
-                ["Enjoliveurs 16\" Elliptik","elliptik.jpg",0]
-            ];
-        }
         return[
-            ["Jantes alliage 16\" Impulse","impulse.jpg",0]
+            ["Jantes alliage 16\" Impulse","impulse.jpg",0],
+            ["Enjoliveurs 16\" Elliptik","elliptik.jpg",0]
         ];
     }
     if(config.trim==="techno"){
@@ -678,8 +674,8 @@ function getWheels(){
         ];
     }
     return[
-        ["Jantes aluminium 19\" Jerez","jantes_rs_trophy.jpg",0],
-        ["Jantes aluminium 19\" Fuji Light","fuji_light.jpg",2000]
+        ["Jantes 19\" Triple Tone Jerez","jantes_rs_trophy.jpg",0],
+        ["Jantes alliage 19\" Trophy Fuji Light","fuji_light.jpg",2000]
     ];
 }
 function renderWheels(){
@@ -705,6 +701,22 @@ function renderWheels(){
         `;
         b.onclick=()=>{
             config.wheel=index;
+            /*
+                EVOLUTION :
+                Impulse = pneus tout-temps désactivés
+                Elliptik = pneus tout-temps activés automatiquement
+            */
+            if(config.trim==="evolution"){
+                if(index===0){
+                    config.options=
+                        config.options.filter(id=>id!=="allweather");
+                }
+                if(index===1){
+                    if(!config.options.includes("allweather")){
+                        config.options.push("allweather");
+                    }
+                }
+            }
             render();
         };
         c.appendChild(b);
@@ -739,12 +751,17 @@ function getOptions(){
             "Diesel uniquement",
             isDiesel()
         );
+        /*
+            L'option pneus tout temps n'est disponible
+            que lorsque les enjoliveurs Elliptik sont sélectionnés.
+        */
         add(
             "allweather",
             "Pneus tout temps",
             300,
             "pneus_tout_temps.jpg",
-            "Ajoute les enjoliveurs Elliptik et supprime les jantes Impulse"
+            "Avec enjoliveurs Elliptik",
+            config.wheel===1
         );
         add(
             "camera",
@@ -785,6 +802,22 @@ function getOptions(){
     }
     if(config.trim==="techno"){
         add(
+            "spare",
+            "Roue de secours",
+            200,
+            "roue_secours.jpg",
+            "Essence uniquement",
+            !isHybrid() && !isDiesel()
+        );
+        add(
+            "galette",
+            "Roue de secours galette",
+            150,
+            "galette.jpg",
+            "Diesel uniquement",
+            isDiesel()
+        );
+        add(
             "hud",
             "Affichage tête haute",
             400,
@@ -824,6 +857,22 @@ function getOptions(){
         );
     }
     if(config.trim==="rsline"){
+        add(
+            "spare",
+            "Roue de secours",
+            200,
+            "roue_secours.jpg",
+            "Essence uniquement",
+            !isHybrid() && !isDiesel()
+        );
+        add(
+            "galette",
+            "Roue de secours galette",
+            150,
+            "galette.jpg",
+            "Diesel uniquement",
+            isDiesel()
+        );
         add(
             "bose",
             "Bose",
@@ -948,6 +997,22 @@ function renderOptions(){
             if(option.id==="galette"){
                 config.options=
                     config.options.filter(id=>id!=="spare");
+            }
+            /*
+                Si l'utilisateur désactive les pneus tout temps,
+                on revient automatiquement aux jantes Impulse.
+            */
+            if(option.id==="allweather" &&
+               !config.options.includes("allweather")){
+                config.wheel=0;
+            }
+            /*
+                Si l'utilisateur active les pneus tout temps,
+                les enjoliveurs Elliptik sont automatiquement sélectionnés.
+            */
+            if(option.id==="allweather" &&
+               config.options.includes("allweather")){
+                config.wheel=1;
             }
             render();
         };
