@@ -277,17 +277,17 @@ header{
 
 .color.active,
 .upholstery.active{
-    background:#000000;
-    color:#ffffff;
-    border:2px solid #ffcc00;
-    box-shadow:0 0 0 1px #ffcc00;
-    border-radius:4px;
-    padding:8px;
+    background:transparent;
+    color:inherit;
+    border:none;
+    box-shadow:none;
+    border-radius:0;
+    padding:0;
 }
 
 .color.active .color-price,
 .upholstery.active .upholstery-price{
-    color:#ccc;
+    color:#777;
 }
 
 .color-round,
@@ -1106,7 +1106,7 @@ function getUpholsteries(){
     if(config.trim==="rstrophy"){
 
         return[
-            ["Sellerie RS Trophy","upholstery_rs_trophy.jpg",0],
+            ["Sellerie en Alcantara® avec surpiqûres Rouge","upholstery_rs_trophy.jpg",0],
             ["Sellerie Recaro® en Alcantara","recaro.jpg",1900]
         ];
 
@@ -1115,7 +1115,7 @@ function getUpholsteries(){
     if(config.trim==="rs"){
 
         return[
-            ["Sellerie RS","upholstery_rs.jpg",0],
+            ["Sellerie tissu avec surpiqûres Gris argent et Rouge","upholstery_rs.jpg",0],
             ["Sellerie en Alcantara® avec surpiqûres Rouge","alcantara.jpg",1500]
         ];
 
@@ -1124,7 +1124,7 @@ function getUpholsteries(){
     if(config.trim==="rsline"){
 
         return[
-            ["Sellerie RS Line","upholstery_rsline.jpg",0]
+            ["Sellerie Alcantara Gris Foncé avec surpiqûres rouges R.S. Line","upholstery_rsline.jpg",0]
         ];
 
     }
@@ -1132,13 +1132,13 @@ function getUpholsteries(){
     if(config.trim==="techno"){
 
         return[
-            ["sellerie mixte semi-cuir/tissu carbone texturé","upholstery_techno.jpg",0]
+            ["Sellerie mixte similicuir / tissu Carbone texturé","upholstery_techno.jpg",0]
         ];
 
     }
 
     return[
-        ["sellerie tissu carbone","upholstery_evolution.jpg",0]
+        ["Sellerie tissu Carbone","upholstery_evolution.jpg",0]
     ];
 
 }
@@ -1234,13 +1234,13 @@ function getWheels(){
         if(config.options.includes("allweather")){
 
             return[
-                ["Enjoliveurs 16\" Elliptik","elliptik.jpg",0]
+                ["Jante 16’’ avec enjoliveurs Elliptik","elliptik.jpg",0]
             ];
 
         }
 
         return[
-            ["Jantes alliage 16\" Impulse","impulse.jpg",0]
+            ["Jante alliage 16’’ Impulse","impulse.jpg",0]
         ];
 
     }
@@ -1249,8 +1249,8 @@ function getWheels(){
     if(config.trim==="techno"){
 
         return[
-            ["Jantes alliage 17\" Allium","jantes_techno.jpg",0],
-            ["Jantes alliage 18\" Hightek","hightek.jpg",700]
+            ["Jante alliage 17’’ Allium","jantes_techno.jpg",0],
+            ["Jante alliage 18’’ Hightek","hightek.jpg",700]
         ];
 
     }
@@ -1259,8 +1259,8 @@ function getWheels(){
     if(config.trim==="rsline"){
 
         return[
-            ["Jantes alliage 17\" Montlhéry","montlhery.jpg",0],
-            ["Jantes alliage 18\" Magny-Cours","magny_cours.jpg",500]
+            ["Jante 17’’ Montlhéry","montlhery.jpg",0],
+            ["Jante 18’’ Magny-Cours","magny_cours.jpg",500]
         ];
 
     }
@@ -1270,12 +1270,9 @@ function getWheels(){
 
         return[
 
-            ["Jantes aluminium 18\" Estoril","jantes_rs.jpg",0],
+            ["Jante alliage 18’’ Estoril Gun Métal Grey","jantes_rs.jpg",0],
 
-            ["Jantes 19\" Interlagos noires","interlagos.jpg",1000],
-
-            ["Jantes Alu 19\" RS Interlagos Diam Noir",
-             "interlagos_diamant_noir.jpg",1000]
+            ["Jante alliage 19’’ Interlagos Full Black","interlagos.jpg",1000]
 
         ];
 
@@ -1284,10 +1281,10 @@ function getWheels(){
 
     return[
 
-        ["Jantes 19\" Tripoton Jerez",
+        ["Jante alliage 19’’ Triple ton Jerez",
          "jantes_rs_trophy.jpg",0],
 
-        ["Jantes alliage 19\" Trophy Fuji Light",
+        ["Jante alliage 19’’ R.S. Trophy Fuji Light",
          "fuji_light.jpg",2000]
 
     ];
@@ -1406,7 +1403,7 @@ function getOptions(){
             "Pneus tout temps",
             300,
             "pneus_tout_temps.jpg",
-            "Avec enjoliveurs 16\" Elliptik",
+            "Avec Jante 16’’ avec enjoliveurs Elliptik",
             true,
             "Confort"
         );
