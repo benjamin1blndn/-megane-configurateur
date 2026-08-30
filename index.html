@@ -142,19 +142,27 @@ header{
     gap:10px;
 }
 
-.choice{
+/* ENCADREMENT JAUNE & OK BADGE RECTANGLES */
+.choice,
+.engine{
+    position:relative;
     background:white;
     border:1px solid #ccc;
+    border-radius:2px;
+}
+
+.choice{
     padding:10px 20px;
     text-align:center;
-    border-radius:2px;
     min-width:100px;
 }
 
-.choice.active{
-    background:#000000;
-    color:#ffffff;
-    border-color:#000000;
+.choice.active,
+.engine.active{
+    background:#ffffff;
+    color:#000000;
+    border:2px solid #ffcc00;
+    box-shadow:0 0 0 1px #ffcc00;
 }
 
 .choice strong{
@@ -169,8 +177,27 @@ header{
     color:#666;
 }
 
-.choice.active span{
-    color:#ccc;
+.choice.active span,
+.engine.active small{
+    color:#666;
+}
+
+/* BADGE OK SUR CADRES RECTANGLES */
+.choice.active::after,
+.engine.active::after,
+.option.active::after{
+    content:"OK";
+    position:absolute;
+    top:-8px;
+    right:-8px;
+    background:#ffcc00;
+    color:#000;
+    font-size:9px;
+    font-weight:bold;
+    padding:2px 5px;
+    border-radius:3px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.2);
+    z-index:2;
 }
 
 /* MOTORISATIONS DISPONIBLES */
@@ -200,20 +227,12 @@ header{
 }
 
 .engine{
-    border:1px solid #ccc;
     padding:14px 18px;
     margin-bottom:10px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    border-radius:2px;
     cursor:pointer;
-}
-
-.engine.active{
-    background:#000000;
-    color:#ffffff;
-    border-color:#000000;
 }
 
 .engine strong{
@@ -224,10 +243,6 @@ header{
     display:block;
     color:#666;
     margin-top:3px;
-}
-
-.engine.active small{
-    color:#ccc;
 }
 
 .engine-price{
@@ -241,10 +256,11 @@ header{
     flex-wrap:wrap;
 }
 
-/* FORMAT COMMUN ROND COULEUR / JANTE / SELLERIE */
+/* ENCADREMENT JAUNE & OK BADGE RONDS */
 .color,
 .wheel,
 .upholstery{
+    position:relative;
     background:transparent;
     border:none;
     padding:0;
@@ -258,10 +274,11 @@ header{
 .color-round,
 .wheel-round,
 .upholstery-round{
+    position:relative;
     width:50px;
     height:50px;
     border-radius:50%;
-    overflow:hidden;
+    overflow:visible;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -274,8 +291,25 @@ header{
 .color.active .color-round,
 .wheel.active .wheel-round,
 .upholstery.active .upholstery-round{
-    border:2px solid #000000;
-    box-shadow:0 0 0 2px #ffffff, 0 0 0 4px #000000;
+    border:2px solid #ffcc00;
+    box-shadow:0 0 0 2px #ffcc00;
+}
+
+.color.active .color-round::after,
+.wheel.active .wheel-round::after,
+.upholstery.active .upholstery-round::after{
+    content:"OK";
+    position:absolute;
+    top:-4px;
+    right:-4px;
+    background:#ffcc00;
+    color:#000;
+    font-size:8px;
+    font-weight:bold;
+    padding:1px 4px;
+    border-radius:3px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.2);
+    z-index:2;
 }
 
 .color-round-inner{
@@ -336,9 +370,10 @@ header{
     border-radius:50%;
 }
 
+/* NOUVEAU FORMAT CARTES OPTIONS */
 .option-grid{
     display:grid;
-    grid-template-columns:1fr;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
     gap:15px;
 }
 
@@ -375,29 +410,41 @@ header{
 }
 
 .option{
+    position:relative;
     background:white;
     border:1px solid #e5e5e5;
-    padding:15px;
+    padding:0 0 12px 0;
     text-align:left;
     display:flex;
-    gap:15px;
-    align-items:center;
+    flex-direction:column;
     width:100%;
+    overflow:hidden;
+    border-radius:4px;
 }
 
 .option.active{
-    border:1px solid #000000;
+    border:2px solid #ffcc00;
+    box-shadow:0 0 0 1px #ffcc00;
 }
 
-.option img{
-    width:100px;
-    height:70px;
-    object-fit:cover;
-    display:block;
+.option-img-container{
+    width:100%;
+    aspect-ratio:16/9;
+    overflow:hidden;
     background:#eee;
 }
 
+.option-img-container img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
 .option-content{
+    padding:10px 12px 0 12px;
+    display:flex;
+    flex-direction:column;
     flex:1;
 }
 
@@ -411,7 +458,8 @@ header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-top:8px;
+    margin-top:auto;
+    padding-top:8px;
 }
 
 .option-check{
@@ -420,33 +468,6 @@ header{
     gap:6px;
     font-size:11px;
     color:#333;
-}
-
-.option-check-box{
-    width:16px;
-    height:16px;
-    border:1px solid #ccc;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:white;
-    border-radius:2px;
-}
-
-.option.active .option-check-box{
-    background:#000000;
-    border-color:#000000;
-}
-
-.option-check-box::after{
-    content:"✓";
-    color:white;
-    font-size:10px;
-    display:none;
-}
-
-.option.active .option-check-box::after{
-    display:block;
 }
 
 .option-price{
@@ -686,18 +707,18 @@ header{
 const engines={
 
     evolution:[
-        ["1.3 TCe 140 ch BVM6","Essence",28800],
-        ["1.6 E-Tech 160 ch BVA","Essence hybride rechargeable",38750],
-        ["1.5 Blue dCi 115 ch BVM6","Diesel",30800],
-        ["1.5 Blue dCi 115 ch EDC7","Diesel",32800]
+        ["1.3 TCE 140 CH","Essence",28800],
+        ["1.6 E-TECH PLUG-IN HYBRID 160 CH","Essence hybride rechargeable",38750],
+        ["1.5 Blue dCi 115","Diesel",30800],
+        ["1.5 Blue dCi 115 EDC","Diesel",32800]
     ],
 
     techno:[
-        ["1.3 TCe 140 ch BVM6","Essence",30750],
-        ["1.3 TCe 140 ch EDC7","Essence",32750],
-        ["1.6 E-Tech 160 ch BVA","Essence hybride rechargeable",40700],
-        ["1.5 Blue dCi 115 ch BVM6","Diesel",32750],
-        ["1.5 Blue dCi 115 ch EDC7","Diesel",34750]
+        ["1.3 TCE 140 CH","Essence",30750],
+        ["1.3 TCE 140 CH","Essence",32750],
+        ["1.6 E-TECH PLUG-IN HYBRID 160 CH","Essence hybride rechargeable",40700],
+        ["1.5 Blue dCi 115","Diesel",32750],
+        ["1.5 Blue dCi 115 EDC","Diesel",34750]
     ],
 
     rsline:[
@@ -1063,7 +1084,7 @@ function getUpholsteries(){
 
         return[
             ["Sellerie RS Trophy","upholstery_rs_trophy.jpg",0],
-            ["Sièges baquet Recaro","recaro.jpg",1900]
+            ["Sellerie Recaro® en Alcantara","recaro.jpg",1900]
         ];
 
     }
@@ -1072,7 +1093,7 @@ function getUpholsteries(){
 
         return[
             ["Sellerie RS","upholstery_rs.jpg",0],
-            ["Pack Alcantara","alcantara.jpg",1500]
+            ["Sellerie en Alcantara® avec surpiqûres Rouge","alcantara.jpg",1500]
         ];
 
     }
@@ -1088,13 +1109,13 @@ function getUpholsteries(){
     if(config.trim==="techno"){
 
         return[
-            ["Sellerie Techno","upholstery_techno.jpg",0]
+            ["sellerie mixte semi-cuir/tissu carbone texturé","upholstery_techno.jpg",0]
         ];
 
     }
 
     return[
-        ["Sellerie Evolution","upholstery_evolution.jpg",0]
+        ["sellerie tissu carbone","upholstery_evolution.jpg",0]
     ];
 
 }
@@ -1146,6 +1167,27 @@ function renderUpholstery(){
         b.onclick=()=>{
 
             config.upholstery=index;
+
+            // Liaison sellerie -> option rattachée
+            if(config.trim==="rs"){
+                if(index===1){
+                    if(!config.options.includes("alcantara")){
+                        config.options.push("alcantara");
+                    }
+                }else{
+                    config.options=config.options.filter(id=>id!=="alcantara");
+                }
+            }
+
+            if(config.trim==="rstrophy"){
+                if(index===1){
+                    if(!config.options.includes("recaro")){
+                        config.options.push("recaro");
+                    }
+                }else{
+                    config.options=config.options.filter(id=>id!=="recaro");
+                }
+            }
 
             render();
 
@@ -1377,13 +1419,13 @@ function getOptions(){
         );
 
         add(
-            "mirrors",
-            "Rétroviseurs extérieurs électriques et dégivrants",
-            0,
-            "retroviseurs.jpg",
-            "Non disponible sur hybride",
-            !isHybrid(),
-            "Confort"
+            "parking_brake",
+            "Frein de parking assisté",
+            200,
+            "frein_parking.jpg",
+            "",
+            true,
+            "Conduite et sécurité"
         );
 
         add(
@@ -1413,7 +1455,7 @@ function getOptions(){
 
         add(
             "sunroof",
-            "Toit ouvrant",
+            "Toit Ouvrant elec",
             900,
             "toit_ouvrant.jpg",
             "",
@@ -1423,11 +1465,11 @@ function getOptions(){
 
         add(
             "dash10",
-            "Tableau de bord numérique 10 pouces",
+            "Tableau de bord avec écran numérique 10’’",
             100,
             "tableau_10.jpg",
             "",
-            true,
+            !isHybrid(),
             "Multimédia"
         );
 
@@ -1488,7 +1530,7 @@ function getOptions(){
 
         add(
             "bose",
-            "Bose",
+            "Bose® Sound System",
             700,
             "bose.jpg",
             "",
@@ -1518,7 +1560,7 @@ function getOptions(){
 
         add(
             "sunroof",
-            "Toit ouvrant",
+            "Toit Ouvrant elec",
             900,
             "toit_ouvrant.jpg",
             "",
@@ -1552,8 +1594,28 @@ function getOptions(){
     if(config.trim==="rs"){
 
         add(
+            "hud",
+            "Affichage tête haute",
+            400,
+            "affichage_tete_haute.jpg",
+            "",
+            true,
+            "Conduite et sécurité"
+        );
+
+        add(
+            "adaptive",
+            "Régulateur de vitesse adaptatif",
+            300,
+            "regulateur_adaptatif.jpg",
+            "",
+            true,
+            "Conduite et sécurité"
+        );
+
+        add(
             "sunroof",
-            "Toit ouvrant",
+            "Toit Ouvrant elec",
             900,
             "toit_ouvrant.jpg",
             "",
@@ -1573,9 +1635,9 @@ function getOptions(){
 
         add(
             "alcantara",
-            "Pack Alcantara",
+            "Pack Alcantara (volant+sellerie)",
             1500,
-            "alcantara.jpg",
+            "alcantara_option.jpg",
             "",
             true,
             "Confort"
@@ -1598,7 +1660,7 @@ function getOptions(){
 
         add(
             "sunroof",
-            "Toit ouvrant",
+            "Toit Ouvrant elec",
             900,
             "toit_ouvrant.jpg",
             "",
@@ -1618,10 +1680,10 @@ function getOptions(){
 
         add(
             "recaro",
-            "Sièges baquet Recaro",
+            "Sièges baquet Recaro (Non chauffants)",
             1900,
-            "recaro.jpg",
-            "Non chauffants",
+            "recaro_option.jpg",
+            "",
             true,
             "Confort"
         );
@@ -1697,10 +1759,12 @@ function renderOptions(){
 
             b.innerHTML=`
 
-                <img
-                    src="${option.image}"
-                    alt="${option.name}"
-                    onerror="imageError(this,'${option.image}')">
+                <div class="option-img-container">
+                    <img
+                        src="${option.image}"
+                        alt="${option.name}"
+                        onerror="imageError(this,'${option.image}')">
+                </div>
 
                 <div class="option-content">
 
@@ -1718,12 +1782,10 @@ function renderOptions(){
 
                         <div class="option-check">
 
-                            <span class="option-check-box"></span>
-
                             <span>
                                 ${config.options.includes(option.id)
-                                ?"Sélectionné"
-                                :"Sélectionner"}
+                                ?"sélectionné"
+                                :"sélectionner"}
                             </span>
 
                         </div>
@@ -1755,9 +1817,25 @@ function renderOptions(){
                             id=>id!==option.id
                         );
 
+                    // Désélection option -> reset sellerie
+                    if(option.id==="alcantara" && config.trim==="rs"){
+                        config.upholstery=0;
+                    }
+                    if(option.id==="recaro" && config.trim==="rstrophy"){
+                        config.upholstery=0;
+                    }
+
                 }else{
 
                     config.options.push(option.id);
+
+                    // Sélection option -> sélection sellerie rattachée
+                    if(option.id==="alcantara" && config.trim==="rs"){
+                        config.upholstery=1;
+                    }
+                    if(option.id==="recaro" && config.trim==="rstrophy"){
+                        config.upholstery=1;
+                    }
 
                 }
 
@@ -1837,7 +1915,11 @@ function calculatePrice(){
 
     const upholstery=getUpholsteries();
 
-    total+=upholstery[config.upholstery][2];
+    // Calcul sans doublon de prix pour Alcantara / Recaro
+    if(!(config.trim==="rs" && config.upholstery===1) && 
+       !(config.trim==="rstrophy" && config.upholstery===1)){
+        total+=upholstery[config.upholstery][2];
+    }
 
     getOptions().forEach(option=>{
 
