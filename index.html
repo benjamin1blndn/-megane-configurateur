@@ -159,8 +159,8 @@ header{
 
 .choice.active,
 .engine.active{
-    background:#ffffff;
-    color:#000000;
+    background:#000000;
+    color:#ffffff;
     border:2px solid #ffcc00;
     box-shadow:0 0 0 1px #ffcc00;
 }
@@ -179,23 +179,27 @@ header{
 
 .choice.active span,
 .engine.active small{
-    color:#666;
+    color:#ccc;
 }
 
-/* BADGE OK SUR CADRES RECTANGLES */
+/* BADGE OK SUR CADRES RECTANGLES (PETIT ROND JAUNE AVEC COCHE) */
 .choice.active::after,
 .engine.active::after,
 .option.active::after{
-    content:"OK";
+    content:"✓";
     position:absolute;
     top:-8px;
     right:-8px;
     background:#ffcc00;
     color:#000;
-    font-size:9px;
+    font-size:10px;
     font-weight:bold;
-    padding:2px 5px;
-    border-radius:3px;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     box-shadow:0 1px 3px rgba(0,0,0,0.2);
     z-index:2;
 }
@@ -271,6 +275,21 @@ header{
     cursor:pointer;
 }
 
+.color.active,
+.upholstery.active{
+    background:#000000;
+    color:#ffffff;
+    border:2px solid #ffcc00;
+    box-shadow:0 0 0 1px #ffcc00;
+    border-radius:4px;
+    padding:8px;
+}
+
+.color.active .color-price,
+.upholstery.active .upholstery-price{
+    color:#ccc;
+}
+
 .color-round,
 .wheel-round,
 .upholstery-round{
@@ -298,16 +317,20 @@ header{
 .color.active .color-round::after,
 .wheel.active .wheel-round::after,
 .upholstery.active .upholstery-round::after{
-    content:"OK";
+    content:"✓";
     position:absolute;
     top:-4px;
     right:-4px;
     background:#ffcc00;
     color:#000;
-    font-size:8px;
+    font-size:9px;
     font-weight:bold;
-    padding:1px 4px;
-    border-radius:3px;
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     box-shadow:0 1px 3px rgba(0,0,0,0.2);
     z-index:2;
 }
@@ -701,30 +724,28 @@ header{
 <script>
 
 /* =========================================================
-   MOTORISATIONS (Mise à jour des prix et motorisations)
+   MOTORISATIONS
 ========================================================= */
 
 const engines={
 
     evolution:[
-        ["1.3 TCe 140ch","Essence",28000],
-        ["1.3 TCe 140ch EDC","Essence",30000],
-        ["1.6 E-Tech Plug-in hybrid 160ch","Essence hybride rechargeable",36500],
-        ["1.5 Blue dCi 115","Diesel",29500],
-        ["1.5 Blue dCi 115 EDC","Diesel",31500]
+        ["1.3 TCe 140ch","Essence",28800],
+        ["1.6 E-Tech Plug-in hybrid 160ch","Essence hybride rechargeable",38750],
+        ["1.5 Blue dCi 115","Diesel",30800],
+        ["1.5 Blue dCi 115 EDC","Diesel",32800]
     ],
 
     techno:[
-        ["1.3 TCe 140ch","Essence",30500],
-        ["1.3 TCe 140ch EDC","Essence",32500],
-        ["1.6 E-Tech Plug-in hybrid 160ch","Essence hybride rechargeable",39000],
-        ["1.5 Blue dCi 115 EDC","Diesel",34000]
+        ["1.3 TCe 140ch","Essence",30750],
+        ["1.3 TCe 140ch EDC","Essence",32750],
+        ["1.6 E-Tech Plug-in hybrid 160ch","Essence hybride rechargeable",40700],
+        ["1.5 Blue dCi 115","Diesel",32750],
+        ["1.5 Blue dCi 115 EDC","Diesel",34750]
     ],
 
     rsline:[
-        ["1.3 TCe 140ch EDC","Essence",33000],
-        ["1.6 E-Tech Plug-in hybrid 160ch","Essence hybride rechargeable",39500],
-        ["1.5 Blue dCi 115 EDC","Diesel",34500]
+        ["1.3 TCe 140ch EDC","Essence",35050]
     ],
 
     rs:[
@@ -737,11 +758,11 @@ const engines={
 };
 
 const trimNames={
-    evolution:"Évolution",
+    evolution:"Evolution",
     techno:"Techno",
-    rsline:"R.S. Line",
-    rs:"R.S.",
-    rstrophy:"R.S. Trophy"
+    rsline:"RS Line",
+    rs:"RS",
+    rstrophy:"RS Trophy"
 };
 
 
@@ -821,6 +842,7 @@ function isRS(){
 
 /* =========================================================
    MOTORISATIONS DISPONIBLES
+   AFFICHÉ DANS LA PARTIE FINITION
 ========================================================= */
 
 function getAvailableFuelTypes(){
@@ -1076,7 +1098,7 @@ function renderColors(){
 
 
 /* =========================================================
-   SELLERIE (Nommages mis à jour selon tes demandes)
+   SELLERIE
 ========================================================= */
 
 function getUpholsteries(){
@@ -1084,8 +1106,8 @@ function getUpholsteries(){
     if(config.trim==="rstrophy"){
 
         return[
-            ["Alcantara R.S. Trophy avec surpiqûres rouges","upholstery_rs_trophy.jpg",0],
-            ["Sièges Baquets Recaro Alcantara R.S. Trophy","recaro.jpg",2600]
+            ["Sellerie RS Trophy","upholstery_rs_trophy.jpg",0],
+            ["Sellerie Recaro® en Alcantara","recaro.jpg",1900]
         ];
 
     }
@@ -1093,8 +1115,8 @@ function getUpholsteries(){
     if(config.trim==="rs"){
 
         return[
-            ["Tissu R.S. Sport","upholstery_rs.jpg",0],
-            ["Sièges Baquets Recaro Alcantara R.S.","recaro.jpg",2600]
+            ["Sellerie RS","upholstery_rs.jpg",0],
+            ["Sellerie en Alcantara® avec surpiqûres Rouge","alcantara.jpg",1500]
         ];
 
     }
@@ -1102,8 +1124,7 @@ function getUpholsteries(){
     if(config.trim==="rsline"){
 
         return[
-            ["Tissu R.S. Line Spécifique","upholstery_rsline.jpg",0],
-            ["Sellerie Alcantara R.S. Line","alcantara.jpg",1200]
+            ["Sellerie RS Line","upholstery_rsline.jpg",0]
         ];
 
     }
@@ -1111,14 +1132,13 @@ function getUpholsteries(){
     if(config.trim==="techno"){
 
         return[
-            ["Tissu / TEP Équilibre Techno","upholstery_techno.jpg",0],
-            ["Sellerie Cuir Noir Techno","upholstery_cuir.jpg",1500]
+            ["sellerie mixte semi-cuir/tissu carbone texturé","upholstery_techno.jpg",0]
         ];
 
     }
 
     return[
-        ["Tissu Évolution Carbone Foncé","upholstery_evolution.jpg",0]
+        ["sellerie tissu carbone","upholstery_evolution.jpg",0]
     ];
 
 }
@@ -1174,11 +1194,11 @@ function renderUpholstery(){
             // Liaison sellerie -> option rattachée
             if(config.trim==="rs"){
                 if(index===1){
-                    if(!config.options.includes("recaro")){
-                        config.options.push("recaro");
+                    if(!config.options.includes("alcantara")){
+                        config.options.push("alcantara");
                     }
                 }else{
-                    config.options=config.options.filter(id=>id!=="recaro");
+                    config.options=config.options.filter(id=>id!=="alcantara");
                 }
             }
 
@@ -1334,7 +1354,7 @@ function renderWheels(){
 
 
 /* =========================================================
-   OPTIONS (Adaptées avec tes dépendances et ajustements)
+   OPTIONS
 ========================================================= */
 
 function getOptions(){
@@ -1362,12 +1382,62 @@ function getOptions(){
     if(config.trim==="evolution"){
 
         add(
-            "dash42",
-            "Tableau de bord écran numérique 4,2\"+compteur analogique",
-            0,
-            "tableau_42.jpg",
+            "spare",
+            "Roue de secours",
+            config.body==="estate" ? 150 : 200,
+            "roue_secours.jpg",
+            "Essence uniquement",
+            !isHybrid() && !isDiesel(),
+            "Confort"
+        );
+
+        add(
+            "galette",
+            "Roue de secours galette",
+            150,
+            "galette.jpg",
+            "Diesel uniquement",
+            isDiesel(),
+            "Confort"
+        );
+
+        add(
+            "allweather",
+            "Pneus tout temps",
+            300,
+            "pneus_tout_temps.jpg",
+            "Avec enjoliveurs 16\" Elliptik",
+            true,
+            "Confort"
+        );
+
+        add(
+            "camera",
+            "Caméra de recul",
+            config.body==="estate" ? 350 : 250,
+            "camera_recul.jpg",
             "",
             true,
+            "Conduite et sécurité"
+        );
+
+        add(
+            "safety",
+            "Safety Pack",
+            650,
+            "safety_pack.jpg",
+            "",
+            true,
+            "Conduite et sécurité"
+        );
+
+        add(
+            "dash42",
+            "Tableau de bord écran numérique 4,2\"+compteur analogique",
+            -100,
+            "tableau_42.jpg",
+            "Non disponible sur hybride",
+            !isHybrid(),
             "Multimédia"
         );
 
@@ -1376,50 +1446,10 @@ function getOptions(){
             "Frein de parking assisté",
             200,
             "frein_parking.jpg",
-            "Non disponible sur hybride",
+            "",
             !isHybrid(),
             "Conduite et sécurité"
         );
-
-        if(config.body==="estate"){
-            add(
-                "spare",
-                "Roue de secours",
-                150,
-                "roue_secours.jpg",
-                "",
-                true,
-                "Confort"
-            );
-            add(
-                "camera",
-                "Caméra de recul",
-                350,
-                "camera_recul.jpg",
-                "",
-                true,
-                "Conduite et sécurité"
-            );
-            add(
-                "modularity_pack",
-                "Modularity Pack",
-                350,
-                "modularity_pack.jpg",
-                "Non disponible sur hybride",
-                !isHybrid(),
-                "Confort"
-            );
-        } else {
-            add(
-                "spare",
-                "Roue de secours",
-                200,
-                "roue_secours.jpg",
-                "",
-                true,
-                "Confort"
-            );
-        }
 
         add(
             "wallbox",
@@ -1431,59 +1461,20 @@ function getOptions(){
             "Multimédia"
         );
 
+        add(
+            "modularity",
+            "Modularity Pack",
+            350,
+            "modularity_pack.jpg",
+            "",
+            config.body==="estate" && !isHybrid(),
+            "Confort"
+        );
+
     }
 
 
     if(config.trim==="techno"){
-
-        if(config.body==="estate"){
-            add(
-                "winter",
-                "Winter Pack",
-                450,
-                "winter_pack.jpg",
-                "",
-                true,
-                "Confort"
-            );
-            add(
-                "spare",
-                "Roue de secours",
-                150,
-                "roue_secours.jpg",
-                "",
-                true,
-                "Confort"
-            );
-            add(
-                "modularity_pack",
-                "Modularity Pack",
-                150,
-                "modularity_pack.jpg",
-                "Non disponible sur hybride",
-                !isHybrid(),
-                "Confort"
-            );
-        } else {
-            add(
-                "winter",
-                "Winter Pack",
-                400,
-                "winter_pack.jpg",
-                "",
-                true,
-                "Confort"
-            );
-            add(
-                "spare",
-                "Roue de secours",
-                200,
-                "roue_secours.jpg",
-                "",
-                true,
-                "Confort"
-            );
-        }
 
         add(
             "hud",
@@ -1500,6 +1491,26 @@ function getOptions(){
             "Toit Ouvrant elec",
             900,
             "toit_ouvrant.jpg",
+            "",
+            true,
+            "Confort"
+        );
+
+        add(
+            "dash10",
+            "Tableau de bord avec écran numérique 10’’",
+            100,
+            "tableau_10.jpg",
+            "",
+            !isHybrid(),
+            "Multimédia"
+        );
+
+        add(
+            "winter",
+            "Winter Pack",
+            config.body==="estate" ? 450 : 400,
+            "winter_pack.jpg",
             "",
             true,
             "Confort"
@@ -1525,31 +1536,40 @@ function getOptions(){
             "Multimédia"
         );
 
+        add(
+            "spare",
+            "Roue de secours",
+            config.body==="estate" ? 150 : 200,
+            "roue_secours.jpg",
+            "Essence uniquement",
+            !isHybrid() && !isDiesel(),
+            "Confort"
+        );
+
+        add(
+            "galette",
+            "Roue de secours galette",
+            150,
+            "galette.jpg",
+            "Diesel uniquement",
+            isDiesel(),
+            "Confort"
+        );
+
+        add(
+            "modularity",
+            "Modularity Pack",
+            150,
+            "modularity_pack.jpg",
+            "",
+            config.body==="estate" && !isHybrid(),
+            "Confort"
+        );
+
     }
 
 
     if(config.trim==="rsline"){
-
-        if(isHybrid()){
-            add(
-                "easydrive_etech",
-                "Pack Easy Drive E-Tech",
-                0,
-                "easy_drive.jpg",
-                "Hybride uniquement",
-                true,
-                "Conduite et sécurité"
-            );
-            add(
-                "wallbox",
-                "Câble de recharge WALLBOX",
-                300,
-                "wallbox.jpg",
-                "Hybride uniquement",
-                true,
-                "Multimédia"
-            );
-        }
 
         add(
             "bose",
@@ -1572,12 +1592,42 @@ function getOptions(){
         );
 
         add(
+            "easydrive",
+            "Pack Easy Drive E-Tech",
+            config.body==="estate" ? 0 : 600,
+            "easy_drive.jpg",
+            "",
+            true,
+            "Conduite et sécurité"
+        );
+
+        add(
             "sunroof",
             "Toit Ouvrant elec",
             900,
             "toit_ouvrant.jpg",
             "",
             true,
+            "Confort"
+        );
+
+        add(
+            "spareRS",
+            "Roue de secours",
+            150,
+            "roue_secours.jpg",
+            "Essence uniquement",
+            !isHybrid() && !isDiesel(),
+            "Confort"
+        );
+
+        add(
+            "galetteRS",
+            "Roue de secours galette",
+            150,
+            "galette.jpg",
+            "Diesel uniquement",
+            isDiesel(),
             "Confort"
         );
 
@@ -1626,6 +1676,16 @@ function getOptions(){
             "Multimédia"
         );
 
+        add(
+            "alcantara",
+            "Pack Alcantara (volant+sellerie)",
+            1500,
+            "alcantara_option.jpg",
+            "",
+            true,
+            "Confort"
+        );
+
     }
 
 
@@ -1659,6 +1719,16 @@ function getOptions(){
             "",
             true,
             "Multimédia"
+        );
+
+        add(
+            "recaro",
+            "Sièges baquet Recaro (Non chauffants)",
+            1900,
+            "recaro_option.jpg",
+            "",
+            true,
+            "Confort"
         );
 
     }
@@ -1790,9 +1860,47 @@ function renderOptions(){
                             id=>id!==option.id
                         );
 
+                    // Désélection option -> reset sellerie
+                    if(option.id==="alcantara" && config.trim==="rs"){
+                        config.upholstery=0;
+                    }
+                    if(option.id==="recaro" && config.trim==="rstrophy"){
+                        config.upholstery=0;
+                    }
+
                 }else{
 
                     config.options.push(option.id);
+
+                    // Sélection option -> sélection sellerie rattachée
+                    if(option.id==="alcantara" && config.trim==="rs"){
+                        config.upholstery=1;
+                    }
+                    if(option.id==="recaro" && config.trim==="rstrophy"){
+                        config.upholstery=1;
+                    }
+
+                }
+
+                if(option.id==="spare" ||
+                   option.id==="spareRS"){
+
+                    config.options=
+                        config.options.filter(
+                            id=>id!=="galette" &&
+                            id!=="galetteRS"
+                        );
+
+                }
+
+                if(option.id==="galette" ||
+                   option.id==="galetteRS"){
+
+                    config.options=
+                        config.options.filter(
+                            id=>id!=="spare" &&
+                            id!=="spareRS"
+                        );
 
                 }
 
@@ -1850,7 +1958,11 @@ function calculatePrice(){
 
     const upholstery=getUpholsteries();
 
-    total+=upholstery[config.upholstery][2];
+    // Calcul sans doublon de prix pour Alcantara / Recaro
+    if(!(config.trim==="rs" && config.upholstery===1) && 
+       !(config.trim==="rstrophy" && config.upholstery===1)){
+        total+=upholstery[config.upholstery][2];
+    }
 
     getOptions().forEach(option=>{
 
