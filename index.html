@@ -2103,7 +2103,7 @@ function getDynamicImageFileName(view){
     const colors=isRS()?rsColors:normalColors;
     const colorName=slugify(colors[config.color][0]);
 
-    const engineName=slugify(currentEngine()[0]);
+    const engineType = isHybrid() ? "hybride" : "thermique";
 
     const wheels=getWheels();
     const wheelName=slugify(wheels[config.wheel][0]);
@@ -2116,7 +2116,7 @@ function getDynamicImageFileName(view){
         config.trim,
         view,
         colorName,
-        engineName,
+        engineType,
         wheelName,
         upholsteryName
     ];
