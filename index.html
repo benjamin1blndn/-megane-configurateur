@@ -62,14 +62,20 @@ header{
 }
 
 .visual img{
-    max-width:85%;
-    max-height:70%;
-    object-fit:contain;
+    aspect-ratio: 3 / 2;
+    width: 85%;
+    max-height: 80%;
+    object-fit: contain;
 }
 
 .no-image{
     text-align:center;
     color:#777;
+    aspect-ratio: 3 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .view-buttons{
@@ -1214,10 +1220,10 @@ function getUpholsteries(){
             return [["Sellerie Java, cravate carbone foncé","upholstery_m3_dynamique.jpg",0]];
         }
         if(config.trim==="bose"){
-            if(config.options.includes("pack_cuir")){
-                return [["Sièges cuir carbone/alcantara gris clair","upholstery_m3_cuir.jpg",0]];
-            }
-            return [["Sellerie tissu/TEP carbone foncé","upholstery_m3_bose.jpg",0]];
+            return [
+                ["Sellerie tissu/TEP carbone foncé","upholstery_m3_bose.jpg",0],
+                ["Sièges cuir carbone/alcantara gris clair","upholstery_m3_cuir.jpg",1500]
+            ];
         }
     }
 
@@ -1293,6 +1299,15 @@ function renderUpholstery(){
 
         b.onclick=()=>{
             config.upholstery=index;
+
+            // Liaisons spécifiques M3 Bose
+            if(config.generation==="megane3" && config.trim==="bose"){
+                if(index===1){
+                    if(!config.options.includes("pack_cuir")) config.options.push("pack_cuir");
+                } else {
+                    config.options=config.options.filter(id=>id!=="pack_cuir");
+                }
+            }
 
             // Liaisons spécifiques M4
             if(config.generation==="megane4"){
@@ -1699,6 +1714,7 @@ function renderOptions(){
                     if(option.id==="tomtom_live"){
                         config.options=config.options.filter(id=>id!=="carte_europe");
                     }
+                    if(option.id==="pack_cuir" && config.trim==="bose") config.upholstery=0;
 
                     // Désélection M4
                     if(option.id==="alcantara" && config.trim==="rs") config.upholstery=0;
@@ -1710,6 +1726,9 @@ function renderOptions(){
                     if(option.id==="pack_confort_noir" && config.trim==="techno5") config.upholstery=0;
                 }else{
                     config.options.push(option.id);
+
+                    // Sélection M3
+                    if(option.id==="pack_cuir" && config.trim==="bose") config.upholstery=1;
 
                     // Sélection M4
                     if(option.id==="alcantara" && config.trim==="rs") config.upholstery=1;
@@ -1864,7 +1883,8 @@ function calculatePrice(){
     const upholstery=getUpholsteries();
     if(upholstery[config.upholstery]){
         if(!(config.trim==="rs" && config.upholstery===1) &&
-           !(config.trim==="rstrophy" && config.upholstery===1)){
+           !(config.trim==="rstrophy" && config.upholstery===1) &&
+           !(config.trim==="bose" && config.upholstery===1)){
             total+=upholstery[config.upholstery][2];
         }
     }
@@ -2031,7 +2051,7 @@ function getDynamicImageFileName(view){
     let parts = [];
 
     if(config.generation==="megane4"){
-        let engineType = "essence";
+        let engineType = (isHybrid() && (view === "rear" || view === "dashboard")) ? "hybride" : "essence";
         parts = [config.body, config.trim, engineType, view];
 
         const colors = isRS() ? rsColors : normalColors;
